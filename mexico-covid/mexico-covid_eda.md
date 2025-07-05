@@ -362,7 +362,8 @@ plt.legend()
 plt.title("age distribution of covid positive patients")
 plt.show()
 ```
-![image](https://github.com/user-attachments/assets/aaddb8bc-74a6-44f4-812f-6b7800ff2529)
+![image](https://github.com/user-attachments/assets/99093cd5-1e60-44ce-a30a-b10b3bdce967)
+
 ```
 Code:
 covid_pos_patients["AGE"].skew().round(3)
@@ -473,7 +474,8 @@ fig.suptitle("Age distribution of covid positive Vs dead covid patients")
 plt.show()
 
 ```
-![image](https://github.com/user-attachments/assets/f51a35a1-773b-479d-8c63-ab46a60cec49)
+![image](https://github.com/user-attachments/assets/f194caa8-b59b-4bf8-9c64-ed757adc7f61)
+
 
 
 Additional code:
@@ -602,7 +604,7 @@ plt.show()
 ```
 Output:
 
-![image](https://github.com/user-attachments/assets/cacef76f-9efc-4b30-b5bc-50d4c13c9e01)
+![image](https://github.com/user-attachments/assets/8f85103e-8dbf-434a-b685-b1abb74a0f5e)
 
 
 Code:
@@ -612,7 +614,7 @@ death_rate_como_sorted
 ```
 Output:
 
-![image](https://github.com/user-attachments/assets/a325ae6d-2696-47c9-89a8-f716f09cfd6f)
+![image](https://github.com/user-attachments/assets/a925dd6a-01b7-40e2-95c1-97a55b662b6e)
 
 
 Findings:
