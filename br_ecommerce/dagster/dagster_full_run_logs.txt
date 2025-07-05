@@ -1,0 +1,1320 @@
+(dagster_meltano) chuhao@DESKTOP-JL1UHSL:~/dsai_sctp/br_e_commerce/meltano-orchestration$ dagster dev
+2025-06-18 11:22:04 +0800 - dagster - INFO - Using temporary directory /home/chuhao/dsai_sctp/br_e_commerce/meltano-orchestration/tmpneutuh9g for storage. This will be removed when dagster dev exits.
+2025-06-18 11:22:04 +0800 - dagster - INFO - To persist information across sessions, set the environment variable DAGSTER_HOME to a directory to use.
+2025-06-18 11:22:08 +0800 - dagster.code_server - INFO - Starting Dagster code proxy server for module meltano_orchestration.definitions in process 4367
+2025-06-18 11:22:09 +0800 - dagster.code_server - INFO - Starting Dagster code server for module meltano_orchestration.definitions in process 4393
+2025-06-18 11:22:09 +0800 - dagster.code_server - INFO - Started Dagster code server for module meltano_orchestration.definitions in process 4393
+2025-06-18 11:22:09 +0800 - dagster.code_server - INFO - Started Dagster code proxy server for module meltano_orchestration.definitions in process 4367
+2025-06-18 11:22:10 +0800 - dagster - INFO - Launching Dagster services...
+2025-06-18 11:22:11 +0800 - dagster.daemon - INFO - Instance is configured with the following daemons: ['AssetDaemon', 'BackfillDaemon', 'SchedulerDaemon', 'SensorDaemon']
+2025-06-18 11:22:12 +0800 - dagster-webserver - INFO - Serving dagster-webserver on http://127.0.0.1:3000 in process 4437
+2025-06-18 11:24:34 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - 11331 - RUN_START - Started execution of run for "__ASSET_JOB".
+2025-06-18 11:24:34 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - 11331 - ENGINE_EVENT - Executing steps using multiprocess executor: parent process (pid: 11331)
+2025-06-18 11:24:34 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - 11331 - supabase_postgres_to_bigquery - STEP_WORKER_STARTING - Launching subprocess for "supabase_postgres_to_bigquery".
+2025-06-18 11:24:36 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - 11409 - supabase_postgres_to_bigquery - STEP_WORKER_STARTED - Executing step "supabase_postgres_to_bigquery" in subprocess.
+2025-06-18 11:24:36 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - 11409 - supabase_postgres_to_bigquery - RESOURCE_INIT_STARTED - Starting initialization of resources [io_manager].
+2025-06-18 11:24:36 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - 11409 - supabase_postgres_to_bigquery - RESOURCE_INIT_SUCCESS - Finished initialization of resources [io_manager].
+2025-06-18 11:24:36 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - 11409 - LOGS_CAPTURED - Started capturing logs in process (pid: 11409).
+2025-06-18 11:24:36 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - 11409 - supabase_postgres_to_bigquery - STEP_START - Started execution of step "supabase_postgres_to_bigquery".
+2025-06-18 11:24:36 +0800 - dagster - INFO - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - supabase_postgres_to_bigquery -  Running Meltano pipeline: tap-postgres -> target-bigquery
+2025-06-18 11:30:55 +0800 - dagster - INFO - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - supabase_postgres_to_bigquery -  Meltano return code: 0
+2025-06-18 11:30:55 +0800 - dagster - INFO - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - supabase_postgres_to_bigquery -  STDOUT:
+
+2025-06-18 11:30:55 +0800 - dagster - ERROR - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - supabase_postgres_to_bigquery -  STDERR:
+2025-06-18T03:24:38.951219Z [info     ] Environment 'dev' is active
+2025-06-18T03:24:39.539836Z [warning  ] Force option is enabled, ignoring stale job check.
+2025-06-18T03:24:39.975625Z [info     ] Using systemdb state backend
+2025-06-18T03:24:41.178794Z [info     ] Beginning full_table sync of 'public-customers'... cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:24:41.179500Z [info     ] Tap has custom mapper. Using 1 provided map(s). cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:24:41.753593Z [info     ] Using thread-based parallelism cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:24:41.755521Z [info     ] Target 'target-bigquery' is listening for input from tap. cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:24:41.756321Z [info     ] Initializing 'target-bigquery' target sink... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:24:41.757211Z [info     ] Initializing target sink for stream 'public-customers'... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:24:49.650461Z [info     ] Setting up public-customers    cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:25:02.697363Z [info     ] 2025-06-18 11:25:02,697 | INFO     | singer_sdk.metrics   | METRIC: {"type": "timer", "metric": "sync_duration", "value": 21.518093824386597, "tags": {"stream": "public-customers", "pid": 11677, "context": {}, "status": "succeeded"}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:25:02.697651Z [info     ] 2025-06-18 11:25:02,697 | INFO     | singer_sdk.metrics   | METRIC: {"type": "counter", "metric": "record_count", "value": 99441, "tags": {"stream": "public-customers", "pid": 11677, "context": {}}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:25:02.697907Z [info     ] Beginning full_table sync of 'public-geolocation'... cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:25:02.698072Z [info     ] Tap has custom mapper. Using 1 provided map(s). cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:25:02.698295Z [info     ] Initializing 'target-bigquery' target sink... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:25:02.698510Z [info     ] Initializing target sink for stream 'public-geolocation'... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:25:08.769433Z [info     ] Setting up public-geolocation  cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:26:02.698023Z [info     ] 2025-06-18 11:26:02,697 | INFO     | singer_sdk.metrics   | METRIC: {"type": "counter", "metric": "record_count", "value": 429821, "tags": {"stream": "public-geolocation", "pid": 11677, "context": {}}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:27:02.748816Z [info     ] 2025-06-18 11:27:02,748 | INFO     | singer_sdk.metrics   | METRIC: {"type": "counter", "metric": "record_count", "value": 429961, "tags": {"stream": "public-geolocation", "pid": 11677, "context": {}}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:27:21.939799Z [info     ] 2025-06-18 11:27:21,939 | INFO     | singer_sdk.metrics   | METRIC: {"type": "timer", "metric": "sync_duration", "value": 139.24181461334229, "tags": {"stream": "public-geolocation", "pid": 11677, "context": {}, "status": "succeeded"}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:27:21.940155Z [info     ] 2025-06-18 11:27:21,939 | INFO     | singer_sdk.metrics   | METRIC: {"type": "counter", "metric": "record_count", "value": 140381, "tags": {"stream": "public-geolocation", "pid": 11677, "context": {}}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:27:21.940437Z [info     ] Beginning full_table sync of 'public-order_items'... cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:27:21.940651Z [info     ] Tap has custom mapper. Using 1 provided map(s). cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:27:21.940914Z [info     ] Initializing 'target-bigquery' target sink... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:27:21.941145Z [info     ] Initializing target sink for stream 'public-order_items'... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:27:28.023389Z [info     ] Setting up public-order_items  cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:27:44.501829Z [info     ] 2025-06-18 11:27:44,501 | INFO     | singer_sdk.metrics   | METRIC: {"type": "timer", "metric": "sync_duration", "value": 22.561408042907715, "tags": {"stream": "public-order_items", "pid": 11677, "context": {}, "status": "succeeded"}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:27:44.502125Z [info     ] 2025-06-18 11:27:44,501 | INFO     | singer_sdk.metrics   | METRIC: {"type": "counter", "metric": "record_count", "value": 112650, "tags": {"stream": "public-order_items", "pid": 11677, "context": {}}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:27:44.502333Z [info     ] Beginning full_table sync of 'public-order_payments'... cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:27:44.502552Z [info     ] Tap has custom mapper. Using 1 provided map(s). cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:27:44.503069Z [info     ] Initializing 'target-bigquery' target sink... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:27:44.503372Z [info     ] Initializing target sink for stream 'public-order_payments'... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:27:50.511620Z [info     ] Setting up public-order_payments cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:27:58.550448Z [info     ] 2025-06-18 11:27:58,550 | INFO     | singer_sdk.metrics   | METRIC: {"type": "timer", "metric": "sync_duration", "value": 14.048071384429932, "tags": {"stream": "public-order_payments", "pid": 11677, "context": {}, "status": "succeeded"}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:27:58.550764Z [info     ] 2025-06-18 11:27:58,550 | INFO     | singer_sdk.metrics   | METRIC: {"type": "counter", "metric": "record_count", "value": 103886, "tags": {"stream": "public-order_payments", "pid": 11677, "context": {}}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:27:58.551023Z [info     ] Beginning full_table sync of 'public-order_reviews'... cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:27:58.551197Z [info     ] Tap has custom mapper. Using 1 provided map(s). cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:27:58.551370Z [info     ] Initializing 'target-bigquery' target sink... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:27:58.551526Z [info     ] Initializing target sink for stream 'public-order_reviews'... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:28:04.629196Z [info     ] Setting up public-order_reviews cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:28:18.366188Z [info     ] 2025-06-18 11:28:18,365 | INFO     | singer_sdk.metrics   | METRIC: {"type": "timer", "metric": "sync_duration", "value": 19.815197706222534, "tags": {"stream": "public-order_reviews", "pid": 11677, "context": {}, "status": "succeeded"}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:18.366442Z [info     ] 2025-06-18 11:28:18,366 | INFO     | singer_sdk.metrics   | METRIC: {"type": "counter", "metric": "record_count", "value": 99224, "tags": {"stream": "public-order_reviews", "pid": 11677, "context": {}}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:18.366696Z [info     ] Beginning full_table sync of 'public-orders'... cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:18.366928Z [info     ] Tap has custom mapper. Using 1 provided map(s). cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:18.367090Z [info     ] Initializing 'target-bigquery' target sink... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:28:18.367276Z [info     ] Initializing target sink for stream 'public-orders'... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:28:24.495311Z [info     ] Setting up public-orders       cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:28:42.390492Z [info     ] 2025-06-18 11:28:42,390 | INFO     | singer_sdk.metrics   | METRIC: {"type": "timer", "metric": "sync_duration", "value": 24.02373433113098, "tags": {"stream": "public-orders", "pid": 11677, "context": {}, "status": "succeeded"}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:42.390873Z [info     ] 2025-06-18 11:28:42,390 | INFO     | singer_sdk.metrics   | METRIC: {"type": "counter", "metric": "record_count", "value": 99441, "tags": {"stream": "public-orders", "pid": 11677, "context": {}}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:42.391201Z [info     ] Beginning full_table sync of 'public-product_category_name_translation'... cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:42.391390Z [info     ] Tap has custom mapper. Using 1 provided map(s). cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:42.391610Z [info     ] Initializing 'target-bigquery' target sink... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:28:42.391788Z [info     ] Initializing target sink for stream 'public-product_category_name_translation'... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:28:42.521063Z [info     ] 2025-06-18 11:28:42,520 | INFO     | singer_sdk.metrics   | METRIC: {"type": "timer", "metric": "sync_duration", "value": 0.1298964023590088, "tags": {"stream": "public-product_category_name_translation", "pid": 11677, "context": {}, "status": "succeeded"}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:42.521448Z [info     ] 2025-06-18 11:28:42,520 | INFO     | singer_sdk.metrics   | METRIC: {"type": "counter", "metric": "record_count", "value": 71, "tags": {"stream": "public-product_category_name_translation", "pid": 11677, "context": {}}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:42.521737Z [info     ] Beginning full_table sync of 'public-products'... cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:42.521960Z [info     ] Tap has custom mapper. Using 1 provided map(s). cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:46.884417Z [info     ] 2025-06-18 11:28:46,884 | INFO     | singer_sdk.metrics   | METRIC: {"type": "timer", "metric": "sync_duration", "value": 4.362791299819946, "tags": {"stream": "public-products", "pid": 11677, "context": {}, "status": "succeeded"}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:46.884696Z [info     ] 2025-06-18 11:28:46,884 | INFO     | singer_sdk.metrics   | METRIC: {"type": "counter", "metric": "record_count", "value": 32951, "tags": {"stream": "public-products", "pid": 11677, "context": {}}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:46.884924Z [info     ] Beginning full_table sync of 'public-sellers'... cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:46.885113Z [info     ] Tap has custom mapper. Using 1 provided map(s). cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:47.262897Z [info     ] 2025-06-18 11:28:47,262 | INFO     | singer_sdk.metrics   | METRIC: {"type": "timer", "metric": "sync_duration", "value": 0.37793540954589844, "tags": {"stream": "public-sellers", "pid": 11677, "context": {}, "status": "succeeded"}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:47.263233Z [info     ] 2025-06-18 11:28:47,262 | INFO     | singer_sdk.metrics   | METRIC: {"type": "counter", "metric": "record_count", "value": 3095, "tags": {"stream": "public-sellers", "pid": 11677, "context": {}}} cmd_type=elb consumer=False job_name=dev:tap-postgres-to-target-bigquery name=tap-postgres producer=True run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=tap-postgres
+2025-06-18T03:28:48.495374Z [info     ] Setting up public-product_category_name_translation cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:28:48.505569Z [info     ] Initializing 'target-bigquery' target sink... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:28:48.506722Z [info     ] Initializing target sink for stream 'public-products'... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:28:54.558278Z [info     ] Setting up public-products     cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:28:55.866556Z [info     ] Initializing 'target-bigquery' target sink... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:28:55.866870Z [info     ] Initializing target sink for stream 'public-sellers'... cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:29:02.274593Z [info     ] Setting up public-sellers      cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:29:02.370167Z [info     ] Target 'target-bigquery' completed reading 1550947 lines of input (1550922 records, (0 batch manifests, 16 state messages). cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:29:02.370806Z [info     ] Adding worker 2ac2a584db6b496a9f1a3070b861e406 cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:30:54.372372Z [info     ] Emitting completed target state {"bookmarks": {"public-customers": {}, "public-geolocation": {}, "public-order_items": {}, "public-order_payments": {}, "public-order_reviews": {}, "public-orders": {}, "public-product_category_name_translation": {}, "public-products": {}, "public-sellers": {}}} cmd_type=elb consumer=True job_name=dev:tap-postgres-to-target-bigquery name=target-bigquery producer=False run_id=022e509a-5880-42c9-aaea-7174f1d2352a stdio=stderr string_id=target-bigquery
+2025-06-18T03:30:54.398362Z [info     ] Using systemdb state backend
+2025-06-18T03:30:54.409688Z [info     ] Incremental state has been updated at 2025-06-18 03:30:54.409655+00:00.
+2025-06-18T03:30:54.562465Z [info     ] Block run completed.           block_type=ExtractLoadBlocks err=None set_number=0 success=True
+
+2025-06-18 11:30:55 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - 11409 - supabase_postgres_to_bigquery - STEP_OUTPUT - Yielded output "result" of type "Any". (Type check passed).
+2025-06-18 11:30:55 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - supabase_postgres_to_bigquery - Writing file at: /home/chuhao/dsai_sctp/br_e_commerce/meltano-orchestration/tmpneutuh9g/storage/supabase_postgres_to_bigquery using PickledObjectFilesystemIOManager...
+2025-06-18 11:30:55 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - 11409 - supabase_postgres_to_bigquery - ASSET_MATERIALIZATION - Materialized value supabase_postgres_to_bigquery.
+2025-06-18 11:30:55 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - 11409 - supabase_postgres_to_bigquery - HANDLED_OUTPUT - Handled output "result" using IO manager "io_manager"
+2025-06-18 11:30:55 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - 11409 - supabase_postgres_to_bigquery - STEP_SUCCESS - Finished execution of step "supabase_postgres_to_bigquery" in 6m15s.
+2025-06-18 11:30:55 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - 11331 - ENGINE_EVENT - Multiprocess executor: parent process exiting after 6m17s (pid: 11331)
+2025-06-18 11:30:55 +0800 - dagster - DEBUG - __ASSET_JOB - 073e9af7-48bd-4b85-bde5-6679ca699660 - 11331 - RUN_SUCCESS - Finished execution of run for "__ASSET_JOB".
+2025-06-18 11:31:13 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - 30650 - RUN_START - Started execution of run for "__ASSET_JOB".
+2025-06-18 11:31:13 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - 30650 - ENGINE_EVENT - Executing steps using multiprocess executor: parent process (pid: 30650)
+2025-06-18 11:31:13 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - 30650 - run_dbt_models - STEP_WORKER_STARTING - Launching subprocess for "run_dbt_models".
+2025-06-18 11:31:14 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - 30694 - run_dbt_models - STEP_WORKER_STARTED - Executing step "run_dbt_models" in subprocess.
+2025-06-18 11:31:14 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - 30694 - run_dbt_models - RESOURCE_INIT_STARTED - Starting initialization of resources [io_manager].
+2025-06-18 11:31:14 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - 30694 - run_dbt_models - RESOURCE_INIT_SUCCESS - Finished initialization of resources [io_manager].
+2025-06-18 11:31:14 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - 30694 - LOGS_CAPTURED - Started capturing logs in process (pid: 30694).
+2025-06-18 11:31:14 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - 30694 - run_dbt_models - STEP_START - Started execution of step "run_dbt_models".
+2025-06-18 11:31:14 +0800 - dagster - INFO - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - run_dbt_models -  Running `dbt run`
+2025-06-18 11:32:00 +0800 - dagster - INFO - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - run_dbt_models -  dbt run return code: 0
+2025-06-18 11:32:00 +0800 - dagster - INFO - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - run_dbt_models -  STDOUT:
+03:31:16  Running with dbt=1.9.6
+03:31:19  Registered adapter: bigquery=1.9.2
+03:31:20  [WARNING]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.olist_brazilian_ecommerce.example
+03:31:20  Found 7 models, 1 seed, 13 data tests, 9 sources, 885 macros
+03:31:20
+03:31:20  Concurrency: 1 threads (target='jaffle_sql')
+03:31:20
+03:31:22  1 of 7 START sql table model olist_brazilian_ecommerce_target.DIM_CUSTOMERS .... [RUN]
+03:31:27  1 of 7 OK created sql table model olist_brazilian_ecommerce_target.DIM_CUSTOMERS  [CREATE TABLE (99.4k rows, 8.8 MiB processed) in 5.15s]
+03:31:27  2 of 7 START sql table model olist_brazilian_ecommerce_target.DIM_DATE ......... [RUN]
+03:31:30  2 of 7 OK created sql table model olist_brazilian_ecommerce_target.DIM_DATE .... [CREATE TABLE (13.2k rows, 0 processed) in 3.13s]
+03:31:30  3 of 7 START sql table model olist_brazilian_ecommerce_target.DIM_GEOLOCATION .. [RUN]
+03:31:36  3 of 7 OK created sql table model olist_brazilian_ecommerce_target.DIM_GEOLOCATION  [CREATE TABLE (738.3k rows, 38.7 MiB processed) in 6.03s]
+03:31:36  4 of 7 START sql table model olist_brazilian_ecommerce_target.DIM_ORDERS ....... [RUN]
+03:31:46  4 of 7 OK created sql table model olist_brazilian_ecommerce_target.DIM_ORDERS .. [CREATE TABLE (99.4k rows, 24.4 MiB processed) in 10.25s]
+03:31:46  5 of 7 START sql table model olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS .. [RUN]
+03:31:51  5 of 7 OK created sql table model olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS  [CREATE TABLE (112.7k rows, 17.9 MiB processed) in 4.23s]
+03:31:51  6 of 7 START sql table model olist_brazilian_ecommerce_target.FCT_PAYMENTS ..... [RUN]
+03:31:54  6 of 7 OK created sql table model olist_brazilian_ecommerce_target.FCT_PAYMENTS  [CREATE TABLE (103.9k rows, 6.9 MiB processed) in 3.17s]
+03:31:54  7 of 7 START sql table model olist_brazilian_ecommerce_target.FCT_REVIEWS ...... [RUN]
+03:31:58  7 of 7 OK created sql table model olist_brazilian_ecommerce_target.FCT_REVIEWS . [CREATE TABLE (99.2k rows, 12.0 MiB processed) in 4.46s]
+03:31:58
+03:31:58  Finished running 7 table models in 0 hours 0 minutes and 38.24 seconds (38.24s).
+03:31:58
+03:31:58  Completed successfully
+03:31:58
+03:31:58  Done. PASS=7 WARN=0 ERROR=0 SKIP=0 TOTAL=7
+
+2025-06-18 11:32:01 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - 30694 - run_dbt_models - STEP_OUTPUT - Yielded output "result" of type "Any". (Type check passed).
+2025-06-18 11:32:01 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - run_dbt_models - Writing file at: /home/chuhao/dsai_sctp/br_e_commerce/meltano-orchestration/tmpneutuh9g/storage/run_dbt_models using PickledObjectFilesystemIOManager...
+2025-06-18 11:32:01 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - 30694 - run_dbt_models - ASSET_MATERIALIZATION - Materialized value run_dbt_models.
+2025-06-18 11:32:01 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - 30694 - run_dbt_models - HANDLED_OUTPUT - Handled output "result" using IO manager "io_manager"
+2025-06-18 11:32:01 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - 30694 - run_dbt_models - STEP_SUCCESS - Finished execution of step "run_dbt_models" in 46.2s.
+2025-06-18 11:32:01 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - 30650 - ENGINE_EVENT - Multiprocess executor: parent process exiting after 47.77s (pid: 30650)
+2025-06-18 11:32:01 +0800 - dagster - DEBUG - __ASSET_JOB - e27453ec-4f41-479a-b1b3-0cf60660f070 - 30650 - RUN_SUCCESS - Finished execution of run for "__ASSET_JOB".
+2025-06-18 11:32:36 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - 34916 - RUN_START - Started execution of run for "__ASSET_JOB".
+2025-06-18 11:32:36 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - 34916 - ENGINE_EVENT - Executing steps using multiprocess executor: parent process (pid: 34916)
+2025-06-18 11:32:36 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - 34916 - run_dbt_tests - STEP_WORKER_STARTING - Launching subprocess for "run_dbt_tests".
+2025-06-18 11:32:37 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - 34961 - run_dbt_tests - STEP_WORKER_STARTED - Executing step "run_dbt_tests" in subprocess.
+2025-06-18 11:32:37 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - 34961 - run_dbt_tests - RESOURCE_INIT_STARTED - Starting initialization of resources [io_manager].
+2025-06-18 11:32:37 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - 34961 - run_dbt_tests - RESOURCE_INIT_SUCCESS - Finished initialization of resources [io_manager].
+2025-06-18 11:32:37 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - 34961 - LOGS_CAPTURED - Started capturing logs in process (pid: 34961).
+2025-06-18 11:32:37 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - 34961 - run_dbt_tests - STEP_START - Started execution of step "run_dbt_tests".
+2025-06-18 11:32:37 +0800 - dagster - INFO - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - run_dbt_tests -  Running `dbt test`
+2025-06-18 11:33:08 +0800 - dagster - INFO - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - run_dbt_tests -  dbt test return code: 0
+2025-06-18 11:33:08 +0800 - dagster - INFO - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - run_dbt_tests -  STDOUT:
+03:32:39  Running with dbt=1.9.6
+03:32:41  Registered adapter: bigquery=1.9.2
+03:32:42  [WARNING]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.olist_brazilian_ecommerce.example
+03:32:42  Found 7 models, 1 seed, 13 data tests, 9 sources, 885 macros
+03:32:42
+03:32:42  Concurrency: 1 threads (target='jaffle_sql')
+03:32:42
+03:32:43  1 of 13 START test dbt_expectations_expect_compound_columns_to_be_unique_FCT_ORDER_ITEMS_pk_order_id__pk_order_item_id  [RUN]
+03:32:45  1 of 13 PASS dbt_expectations_expect_compound_columns_to_be_unique_FCT_ORDER_ITEMS_pk_order_id__pk_order_item_id  [PASS in 2.03s]
+03:32:45  2 of 13 START test dbt_expectations_expect_compound_columns_to_be_unique_FCT_PAYMENTS_pk_order_id__pk_payment_sequential  [RUN]
+03:32:47  2 of 13 PASS dbt_expectations_expect_compound_columns_to_be_unique_FCT_PAYMENTS_pk_order_id__pk_payment_sequential  [PASS in 1.92s]
+03:32:47  3 of 13 START test dbt_expectations_expect_compound_columns_to_be_unique_FCT_REVIEWS_pk_order_id__pk_review_id  [RUN]
+03:32:50  3 of 13 PASS dbt_expectations_expect_compound_columns_to_be_unique_FCT_REVIEWS_pk_order_id__pk_review_id  [PASS in 2.59s]
+03:32:50  4 of 13 START test not_null_DIM_CUSTOMERS_pk_customer_sid ...................... [RUN]
+03:32:51  4 of 13 PASS not_null_DIM_CUSTOMERS_pk_customer_sid ............................ [PASS in 1.74s]
+03:32:51  5 of 13 START test not_null_DIM_ORDERS_pk_order_sid ............................ [RUN]
+03:32:53  5 of 13 PASS not_null_DIM_ORDERS_pk_order_sid .................................. [PASS in 1.56s]
+03:32:53  6 of 13 START test not_null_FCT_ORDER_ITEMS_pk_order_id ........................ [RUN]
+03:32:55  6 of 13 PASS not_null_FCT_ORDER_ITEMS_pk_order_id .............................. [PASS in 1.56s]
+03:32:55  7 of 13 START test not_null_FCT_ORDER_ITEMS_pk_order_item_id ................... [RUN]
+03:32:56  7 of 13 PASS not_null_FCT_ORDER_ITEMS_pk_order_item_id ......................... [PASS in 1.49s]
+03:32:56  8 of 13 START test not_null_FCT_PAYMENTS_pk_order_id ........................... [RUN]
+03:32:58  8 of 13 PASS not_null_FCT_PAYMENTS_pk_order_id ................................. [PASS in 1.51s]
+03:32:58  9 of 13 START test not_null_FCT_PAYMENTS_pk_payment_sequential ................. [RUN]
+03:32:59  9 of 13 PASS not_null_FCT_PAYMENTS_pk_payment_sequential ....................... [PASS in 1.51s]
+03:32:59  10 of 13 START test not_null_FCT_REVIEWS_pk_order_id ........................... [RUN]
+03:33:01  10 of 13 PASS not_null_FCT_REVIEWS_pk_order_id ................................. [PASS in 1.57s]
+03:33:01  11 of 13 START test not_null_FCT_REVIEWS_pk_review_id .......................... [RUN]
+03:33:02  11 of 13 PASS not_null_FCT_REVIEWS_pk_review_id ................................ [PASS in 1.68s]
+03:33:02  12 of 13 START test unique_DIM_CUSTOMERS_pk_customer_sid ....................... [RUN]
+03:33:04  12 of 13 PASS unique_DIM_CUSTOMERS_pk_customer_sid ............................. [PASS in 1.76s]
+03:33:04  13 of 13 START test unique_DIM_ORDERS_pk_order_sid ............................. [RUN]
+03:33:06  13 of 13 PASS unique_DIM_ORDERS_pk_order_sid ................................... [PASS in 1.75s]
+03:33:06
+03:33:06  Finished running 13 data tests in 0 hours 0 minutes and 23.99 seconds (23.99s).
+03:33:06
+03:33:06  Completed successfully
+03:33:06
+03:33:06  Done. PASS=13 WARN=0 ERROR=0 SKIP=0 TOTAL=13
+
+2025-06-18 11:33:08 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - 34961 - run_dbt_tests - STEP_OUTPUT - Yielded output "result" of type "Any". (Type check passed).
+2025-06-18 11:33:08 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - run_dbt_tests - Writing file at: /home/chuhao/dsai_sctp/br_e_commerce/meltano-orchestration/tmpneutuh9g/storage/run_dbt_tests using PickledObjectFilesystemIOManager...
+2025-06-18 11:33:08 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - 34961 - run_dbt_tests - ASSET_MATERIALIZATION - Materialized value run_dbt_tests.
+2025-06-18 11:33:08 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - 34961 - run_dbt_tests - HANDLED_OUTPUT - Handled output "result" using IO manager "io_manager"
+2025-06-18 11:33:08 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - 34961 - run_dbt_tests - STEP_SUCCESS - Finished execution of step "run_dbt_tests" in 30.21s.
+2025-06-18 11:33:08 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - 34916 - ENGINE_EVENT - Multiprocess executor: parent process exiting after 31.5s (pid: 34916)
+2025-06-18 11:33:08 +0800 - dagster - DEBUG - __ASSET_JOB - d0549626-c1ca-48b6-adb9-0c844ac4982a - 34916 - RUN_SUCCESS - Finished execution of run for "__ASSET_JOB".
+2025-06-18 11:34:53 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - 41623 - RUN_START - Started execution of run for "__ASSET_JOB".
+2025-06-18 11:34:53 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - 41623 - ENGINE_EVENT - Executing steps using multiprocess executor: parent process (pid: 41623)
+2025-06-18 11:34:53 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - 41623 - run_feature_engineering_script - STEP_WORKER_STARTING - Launching subprocess for "run_feature_engineering_script".
+2025-06-18 11:34:54 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - 41668 - run_feature_engineering_script - STEP_WORKER_STARTED - Executing step "run_feature_engineering_script" in subprocess.
+2025-06-18 11:34:54 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - 41668 - run_feature_engineering_script - RESOURCE_INIT_STARTED - Starting initialization of resources [io_manager].
+2025-06-18 11:34:54 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - 41668 - run_feature_engineering_script - RESOURCE_INIT_SUCCESS - Finished initialization of resources [io_manager].
+2025-06-18 11:34:54 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - 41668 - LOGS_CAPTURED - Started capturing logs in process (pid: 41668).
+2025-06-18 11:34:54 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - 41668 - run_feature_engineering_script - STEP_START - Started execution of step "run_feature_engineering_script".
+2025-06-18 11:34:55 +0800 - dagster - INFO - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - run_feature_engineering_script -  Running feature_engineering
+2025-06-18 11:41:38 +0800 - dagster - INFO - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - run_feature_engineering_script -  STDOUT:
+
+Downloading:   0%|          |
+Downloading:  59%|█████▊    |
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+
+Downloading:   0%|          |
+Downloading:  48%|████▊     |
+Downloading:  96%|█████████▋|
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+
+Downloading:   0%|          |
+Downloading:  35%|███▌      |
+Downloading:  35%|███▌      |
+Downloading:  71%|███████   |
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+
+Downloading:   0%|          |
+Downloading:   8%|▊         |
+Downloading:  16%|█▌        |
+Downloading:  24%|██▎       |
+Downloading:  32%|███▏      |
+Downloading:  40%|███▉      |
+Downloading:  47%|████▋     |
+Downloading:  55%|█████▌    |
+Downloading:  63%|██████▎   |
+Downloading:  71%|███████   |
+Downloading:  79%|███████▉  |
+Downloading:  87%|████████▋ |
+Downloading:  95%|█████████▍|
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+
+Downloading:   0%|          |
+Downloading:  14%|█▍        |
+Downloading:  28%|██▊       |
+Downloading:  42%|████▏     |
+Downloading:  56%|█████▋    |
+Downloading:  71%|███████   |
+Downloading:  85%|████████▍ |
+Downloading:  99%|█████████▉|
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+
+Downloading:   0%|          |
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+
+Downloading:   0%|          |
+Downloading:  18%|█▊        |
+Downloading:  35%|███▌      |
+Downloading:  53%|█████▎    |
+Downloading:  70%|███████   |
+Downloading:  88%|████████▊ |
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+
+2025-06-18 11:41:38 +0800 - dagster - ERROR - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - run_feature_engineering_script -  STDERR:
+/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/pandas_gbq/schema/pandas_to_bigquery.py:157: UserWarning: Could not determine the type of columns: actual_delivery_time, estimated delivery_time
+  warnings.warn(msg)
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [00:00<00:00, 18001.30it/s]
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [00:00<00:00, 36792.14it/s]
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [00:00<00:00, 40721.40it/s]
+
+2025-06-18 11:41:38 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - 41668 - run_feature_engineering_script - STEP_OUTPUT - Yielded output "result" of type "Any". (Type check passed).
+2025-06-18 11:41:38 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - run_feature_engineering_script - Writing file at: /home/chuhao/dsai_sctp/br_e_commerce/meltano-orchestration/tmpneutuh9g/storage/run_feature_engineering_script using PickledObjectFilesystemIOManager...
+2025-06-18 11:41:38 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - 41668 - run_feature_engineering_script - ASSET_MATERIALIZATION - Materialized value run_feature_engineering_script.
+2025-06-18 11:41:38 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - 41668 - run_feature_engineering_script - HANDLED_OUTPUT - Handled output "result" using IO manager "io_manager"
+2025-06-18 11:41:38 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - 41668 - run_feature_engineering_script - STEP_SUCCESS - Finished execution of step "run_feature_engineering_script" in 6m36s.
+2025-06-18 11:41:38 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - 41623 - ENGINE_EVENT - Multiprocess executor: parent process exiting after 6m38s (pid: 41623)
+2025-06-18 11:41:38 +0800 - dagster - DEBUG - __ASSET_JOB - 90d04abd-1d9b-406a-9a36-7e773552f01d - 41623 - RUN_SUCCESS - Finished execution of run for "__ASSET_JOB".
+2025-06-18 11:41:52 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - 62035 - RUN_START - Started execution of run for "__ASSET_JOB".
+2025-06-18 11:41:53 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - 62035 - ENGINE_EVENT - Executing steps using multiprocess executor: parent process (pid: 62035)
+2025-06-18 11:41:53 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - 62035 - run_great_expectations_tests - STEP_WORKER_STARTING - Launching subprocess for "run_great_expectations_tests".
+2025-06-18 11:41:53 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - 62075 - run_great_expectations_tests - STEP_WORKER_STARTED - Executing step "run_great_expectations_tests" in subprocess.
+2025-06-18 11:41:53 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - 62075 - run_great_expectations_tests - RESOURCE_INIT_STARTED - Starting initialization of resources [io_manager].
+2025-06-18 11:41:54 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - 62075 - run_great_expectations_tests - RESOURCE_INIT_SUCCESS - Finished initialization of resources [io_manager].
+2025-06-18 11:41:54 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - 62075 - LOGS_CAPTURED - Started capturing logs in process (pid: 62075).
+2025-06-18 11:41:54 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - 62075 - run_great_expectations_tests - STEP_START - Started execution of step "run_great_expectations_tests".
+2025-06-18 11:41:54 +0800 - dagster - INFO - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - run_great_expectations_tests -  Running GX_tests
+2025-06-18 11:50:58 +0800 - dagster - INFO - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - run_great_expectations_tests -  STDOUT:
+
+Downloading:   0%|          |
+Downloading:  59%|█████▊    |
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+ Full GX test results saved to gx_output/gx_results_customers.txt
+
+Downloading:   0%|          |
+Downloading:  48%|████▊     |
+Downloading:  96%|█████████▋|
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+ Running validation for: olist_brazilian_ecommerce_target.FCT_PAYMENTS
+Validation results for olist_brazilian_ecommerce_target.FCT_PAYMENTS:
+{
+  "success": false,
+  "results": [
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_of_type",
+        "kwargs": {
+          "column": "payment_sid",
+          "type_": "string",
+          "batch_id": "olist_brazilian_ecommerce_target.FCT_PAYMENTS_data_source-olist_brazilian_ecommerce_target.FCT_PAYMENTS_asset"
+        },
+        "meta": {},
+        "id": "355fd3e8-d869-4cd2-9e08-fd70900ec550"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "exception_traceback": "Traceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/validator/validator.py\", line 650, in graph_validate\n    result = expectation.metrics_validate(\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/expectation.py\", line 1147, in metrics_validate\n    expectation_validation_result: Union[ExpectationValidationResult, dict] = self._validate(\n                                                                              ^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/core/expect_column_values_to_be_of_type.py\", line 574, in _validate\n    actual_column_type = [\n                         ^\nIndexError: list index out of range\n",
+        "exception_message": "list index out of range",
+        "raised_exception": true
+      }
+    }
+  ],
+  "suite_name": "olist_brazilian_ecommerce_target.FCT_PAYMENTS_suite",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 1,
+    "successful_expectations": 0,
+    "unsuccessful_expectations": 1,
+    "success_percent": 0.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250618T034301.189730Z",
+      "pandas_data_fingerprint": "f3ba4ad23ff07e14000b1877336df974"
+    },
+    "active_batch_definition": {
+      "datasource_name": "olist_brazilian_ecommerce_target.FCT_PAYMENTS_data_source",
+      "data_connector_name": "fluent",
+      "data_asset_name": "olist_brazilian_ecommerce_target.FCT_PAYMENTS_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "96c599f1-8225-4e2d-9a9f-236446520b01",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-18T11:43:01.284364+08:00"
+    },
+    "validation_time": "2025-06-18T03:43:01.284364+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}
+ Finished validation for: olist_brazilian_ecommerce_target.FCT_PAYMENTS
+
+Downloading:   0%|          |
+Downloading:  35%|███▌      |
+Downloading:  35%|███▌      |
+Downloading:  71%|███████   |
+Downloading:  71%|███████   |
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+ Running validation for: olist_brazilian_ecommerce_target.FCT_REVIEWS
+Validation results for olist_brazilian_ecommerce_target.FCT_REVIEWS:
+{
+  "success": false,
+  "results": [
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_of_type",
+        "kwargs": {
+          "column": "review_sid",
+          "type_": "string",
+          "batch_id": "olist_brazilian_ecommerce_target.FCT_REVIEWS_data_source-olist_brazilian_ecommerce_target.FCT_REVIEWS_asset"
+        },
+        "meta": {},
+        "id": "f2539ba5-bace-45b6-a1fe-28e5516e940a"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "exception_traceback": "Traceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/validator/validator.py\", line 650, in graph_validate\n    result = expectation.metrics_validate(\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/expectation.py\", line 1147, in metrics_validate\n    expectation_validation_result: Union[ExpectationValidationResult, dict] = self._validate(\n                                                                              ^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/core/expect_column_values_to_be_of_type.py\", line 574, in _validate\n    actual_column_type = [\n                         ^\nIndexError: list index out of range\n",
+        "exception_message": "list index out of range",
+        "raised_exception": true
+      }
+    }
+  ],
+  "suite_name": "olist_brazilian_ecommerce_target.FCT_REVIEWS_suite",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 1,
+    "successful_expectations": 0,
+    "unsuccessful_expectations": 1,
+    "success_percent": 0.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250618T034350.849789Z",
+      "pandas_data_fingerprint": "ee935aa04f5515de286d3cbdf7b59ce0"
+    },
+    "active_batch_definition": {
+      "datasource_name": "olist_brazilian_ecommerce_target.FCT_REVIEWS_data_source",
+      "data_connector_name": "fluent",
+      "data_asset_name": "olist_brazilian_ecommerce_target.FCT_REVIEWS_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "d51b12ca-befa-4d33-93a6-1cc2a468508a",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-18T11:43:51.012283+08:00"
+    },
+    "validation_time": "2025-06-18T03:43:51.012283+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}
+ Finished validation for: olist_brazilian_ecommerce_target.FCT_REVIEWS
+
+Downloading:   0%|          |
+Downloading:   8%|▊         |
+Downloading:  16%|█▌        |
+Downloading:  24%|██▎       |
+Downloading:  32%|███▏      |
+Downloading:  40%|███▉      |
+Downloading:  47%|████▋     |
+Downloading:  55%|█████▌    |
+Downloading:  63%|██████▎   |
+Downloading:  71%|███████   |
+Downloading:  79%|███████▉  |
+Downloading:  87%|████████▋ |
+Downloading:  95%|█████████▍|
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+ Running validation for: olist_brazilian_ecommerce_target.DIM_GEOLOCATION
+Validation results for olist_brazilian_ecommerce_target.DIM_GEOLOCATION:
+{
+  "success": false,
+  "results": [
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_of_type",
+        "kwargs": {
+          "column": "geolocation_zip_code_prefix",
+          "type_": "string",
+          "batch_id": "olist_brazilian_ecommerce_target.DIM_GEOLOCATION_data_source-olist_brazilian_ecommerce_target.DIM_GEOLOCATION_asset"
+        },
+        "meta": {},
+        "id": "c9b93e95-11e8-4830-9425-1887d470c513"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "MetricConfigurationID(metric_name='column_values.of_type.condition', metric_domain_kwargs_id='512b8da6f36e3964b470b5838155831e', metric_value_kwargs_id='type_=string')": {
+          "exception_traceback": "Traceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 534, in _process_direct_and_bundled_metric_computation_configurations\n    metric_computation_configuration.metric_fn(  # type: ignore[misc] # F not callable\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/metric_provider.py\", line 99, in inner_func\n    return metric_fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/map_metric_provider/column_condition_partial.py\", line 113, in inner_func\n    meets_expectation_series = metric_fn(\n                               ^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/column_map_metrics/column_values_of_type.py\", line 45, in _pandas\n    raise ValueError(f\"Unrecognized numpy/python type: {type_}\")  # noqa: TRY003 # FIXME CoP\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Unrecognized numpy/python type: string\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/validator/validation_graph.py\", line 286, in _resolve\n    self._execution_engine.resolve_metrics(\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 280, in resolve_metrics\n    return self._process_direct_and_bundled_metric_computation_configurations(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 539, in _process_direct_and_bundled_metric_computation_configurations\n    raise gx_exceptions.MetricResolutionError(\ngreat_expectations.exceptions.exceptions.MetricResolutionError: Unrecognized numpy/python type: string\n",
+          "exception_message": "Unrecognized numpy/python type: string",
+          "raised_exception": true
+        }
+      }
+    }
+  ],
+  "suite_name": "olist_brazilian_ecommerce_target.DIM_GEOLOCATION_suite",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 1,
+    "successful_expectations": 0,
+    "unsuccessful_expectations": 1,
+    "success_percent": 0.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250618T034544.775952Z",
+      "pandas_data_fingerprint": "01326265c5e59629d75aae2b8a2ed35c"
+    },
+    "active_batch_definition": {
+      "datasource_name": "olist_brazilian_ecommerce_target.DIM_GEOLOCATION_data_source",
+      "data_connector_name": "fluent",
+      "data_asset_name": "olist_brazilian_ecommerce_target.DIM_GEOLOCATION_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "1cbe57d8-4ae9-4a4a-b609-913598ccc974",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-18T11:45:45.150862+08:00"
+    },
+    "validation_time": "2025-06-18T03:45:45.150862+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}
+ Finished validation for: olist_brazilian_ecommerce_target.DIM_GEOLOCATION
+
+Downloading:   0%|          |
+Downloading:  14%|█▍        |
+Downloading:  28%|██▊       |
+Downloading:  42%|████▏     |
+Downloading:  56%|█████▋    |
+Downloading:  71%|███████   |
+Downloading:  85%|████████▍ |
+Downloading:  99%|█████████▉|
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+ Running validation for: olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS
+Validation results for olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS:
+{
+  "success": false,
+  "results": [
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_of_type",
+        "kwargs": {
+          "column": "item_sid",
+          "type_": "string",
+          "batch_id": "olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_data_source-olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_asset"
+        },
+        "meta": {},
+        "id": "e1ebe1ca-5780-453a-92d5-b42b7d739dc8"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "exception_traceback": "Traceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/validator/validator.py\", line 650, in graph_validate\n    result = expectation.metrics_validate(\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/expectation.py\", line 1147, in metrics_validate\n    expectation_validation_result: Union[ExpectationValidationResult, dict] = self._validate(\n                                                                              ^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/core/expect_column_values_to_be_of_type.py\", line 574, in _validate\n    actual_column_type = [\n                         ^\nIndexError: list index out of range\n",
+        "exception_message": "list index out of range",
+        "raised_exception": true
+      }
+    }
+  ],
+  "suite_name": "olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_suite",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 1,
+    "successful_expectations": 0,
+    "unsuccessful_expectations": 1,
+    "success_percent": 0.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250618T034638.557671Z",
+      "pandas_data_fingerprint": "7dc15ba813450f7ca2cc0f314c3089d1"
+    },
+    "active_batch_definition": {
+      "datasource_name": "olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_data_source",
+      "data_connector_name": "fluent",
+      "data_asset_name": "olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "eaf042da-a153-4eac-84eb-f02084bbea86",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-18T11:46:38.742897+08:00"
+    },
+    "validation_time": "2025-06-18T03:46:38.742897+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}
+ Finished validation for: olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS
+
+Downloading:   0%|          |
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+ Running validation for: olist_brazilian_ecommerce_target.DIM_DATE
+Validation results for olist_brazilian_ecommerce_target.DIM_DATE:
+{
+  "success": false,
+  "results": [
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_of_type",
+        "kwargs": {
+          "column": "date_sid",
+          "type_": "integer",
+          "batch_id": "olist_brazilian_ecommerce_target.DIM_DATE_data_source-olist_brazilian_ecommerce_target.DIM_DATE_asset"
+        },
+        "meta": {},
+        "id": "ca388c15-7186-48b1-a95d-a5d917d4c2be"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "exception_traceback": "Traceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/validator/validator.py\", line 650, in graph_validate\n    result = expectation.metrics_validate(\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/expectation.py\", line 1147, in metrics_validate\n    expectation_validation_result: Union[ExpectationValidationResult, dict] = self._validate(\n                                                                              ^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/core/expect_column_values_to_be_of_type.py\", line 574, in _validate\n    actual_column_type = [\n                         ^\nIndexError: list index out of range\n",
+        "exception_message": "list index out of range",
+        "raised_exception": true
+      }
+    }
+  ],
+  "suite_name": "olist_brazilian_ecommerce_target.DIM_DATE_suite",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 1,
+    "successful_expectations": 0,
+    "unsuccessful_expectations": 1,
+    "success_percent": 0.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250618T034641.282367Z",
+      "pandas_data_fingerprint": "756fac0bb634e4542e00af89bfd9f7f8"
+    },
+    "active_batch_definition": {
+      "datasource_name": "olist_brazilian_ecommerce_target.DIM_DATE_data_source",
+      "data_connector_name": "fluent",
+      "data_asset_name": "olist_brazilian_ecommerce_target.DIM_DATE_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "eb67ddac-c0a9-40b4-bf2e-3fb323f87f12",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-18T11:46:41.295285+08:00"
+    },
+    "validation_time": "2025-06-18T03:46:41.295285+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}
+ Finished validation for: olist_brazilian_ecommerce_target.DIM_DATE
+Combined gx dytppe test results saved to gx_output/gx_dtype_summary.txt
+
+Downloading:   0%|          |
+Downloading:  14%|█▍        |
+Downloading:  28%|██▊       |
+Downloading:  42%|████▏     |
+Downloading:  56%|█████▋    |
+Downloading:  71%|███████   |
+Downloading:  85%|████████▍ |
+Downloading:  99%|█████████▉|
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+Validation results for projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS:
+{
+  "success": false,
+  "results": [
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_to_exist",
+        "kwargs": {
+          "batch_id": "projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_data_source-projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_asset",
+          "column": "payment_sid",
+          "column_index": 0
+        },
+        "meta": {},
+        "id": "5d9b4e53-61e7-4c02-af33-b248d7ffe5bd"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_to_exist",
+        "kwargs": {
+          "batch_id": "projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_data_source-projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_asset",
+          "column": "review_sid",
+          "column_index": 1
+        },
+        "meta": {},
+        "id": "26a0cdb9-58ea-415b-8718-4de37ddf644a"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_to_exist",
+        "kwargs": {
+          "batch_id": "projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_data_source-projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_asset",
+          "column": "item_sid",
+          "column_index": 2
+        },
+        "meta": {},
+        "id": "2b308e28-f70b-4ba2-8e20-b337b37e09e4"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_to_exist",
+        "kwargs": {
+          "batch_id": "projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_data_source-projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_asset",
+          "column": "customer_sid",
+          "column_index": 3
+        },
+        "meta": {},
+        "id": "b5845e5e-2527-4dd5-87df-000f151208d7"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    }
+  ],
+  "suite_name": "schema_fct_orders_expectation",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 4,
+    "successful_expectations": 0,
+    "unsuccessful_expectations": 4,
+    "success_percent": 0.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250618T034735.548639Z",
+      "pandas_data_fingerprint": "7dc15ba813450f7ca2cc0f314c3089d1"
+    },
+    "active_batch_definition": {
+      "datasource_name": "projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_data_source",
+      "data_connector_name": "fluent",
+      "data_asset_name": "projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "271139d6-d8a8-4b64-b252-9f226a41b297",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-18T11:47:35.815813+08:00"
+    },
+    "validation_time": "2025-06-18T03:47:35.815813+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}
+ Full GX test results saved to gx_output/gx_results_FCT_ORDER_ITEMS.txt
+
+Downloading:   0%|          |
+Downloading:  15%|█▍        |
+Downloading:  29%|██▉       |
+Downloading:  44%|████▍     |
+Downloading:  59%|█████▊    |
+Downloading:  59%|█████▊    |
+Downloading:  73%|███████▎  |
+Downloading:  88%|████████▊ |
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+Batch for olist_brazilian_ecommerce_DS.DS_orders_delivery:
+                       pk_order_sid  ... estimated delivery_time_minutes
+0  809a282bbd5dbcabb6f2f724fca862ec  ...                    23555.683333
+1  bfbd0f9bdef84302105ad712db648a6c  ...                    26623.366667
+2  2e7a8482f6fb09756ca50c10d7bfc047  ...                    64964.683333
+3  e5215415bb6f76fe3b7cb68103a0d1c0  ...                     2374.550000
+
+[4 rows x 24 columns]
+Validation results for olist_brazilian_ecommerce_DS.DS_orders_delivery:
+{
+  "success": false,
+  "results": [
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_to_exist",
+        "kwargs": {
+          "batch_id": "olist_brazilian_ecommerce_DS.DS_orders_delivery_data_source-olist_brazilian_ecommerce_DS.DS_orders_delivery_asset",
+          "column": "payment_sid",
+          "column_index": 0
+        },
+        "meta": {},
+        "id": "0419ea9f-482d-492e-831a-0ec6a8a50802"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_to_exist",
+        "kwargs": {
+          "batch_id": "olist_brazilian_ecommerce_DS.DS_orders_delivery_data_source-olist_brazilian_ecommerce_DS.DS_orders_delivery_asset",
+          "column": "review_sid",
+          "column_index": 1
+        },
+        "meta": {},
+        "id": "997fcff8-b356-4591-8ab5-f8c8064f6b35"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_to_exist",
+        "kwargs": {
+          "batch_id": "olist_brazilian_ecommerce_DS.DS_orders_delivery_data_source-olist_brazilian_ecommerce_DS.DS_orders_delivery_asset",
+          "column": "item_sid",
+          "column_index": 2
+        },
+        "meta": {},
+        "id": "1b0d42f5-6e69-4107-a52a-8756c6628466"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_to_exist",
+        "kwargs": {
+          "batch_id": "olist_brazilian_ecommerce_DS.DS_orders_delivery_data_source-olist_brazilian_ecommerce_DS.DS_orders_delivery_asset",
+          "column": "customer_sid",
+          "column_index": 3
+        },
+        "meta": {},
+        "id": "7da3ae52-fe2b-486c-b3a2-08589e4b786b"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    }
+  ],
+  "suite_name": "schema_fct_orders_expectation",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 4,
+    "successful_expectations": 0,
+    "unsuccessful_expectations": 4,
+    "success_percent": 0.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250618T034904.089085Z",
+      "pandas_data_fingerprint": "1b34ebd25aab117defbd7f0fe117d18c"
+    },
+    "active_batch_definition": {
+      "datasource_name": "olist_brazilian_ecommerce_DS.DS_orders_delivery_data_source",
+      "data_connector_name": "fluent",
+      "data_asset_name": "olist_brazilian_ecommerce_DS.DS_orders_delivery_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "935fb390-9e54-4de9-9a62-2cf89ab5d6fe",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-18T11:49:04.408164+08:00"
+    },
+    "validation_time": "2025-06-18T03:49:04.408164+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}
+ Full GX test results saved to gx_output/gx_results_DS_fct_orders_delivery.txt
+
+Downloading:   0%|          |
+Downloading:   8%|▊         |
+Downloading:  16%|█▌        |
+Downloading:  24%|██▎       |
+Downloading:  32%|███▏      |
+Downloading:  40%|███▉      |
+Downloading:  47%|████▋     |
+Downloading:  55%|█████▌    |
+Downloading:  63%|██████▎   |
+Downloading:  71%|███████   |
+Downloading:  79%|███████▉  |
+Downloading:  87%|████████▋ |
+Downloading:  95%|█████████▍|
+Downloading: 100%|██████████|
+Downloading: 100%|██████████|
+{
+  "success": false,
+  "results": [
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "batch_id": "geolocation_df-geolocation_asset",
+          "column": "geolocation_lat",
+          "min_value": -35.0,
+          "max_value": 5.0
+        },
+        "meta": {},
+        "id": "05d5806d-c208-4dd1-9d74-06721188dfe1"
+      },
+      "result": {
+        "element_count": 738299,
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "partial_unexpected_list": [],
+        "missing_count": 0,
+        "missing_percent": 0.0,
+        "unexpected_percent_total": 0.0,
+        "unexpected_percent_nonmissing": 0.0,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": []
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "batch_id": "geolocation_df-geolocation_asset",
+          "column": "geolocation_lng",
+          "min_value": -75.0,
+          "max_value": -35.0
+        },
+        "meta": {},
+        "id": "ec4a1795-ed92-4ab7-80f6-26371028199a"
+      },
+      "result": {
+        "element_count": 738299,
+        "unexpected_count": 9021,
+        "unexpected_percent": 1.2218626870685183,
+        "partial_unexpected_list": [
+          -34.8986178702464,
+          -34.9004323113108,
+          -34.8991993508425,
+          -34.900806986814,
+          -34.8993922163426,
+          -34.8974481385628,
+          -34.9023807618847,
+          -34.9067026150299,
+          -34.9138294348155,
+          -34.9023532137209,
+          -34.9077948480934,
+          -34.90248,
+          -34.9009879139308,
+          -34.9011355453068,
+          -34.9000304594152,
+          -34.9063250899566,
+          -34.9027399348706,
+          -34.901220298375,
+          -34.9037988954785,
+          -34.90554467849
+        ],
+        "missing_count": 0,
+        "missing_percent": 0.0,
+        "unexpected_percent_total": 1.2218626870685183,
+        "unexpected_percent_nonmissing": 1.2218626870685183,
+        "partial_unexpected_counts": [
+          {
+            "value": -34.9138294348155,
+            "count": 1
+          },
+          {
+            "value": -34.9077948480934,
+            "count": 1
+          },
+          {
+            "value": -34.9067026150299,
+            "count": 1
+          },
+          {
+            "value": -34.9063250899566,
+            "count": 1
+          },
+          {
+            "value": -34.90554467849,
+            "count": 1
+          },
+          {
+            "value": -34.9037988954785,
+            "count": 1
+          },
+          {
+            "value": -34.9027399348706,
+            "count": 1
+          },
+          {
+            "value": -34.90248,
+            "count": 1
+          },
+          {
+            "value": -34.9023807618847,
+            "count": 1
+          },
+          {
+            "value": -34.9023532137209,
+            "count": 1
+          },
+          {
+            "value": -34.901220298375,
+            "count": 1
+          },
+          {
+            "value": -34.9011355453068,
+            "count": 1
+          },
+          {
+            "value": -34.9009879139308,
+            "count": 1
+          },
+          {
+            "value": -34.900806986814,
+            "count": 1
+          },
+          {
+            "value": -34.9004323113108,
+            "count": 1
+          },
+          {
+            "value": -34.9000304594152,
+            "count": 1
+          },
+          {
+            "value": -34.8993922163426,
+            "count": 1
+          },
+          {
+            "value": -34.8991993508425,
+            "count": 1
+          },
+          {
+            "value": -34.8986178702464,
+            "count": 1
+          },
+          {
+            "value": -34.8974481385628,
+            "count": 1
+          }
+        ],
+        "partial_unexpected_index_list": [
+          480,
+          481,
+          482,
+          483,
+          484,
+          485,
+          486,
+          487,
+          488,
+          489,
+          490,
+          491,
+          492,
+          493,
+          494,
+          495,
+          496,
+          497,
+          498,
+          499
+        ]
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    }
+  ],
+  "suite_name": "br_ecom_expectation",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 2,
+    "successful_expectations": 1,
+    "unsuccessful_expectations": 1,
+    "success_percent": 50.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250618T035058.040065Z",
+      "pandas_data_fingerprint": "267fd3c48d6982672c5024bcd6c3c296"
+    },
+    "active_batch_definition": {
+      "datasource_name": "geolocation_df",
+      "data_connector_name": "fluent",
+      "data_asset_name": "geolocation_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "747de273-12e0-4227-a785-85d69d813de5",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-18T11:50:58.354113+08:00"
+    },
+    "validation_time": "2025-06-18T03:50:58.354113+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}
+ Full GX test results saved to gx_output/gx_results_geo.txt
+
+2025-06-18 11:50:58 +0800 - dagster - ERROR - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - run_great_expectations_tests -  STDERR:
+
+Calculating Metrics:   0%|          | 0/2 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/2 [00:00<?, ?it/s]
+Calculating Metrics:  50%|█████     | 1/2 [00:00<00:00, 5102.56it/s]
+Calculating Metrics:  50%|█████     | 1/2 [00:00<00:00, 3421.13it/s]
+Calculating Metrics: 100%|██████████| 2/2 [00:00<00:00, 5533.38it/s]
+Calculating Metrics: 100%|██████████| 2/2 [00:00<00:00, 4739.33it/s]
+Calculating Metrics: 100%|██████████| 2/2 [00:00<00:00, 4306.27it/s]
+Calculating Metrics: 100%|██████████| 2/2 [00:00<00:00, 3751.61it/s]
+
+Calculating Metrics:   0%|          | 0/1 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/1 [00:00<?, ?it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 5817.34it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 4060.31it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 3460.65it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 2809.31it/s]
+
+Calculating Metrics:   0%|          | 0/1 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/1 [00:00<?, ?it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 4500.33it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 3206.65it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 2559.06it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 2182.26it/s]
+
+Calculating Metrics:   0%|          | 0/10 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/10 [00:00<?, ?it/s]
+Calculating Metrics:  20%|██        | 2/10 [00:00<00:00, 6048.02it/s]
+Calculating Metrics:  20%|██        | 2/10 [00:00<00:00, 4670.72it/s]
+Calculating Metrics:  30%|███       | 3/10 [00:00<00:00, 5929.74it/s]
+Calculating Metrics:  30%|███       | 3/10 [00:00<00:00, 5302.53it/s]
+Calculating Metrics:  30%|███       | 3/10 [00:00<00:00, 43.58it/s]
+Calculating Metrics:  30%|███       | 3/10 [00:00<00:00, 23.22it/s]
+Calculating Metrics:  30%|███       | 3/10 [00:00<00:00, 23.22it/s]
+Calculating Metrics:  30%|███       | 3/10 [00:00<00:00, 23.22it/s]
+Calculating Metrics:  40%|████      | 4/10 [00:00<00:00, 23.22it/s]
+Calculating Metrics:  40%|████      | 4/10 [00:00<00:00, 23.22it/s]
+Calculating Metrics:  50%|█████     | 5/10 [00:00<00:00, 23.22it/s]
+Calculating Metrics:  50%|█████     | 5/10 [00:00<00:00, 23.22it/s]
+Calculating Metrics:  50%|█████     | 5/10 [00:00<00:00, 23.22it/s]
+Calculating Metrics:  50%|█████     | 5/10 [00:00<00:00, 23.88it/s]
+
+Calculating Metrics:   0%|          | 0/1 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/1 [00:00<?, ?it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 5809.29it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 4002.20it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 3163.13it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 2673.23it/s]
+
+Calculating Metrics:   0%|          | 0/1 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/1 [00:00<?, ?it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 5035.18it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 3597.17it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 2890.63it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 2343.19it/s]
+
+Calculating Metrics:   0%|          | 0/2 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/2 [00:00<?, ?it/s]
+Calculating Metrics:  50%|█████     | 1/2 [00:00<00:00, 3116.12it/s]
+Calculating Metrics:  50%|█████     | 1/2 [00:00<00:00, 2400.86it/s]
+Calculating Metrics: 100%|██████████| 2/2 [00:00<00:00, 3930.93it/s]
+Calculating Metrics: 100%|██████████| 2/2 [00:00<00:00, 3421.13it/s]
+Calculating Metrics: 100%|██████████| 2/2 [00:00<00:00, 3052.62it/s]
+Calculating Metrics: 100%|██████████| 2/2 [00:00<00:00, 2692.97it/s]
+
+Calculating Metrics:   0%|          | 0/1 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/1 [00:00<?, ?it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 2824.45it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 2154.24it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 1829.98it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 1473.24it/s]
+
+Calculating Metrics:   0%|          | 0/2 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/2 [00:00<?, ?it/s]
+Calculating Metrics:  50%|█████     | 1/2 [00:00<00:00, 2029.17it/s]
+Calculating Metrics:  50%|█████     | 1/2 [00:00<00:00, 1419.87it/s]
+Calculating Metrics: 100%|██████████| 2/2 [00:00<00:00, 2176.60it/s]
+Calculating Metrics: 100%|██████████| 2/2 [00:00<00:00, 1993.49it/s]
+Calculating Metrics: 100%|██████████| 2/2 [00:00<00:00, 1860.41it/s]
+Calculating Metrics: 100%|██████████| 2/2 [00:00<00:00, 1716.51it/s]
+
+Calculating Metrics:   0%|          | 0/17 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/17 [00:00<?, ?it/s]
+Calculating Metrics:  12%|█▏        | 2/17 [00:00<00:00, 7906.32it/s]
+Calculating Metrics:  12%|█▏        | 2/17 [00:00<00:00, 5493.52it/s]
+Calculating Metrics:  18%|█▊        | 3/17 [00:00<00:00, 6772.29it/s]
+Calculating Metrics:  18%|█▊        | 3/17 [00:00<00:00, 5771.98it/s]
+Calculating Metrics:  41%|████      | 7/17 [00:00<00:00, 167.16it/s]
+Calculating Metrics:  41%|████      | 7/17 [00:00<00:00, 166.48it/s]
+Calculating Metrics: 100%|██████████| 17/17 [00:00<00:00, 103.39it/s]
+Calculating Metrics: 100%|██████████| 17/17 [00:00<00:00, 103.39it/s]
+Calculating Metrics: 100%|██████████| 17/17 [00:00<00:00, 103.39it/s]
+Calculating Metrics: 100%|██████████| 17/17 [00:00<00:00, 103.39it/s]
+Calculating Metrics: 100%|██████████| 17/17 [00:00<00:00, 103.17it/s]
+
+2025-06-18 11:50:58 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - 62075 - run_great_expectations_tests - STEP_OUTPUT - Yielded output "result" of type "Any". (Type check passed).
+2025-06-18 11:50:58 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - run_great_expectations_tests - Writing file at: /home/chuhao/dsai_sctp/br_e_commerce/meltano-orchestration/tmpneutuh9g/storage/run_great_expectations_tests using PickledObjectFilesystemIOManager...
+2025-06-18 11:50:58 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - 62075 - run_great_expectations_tests - ASSET_MATERIALIZATION - Materialized value run_great_expectations_tests.
+2025-06-18 11:50:58 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - 62075 - run_great_expectations_tests - HANDLED_OUTPUT - Handled output "result" using IO manager "io_manager"
+2025-06-18 11:50:58 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - 62075 - run_great_expectations_tests - STEP_SUCCESS - Finished execution of step "run_great_expectations_tests" in 8m55s.
+2025-06-18 11:50:59 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - 62035 - ENGINE_EVENT - Multiprocess executor: parent process exiting after 8m57s (pid: 62035)
+2025-06-18 11:50:59 +0800 - dagster - DEBUG - __ASSET_JOB - 0c9624e6-435b-4868-8bfc-a13dcd6ad758 - 62035 - RUN_SUCCESS - Finished execution of run for "__ASSET_JOB".
