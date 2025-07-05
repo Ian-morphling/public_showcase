@@ -1,0 +1,62 @@
+{
+  "success": true,
+  "results": [
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_to_exist",
+        "kwargs": {
+          "batch_id": "olist.dim_customers-olist.dim_customers_asset",
+          "column": "pk_customer_sid",
+          "column_index": 0
+        },
+        "meta": {},
+        "id": "83e777bb-b4e4-40a0-835e-b65c148e43a6"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    }
+  ],
+  "suite_name": "schema_dim_customers_expectation",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 1,
+    "successful_expectations": 1,
+    "unsuccessful_expectations": 0,
+    "success_percent": 100.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250619T002201.842889Z",
+      "pandas_data_fingerprint": "a042d1778257861e20708b00e390f103"
+    },
+    "active_batch_definition": {
+      "datasource_name": "olist.dim_customers",
+      "data_connector_name": "fluent",
+      "data_asset_name": "olist.dim_customers_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "52143e3d-394a-47dd-8ec3-a45942ecebde",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-19T08:22:02.039934+08:00"
+    },
+    "validation_time": "2025-06-19T00:22:02.039934+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}

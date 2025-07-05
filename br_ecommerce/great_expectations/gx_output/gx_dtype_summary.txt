@@ -1,0 +1,324 @@
+Great Expectations Full Validation Results
+============================================================
+
+Table: olist_brazilian_ecommerce_target.FCT_PAYMENTS
+{
+  "success": false,
+  "results": [
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_of_type",
+        "kwargs": {
+          "column": "fk_order_sid",
+          "type_": "string",
+          "batch_id": "olist_brazilian_ecommerce_target.FCT_PAYMENTS_data_source-olist_brazilian_ecommerce_target.FCT_PAYMENTS_asset"
+        },
+        "meta": {},
+        "id": "caa4185a-b044-489c-a322-0c6bf74e2bcb"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "MetricConfigurationID(metric_name='column_values.of_type.condition', metric_domain_kwargs_id='5b6378d6c76a9d045392b5e52bdfb713', metric_value_kwargs_id='type_=string')": {
+          "exception_traceback": "Traceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 534, in _process_direct_and_bundled_metric_computation_configurations\n    metric_computation_configuration.metric_fn(  # type: ignore[misc] # F not callable\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/metric_provider.py\", line 99, in inner_func\n    return metric_fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/map_metric_provider/column_condition_partial.py\", line 113, in inner_func\n    meets_expectation_series = metric_fn(\n                               ^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/column_map_metrics/column_values_of_type.py\", line 45, in _pandas\n    raise ValueError(f\"Unrecognized numpy/python type: {type_}\")  # noqa: TRY003 # FIXME CoP\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Unrecognized numpy/python type: string\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/validator/validation_graph.py\", line 286, in _resolve\n    self._execution_engine.resolve_metrics(\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 280, in resolve_metrics\n    return self._process_direct_and_bundled_metric_computation_configurations(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 539, in _process_direct_and_bundled_metric_computation_configurations\n    raise gx_exceptions.MetricResolutionError(\ngreat_expectations.exceptions.exceptions.MetricResolutionError: Unrecognized numpy/python type: string\n",
+          "exception_message": "Unrecognized numpy/python type: string",
+          "raised_exception": true
+        }
+      }
+    }
+  ],
+  "suite_name": "olist_brazilian_ecommerce_target.FCT_PAYMENTS_suite",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 1,
+    "successful_expectations": 0,
+    "unsuccessful_expectations": 1,
+    "success_percent": 0.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250619T002230.136875Z",
+      "pandas_data_fingerprint": "f3ba4ad23ff07e14000b1877336df974"
+    },
+    "active_batch_definition": {
+      "datasource_name": "olist_brazilian_ecommerce_target.FCT_PAYMENTS_data_source",
+      "data_connector_name": "fluent",
+      "data_asset_name": "olist_brazilian_ecommerce_target.FCT_PAYMENTS_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "a31f4a79-b6e3-4db8-b1ae-9ac6fc3e9c73",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-19T08:22:30.360147+08:00"
+    },
+    "validation_time": "2025-06-19T00:22:30.360147+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}Table: olist_brazilian_ecommerce_target.FCT_REVIEWS
+{
+  "success": false,
+  "results": [
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_of_type",
+        "kwargs": {
+          "column": "fk_order_sid",
+          "type_": "string",
+          "batch_id": "olist_brazilian_ecommerce_target.FCT_REVIEWS_data_source-olist_brazilian_ecommerce_target.FCT_REVIEWS_asset"
+        },
+        "meta": {},
+        "id": "e0d6dda3-e3d5-40e2-9ba6-d70e3df39c20"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "MetricConfigurationID(metric_name='column_values.of_type.condition', metric_domain_kwargs_id='5b6378d6c76a9d045392b5e52bdfb713', metric_value_kwargs_id='type_=string')": {
+          "exception_traceback": "Traceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 534, in _process_direct_and_bundled_metric_computation_configurations\n    metric_computation_configuration.metric_fn(  # type: ignore[misc] # F not callable\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/metric_provider.py\", line 99, in inner_func\n    return metric_fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/map_metric_provider/column_condition_partial.py\", line 113, in inner_func\n    meets_expectation_series = metric_fn(\n                               ^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/column_map_metrics/column_values_of_type.py\", line 45, in _pandas\n    raise ValueError(f\"Unrecognized numpy/python type: {type_}\")  # noqa: TRY003 # FIXME CoP\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Unrecognized numpy/python type: string\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/validator/validation_graph.py\", line 286, in _resolve\n    self._execution_engine.resolve_metrics(\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 280, in resolve_metrics\n    return self._process_direct_and_bundled_metric_computation_configurations(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 539, in _process_direct_and_bundled_metric_computation_configurations\n    raise gx_exceptions.MetricResolutionError(\ngreat_expectations.exceptions.exceptions.MetricResolutionError: Unrecognized numpy/python type: string\n",
+          "exception_message": "Unrecognized numpy/python type: string",
+          "raised_exception": true
+        }
+      }
+    }
+  ],
+  "suite_name": "olist_brazilian_ecommerce_target.FCT_REVIEWS_suite",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 1,
+    "successful_expectations": 0,
+    "unsuccessful_expectations": 1,
+    "success_percent": 0.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250619T002319.371341Z",
+      "pandas_data_fingerprint": "ee935aa04f5515de286d3cbdf7b59ce0"
+    },
+    "active_batch_definition": {
+      "datasource_name": "olist_brazilian_ecommerce_target.FCT_REVIEWS_data_source",
+      "data_connector_name": "fluent",
+      "data_asset_name": "olist_brazilian_ecommerce_target.FCT_REVIEWS_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "926e3799-1c2e-499d-b3e3-73d6f8891da7",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-19T08:23:19.690241+08:00"
+    },
+    "validation_time": "2025-06-19T00:23:19.690241+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}Table: olist_brazilian_ecommerce_target.DIM_GEOLOCATION
+{
+  "success": false,
+  "results": [
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_of_type",
+        "kwargs": {
+          "column": "geolocation_zip_code_prefix",
+          "type_": "string",
+          "batch_id": "olist_brazilian_ecommerce_target.DIM_GEOLOCATION_data_source-olist_brazilian_ecommerce_target.DIM_GEOLOCATION_asset"
+        },
+        "meta": {},
+        "id": "71b78f5b-bcb4-4f13-b991-fe63ca7c570a"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "MetricConfigurationID(metric_name='column_values.of_type.condition', metric_domain_kwargs_id='512b8da6f36e3964b470b5838155831e', metric_value_kwargs_id='type_=string')": {
+          "exception_traceback": "Traceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 534, in _process_direct_and_bundled_metric_computation_configurations\n    metric_computation_configuration.metric_fn(  # type: ignore[misc] # F not callable\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/metric_provider.py\", line 99, in inner_func\n    return metric_fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/map_metric_provider/column_condition_partial.py\", line 113, in inner_func\n    meets_expectation_series = metric_fn(\n                               ^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/column_map_metrics/column_values_of_type.py\", line 45, in _pandas\n    raise ValueError(f\"Unrecognized numpy/python type: {type_}\")  # noqa: TRY003 # FIXME CoP\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Unrecognized numpy/python type: string\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/validator/validation_graph.py\", line 286, in _resolve\n    self._execution_engine.resolve_metrics(\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 280, in resolve_metrics\n    return self._process_direct_and_bundled_metric_computation_configurations(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 539, in _process_direct_and_bundled_metric_computation_configurations\n    raise gx_exceptions.MetricResolutionError(\ngreat_expectations.exceptions.exceptions.MetricResolutionError: Unrecognized numpy/python type: string\n",
+          "exception_message": "Unrecognized numpy/python type: string",
+          "raised_exception": true
+        }
+      }
+    }
+  ],
+  "suite_name": "olist_brazilian_ecommerce_target.DIM_GEOLOCATION_suite",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 1,
+    "successful_expectations": 0,
+    "unsuccessful_expectations": 1,
+    "success_percent": 0.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250619T002512.993006Z",
+      "pandas_data_fingerprint": "01326265c5e59629d75aae2b8a2ed35c"
+    },
+    "active_batch_definition": {
+      "datasource_name": "olist_brazilian_ecommerce_target.DIM_GEOLOCATION_data_source",
+      "data_connector_name": "fluent",
+      "data_asset_name": "olist_brazilian_ecommerce_target.DIM_GEOLOCATION_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "838d4f92-5b58-4abe-86f9-645cdfdfb0b3",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-19T08:25:13.392386+08:00"
+    },
+    "validation_time": "2025-06-19T00:25:13.392386+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}Table: olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS
+{
+  "success": false,
+  "results": [
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_of_type",
+        "kwargs": {
+          "column": "fk_order_sid",
+          "type_": "string",
+          "batch_id": "olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_data_source-olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_asset"
+        },
+        "meta": {},
+        "id": "bf9ec11c-d01b-4d4b-ba5c-f32b63df6e7a"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "MetricConfigurationID(metric_name='column_values.of_type.condition', metric_domain_kwargs_id='5b6378d6c76a9d045392b5e52bdfb713', metric_value_kwargs_id='type_=string')": {
+          "exception_traceback": "Traceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 534, in _process_direct_and_bundled_metric_computation_configurations\n    metric_computation_configuration.metric_fn(  # type: ignore[misc] # F not callable\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/metric_provider.py\", line 99, in inner_func\n    return metric_fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/map_metric_provider/column_condition_partial.py\", line 113, in inner_func\n    meets_expectation_series = metric_fn(\n                               ^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/column_map_metrics/column_values_of_type.py\", line 45, in _pandas\n    raise ValueError(f\"Unrecognized numpy/python type: {type_}\")  # noqa: TRY003 # FIXME CoP\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Unrecognized numpy/python type: string\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/validator/validation_graph.py\", line 286, in _resolve\n    self._execution_engine.resolve_metrics(\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 280, in resolve_metrics\n    return self._process_direct_and_bundled_metric_computation_configurations(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 539, in _process_direct_and_bundled_metric_computation_configurations\n    raise gx_exceptions.MetricResolutionError(\ngreat_expectations.exceptions.exceptions.MetricResolutionError: Unrecognized numpy/python type: string\n",
+          "exception_message": "Unrecognized numpy/python type: string",
+          "raised_exception": true
+        }
+      }
+    }
+  ],
+  "suite_name": "olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_suite",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 1,
+    "successful_expectations": 0,
+    "unsuccessful_expectations": 1,
+    "success_percent": 0.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250619T002608.261097Z",
+      "pandas_data_fingerprint": "7dc15ba813450f7ca2cc0f314c3089d1"
+    },
+    "active_batch_definition": {
+      "datasource_name": "olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_data_source",
+      "data_connector_name": "fluent",
+      "data_asset_name": "olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "43d93d7e-a33a-4e2a-b537-b0c969d75c07",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-19T08:26:08.657026+08:00"
+    },
+    "validation_time": "2025-06-19T00:26:08.657026+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}Table: olist_brazilian_ecommerce_target.DIM_DATE
+{
+  "success": false,
+  "results": [
+    {
+      "success": false,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_of_type",
+        "kwargs": {
+          "column": "pk_date_sid",
+          "type_": "integer",
+          "batch_id": "olist_brazilian_ecommerce_target.DIM_DATE_data_source-olist_brazilian_ecommerce_target.DIM_DATE_asset"
+        },
+        "meta": {},
+        "id": "4ec914ab-522e-4d63-b0ab-2d319f88a65a"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "MetricConfigurationID(metric_name='column_values.of_type.condition', metric_domain_kwargs_id='8a34c2aaf764a7bff22df977fd1f456c', metric_value_kwargs_id='type_=integer')": {
+          "exception_traceback": "Traceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 534, in _process_direct_and_bundled_metric_computation_configurations\n    metric_computation_configuration.metric_fn(  # type: ignore[misc] # F not callable\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/metric_provider.py\", line 99, in inner_func\n    return metric_fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/map_metric_provider/column_condition_partial.py\", line 113, in inner_func\n    meets_expectation_series = metric_fn(\n                               ^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/expectations/metrics/column_map_metrics/column_values_of_type.py\", line 45, in _pandas\n    raise ValueError(f\"Unrecognized numpy/python type: {type_}\")  # noqa: TRY003 # FIXME CoP\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Unrecognized numpy/python type: integer\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/validator/validation_graph.py\", line 286, in _resolve\n    self._execution_engine.resolve_metrics(\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 280, in resolve_metrics\n    return self._process_direct_and_bundled_metric_computation_configurations(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/chuhao/miniconda3/envs/dagster_meltano/lib/python3.11/site-packages/great_expectations/execution_engine/execution_engine.py\", line 539, in _process_direct_and_bundled_metric_computation_configurations\n    raise gx_exceptions.MetricResolutionError(\ngreat_expectations.exceptions.exceptions.MetricResolutionError: Unrecognized numpy/python type: integer\n",
+          "exception_message": "Unrecognized numpy/python type: integer",
+          "raised_exception": true
+        }
+      }
+    }
+  ],
+  "suite_name": "olist_brazilian_ecommerce_target.DIM_DATE_suite",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 1,
+    "successful_expectations": 0,
+    "unsuccessful_expectations": 1,
+    "success_percent": 0.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250619T002611.453188Z",
+      "pandas_data_fingerprint": "756fac0bb634e4542e00af89bfd9f7f8"
+    },
+    "active_batch_definition": {
+      "datasource_name": "olist_brazilian_ecommerce_target.DIM_DATE_data_source",
+      "data_connector_name": "fluent",
+      "data_asset_name": "olist_brazilian_ecommerce_target.DIM_DATE_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "31570cdd-6939-44ea-8796-d6c3a6fb1da1",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-19T08:26:11.487653+08:00"
+    },
+    "validation_time": "2025-06-19T00:26:11.487653+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}

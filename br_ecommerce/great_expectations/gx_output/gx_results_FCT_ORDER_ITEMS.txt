@@ -1,0 +1,122 @@
+{
+  "success": true,
+  "results": [
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_to_exist",
+        "kwargs": {
+          "batch_id": "projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_data_source-projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_asset",
+          "column": "fk_order_sid",
+          "column_index": 0
+        },
+        "meta": {},
+        "id": "04b9ae53-2297-4d7f-9561-08f281455ed6"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_to_exist",
+        "kwargs": {
+          "batch_id": "projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_data_source-projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_asset",
+          "column": "pk_order_id",
+          "column_index": 1
+        },
+        "meta": {},
+        "id": "a053fc88-e01f-4f1d-81ef-c43fc4bba1f8"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_to_exist",
+        "kwargs": {
+          "batch_id": "projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_data_source-projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_asset",
+          "column": "pk_order_item_id",
+          "column_index": 2
+        },
+        "meta": {},
+        "id": "ce45631a-aec4-49cb-869c-3a11cf9c648a"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_to_exist",
+        "kwargs": {
+          "batch_id": "projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_data_source-projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_asset",
+          "column": "fk_shipping_limit_date_sid",
+          "column_index": 3
+        },
+        "meta": {},
+        "id": "325c8a9d-d131-4d8a-8d8c-a53916485e47"
+      },
+      "result": {},
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    }
+  ],
+  "suite_name": "schema_fct_orders_expectation",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 4,
+    "successful_expectations": 4,
+    "unsuccessful_expectations": 0,
+    "success_percent": 100.0
+  },
+  "meta": {
+    "great_expectations_version": "1.5.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250619T002701.719488Z",
+      "pandas_data_fingerprint": "7dc15ba813450f7ca2cc0f314c3089d1"
+    },
+    "active_batch_definition": {
+      "datasource_name": "projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_data_source",
+      "data_connector_name": "fluent",
+      "data_asset_name": "projectm2-aiess.olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS_asset",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "6f801977-44a3-470f-9a03-466511765a07",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-06-19T08:27:01.959168+08:00"
+    },
+    "validation_time": "2025-06-19T00:27:01.959168+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}
