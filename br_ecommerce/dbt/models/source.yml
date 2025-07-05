@@ -1,0 +1,15 @@
+version: 2
+sources:
+  - name: olist_brazilian_ecommerce
+    database: projectm2-aiess 
+    tables:
+      - name: public_customers
+      - name: public_order_items
+      - name: public_geolocation
+      - name: public_order_payments
+      - name: public_order_reviews
+      - name: public_orders
+      - name: public_products
+      - name: public_sellers
+      - name: public_product_category_name_translation
+      

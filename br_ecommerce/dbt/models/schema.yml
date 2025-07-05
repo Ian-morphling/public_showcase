@@ -1,0 +1,68 @@
+
+version: 2
+
+models:
+  - name: DIM_CUSTOMERS
+    description: "Dimension table for customers."
+    columns:
+      - name: pk_customer_sid
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+  - name: FCT_ORDER_ITEMS
+    description: "Dimension table for items."
+    columns:
+      - name: pk_order_id
+        description: "The primary key for this table."
+        tests:
+          - not_null
+      - name: pk_order_item_id
+        description: "Order item identifier."
+        tests:
+          - not_null
+    tests:
+      - dbt_expectations.expect_compound_columns_to_be_unique:
+          column_list: ["pk_order_id", "pk_order_item_id"]
+  - name: FCT_REVIEWS
+    description: "Dimension table for reviews."
+    columns:
+      - name: pk_order_id
+        description: "The primary key for this table."
+        tests:
+          - not_null
+      - name: pk_review_id
+        description: "Order reviews identifier."
+        tests:
+          - not_null
+    tests:
+      - dbt_expectations.expect_compound_columns_to_be_unique:
+          column_list: ["pk_order_id", "pk_review_id"]
+  - name: FCT_PAYMENTS
+    description: "Dimension table for payments."
+    columns:
+      - name: pk_order_id
+        description: "The primary key for this table."
+        tests:
+          - not_null
+      - name: pk_payment_sequential
+        description: "Order payment identifier."
+        tests:
+          - not_null
+    tests:
+      - dbt_expectations.expect_compound_columns_to_be_unique:
+          column_list: ["pk_order_id", "pk_payment_sequential"]
+  - name: DIM_ORDERS
+    description: "Fact table for orders"
+    columns:
+      - name: pk_order_sid
+        description: "The primary key for this table"
+        data_tests:
+          - unique
+          - not_null
+      - name: fk_customer_sid
+        description: "The foreign key to the country dimension table"
+        tests:
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_sid    

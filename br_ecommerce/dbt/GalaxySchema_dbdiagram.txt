@@ -1,0 +1,265 @@
+TABLE DIM_CUSTOMERS{
+pk_customer_sid	STRING [pk]
+customer_unique_id	STRING
+customer_zip_code_prefix	STRING
+customer_city	STRING
+customer_state	STRING
+load_date	STRING
+}
+
+TABLE DIM_DATE{
+pk_date_sid	STRING [pk]
+full_date	DATE
+year	INTEGER
+month	INTEGER
+month_name	STRING
+day_of_month	INTEGER
+day_name	STRING
+is_weekday	INTEGER
+load_date	STRING
+}
+
+TABLE DIM_GEOLOCATION{
+geolocation_zip_code_prefix	STRING
+geolocation_lat	FLOAT
+geolocation_lng	FLOAT
+geolocation_city	STRING
+geolocation_state	STRING
+load_date	STRING
+}
+
+TABLE FCT_ORDER_ITEMS{
+fk_order_sid	STRING
+pk_order_id	STRING [pk]
+pk_order_item_id	STRING [pk]
+fk_shipping_limit_date_sid	STRING
+product_id	STRING
+seller_id	STRING
+shipping_limit_date	TIMESTAMP
+price	FLOAT
+freight_value	FLOAT
+product_category_name	STRING
+product_category_name_english	STRING
+product_name_length	INTEGER
+product_description_length	INTEGER
+product_photos_qty	INTEGER
+product_weight_g	INTEGER
+product_length_cm	INTEGER
+product_height_cm	INTEGER
+product_width_cm	INTEGER
+seller_zip_code_prefix	STRING
+seller_city	STRING
+seller_state	STRING
+load_date	STRING
+}
+
+TABLE FCT_PAYMENTS{
+fk_order_sid	STRING
+pk_order_id	STRING [pk]
+pk_payment_sequential	INTEGER [pk]
+payment_type	STRING
+payment_installments	INTEGER
+payment_value	FLOAT
+load_date	STRING
+}
+
+
+TABLE FCT_REVIEWS{
+fk_order_sid	STRING
+pk_order_id	STRING [pk]
+pk_review_id	STRING [pk]
+fk_review_creation_date_sid	STRING
+review_score	INTEGER
+review_comment_title	STRING
+review_comment_message	STRING
+review_creation_date	TIMESTAMP
+review_answer_timestamp	TIMESTAMP
+load_date	STRING
+}
+
+
+TABLE DIM_ORDERS{
+pk_order_sid	STRING [pk]
+fk_customer_sid	STRING
+fk_order_purchased_date_sid	STRING
+fk_order_approved_at_date_sid	STRING
+fk_order_delivered_carrier_date_sid	STRING
+fk_order_delivered_customer_date_sid	STRING
+fk_order_estimated_delivery_date_sid	STRING
+order_status	STRING
+total_payment	FLOAT
+order_amt	FLOAT
+freight_amt	FLOAT
+total_order_amt_wf_freight	FLOAT
+balance_amt	FLOAT
+payment_status	STRING
+order_purchase_timestamp	TIMESTAMP
+order_approved_at	TIMESTAMP
+order_delivered_carrier_date	TIMESTAMP
+order_delivered_customer_date	TIMESTAMP
+order_estimated_delivery_date	TIMESTAMP
+load_date	STRING
+}
+
+TABLE LKP_STATUS_DESC{
+order_status	STRING [pk]
+payment_status	STRING [pk]TABLE DIM_CUSTOMERS{
+pk_customer_sid	STRING [pk]
+customer_unique_id	STRING
+customer_zip_code_prefix	STRING
+customer_city	STRING
+customer_state	STRING
+load_date	STRING
+}
+
+TABLE DIM_DATE{
+pk_date_sid	STRING [pk]
+full_date	DATE
+year	INTEGER
+month	INTEGER
+month_name	STRING
+day_of_month	INTEGER
+day_name	STRING
+is_weekday	INTEGER
+load_date	STRING
+}
+
+TABLE DIM_GEOLOCATION{
+geolocation_zip_code_prefix	STRING
+geolocation_lat	FLOAT
+geolocation_lng	FLOAT
+geolocation_city	STRING
+geolocation_state	STRING
+load_date	STRING
+}
+
+TABLE FCT_ORDER_ITEMS{
+fk_order_sid	STRING
+pk_order_id	STRING [pk]
+pk_order_item_id	STRING [pk]
+fk_shipping_limit_date_sid	STRING
+product_id	STRING
+seller_id	STRING
+shipping_limit_date	TIMESTAMP
+price	FLOAT
+freight_value	FLOAT
+product_category_name	STRING
+product_category_name_english	STRING
+product_name_length	INTEGER
+product_description_length	INTEGER
+product_photos_qty	INTEGER
+product_weight_g	INTEGER
+product_length_cm	INTEGER
+product_height_cm	INTEGER
+product_width_cm	INTEGER
+seller_zip_code_prefix	STRING
+seller_city	STRING
+seller_state	STRING
+load_date	STRING
+}
+
+TABLE FCT_PAYMENTS{
+fk_order_sid	STRING
+pk_order_id	STRING [pk]
+pk_payment_sequential	INTEGER [pk]
+payment_type	STRING
+payment_installments	INTEGER
+payment_value	FLOAT
+load_date	STRING
+}
+
+
+TABLE FCT_REVIEWS{
+fk_order_sid	STRING
+pk_order_id	STRING [pk]
+pk_review_id	STRING [pk]
+fk_review_creation_date_sid	STRING
+review_score	INTEGER
+review_comment_title	STRING
+review_comment_message	STRING
+review_creation_date	TIMESTAMP
+review_answer_timestamp	TIMESTAMP
+load_date	STRING
+}
+
+
+TABLE DIM_ORDERS{
+pk_order_sid	STRING [pk]
+fk_customer_sid	STRING
+fk_order_purchased_date_sid	STRING
+fk_order_approved_at_date_sid	STRING
+fk_order_delivered_carrier_date_sid	STRING
+fk_order_delivered_customer_date_sid	STRING
+fk_order_estimated_delivery_date_sid	STRING
+order_status	STRING
+payment_status	STRING
+total_payment	FLOAT
+order_amt	FLOAT
+freight_amt	FLOAT
+total_order_amt_wf_freight	FLOAT
+balance_amt	FLOAT
+order_purchase_timestamp	TIMESTAMP
+order_approved_at	TIMESTAMP
+order_delivered_carrier_date	TIMESTAMP
+order_delivered_customer_date	TIMESTAMP
+order_estimated_delivery_date	TIMESTAMP
+load_date	STRING
+}
+
+TABLE LKP_STATUS_DESC{
+order_status	STRING [pk]
+payment_status	STRING [pk]
+record_count	INTEGER
+profit_lost	STRING
+status_description	STRING
+}
+
+
+Ref: "DIM_ORDERS"."pk_order_sid" < "FCT_ORDER_ITEMS"."fk_order_sid"
+
+Ref: "DIM_CUSTOMERS"."pk_customer_sid" < "DIM_ORDERS"."fk_customer_sid"
+
+Ref: "DIM_DATE"."pk_date_sid" < "DIM_ORDERS"."fk_order_purchased_date_sid"
+
+Ref: "DIM_DATE"."pk_date_sid" < "DIM_ORDERS"."fk_order_approved_at_date_sid"
+
+Ref: "DIM_DATE"."pk_date_sid" < "DIM_ORDERS"."fk_order_delivered_carrier_date_sid"
+
+Ref: "DIM_DATE"."pk_date_sid" < "DIM_ORDERS"."fk_order_delivered_customer_date_sid"
+
+Ref: "DIM_DATE"."pk_date_sid" < "DIM_ORDERS"."fk_order_estimated_delivery_date_sid"
+
+Ref: "DIM_ORDERS"."pk_order_sid" < "FCT_PAYMENTS"."fk_order_sid"
+
+Ref: "DIM_ORDERS"."pk_order_sid" < "FCT_REVIEWS"."fk_order_sid"
+
+Ref: "LKP_STATUS_DESC"."order_status" < "DIM_ORDERS"."order_status"
+
+Ref: "LKP_STATUS_DESC"."payment_status" < "DIM_ORDERS"."payment_status"
+record_count	INTEGER
+profit_lost	STRING
+status_description	STRING
+}
+
+
+Ref: "FCT_ORDER_ITEMS"."pk_item_sid" > "DIM_ORDERS"."fk_item_sid"
+
+Ref: "DIM_ORDERS"."fk_payment_sid" < "FCT_PAYMENTS"."pk_payment_sid"
+
+Ref: "DIM_ORDERS"."fk_review_sid" < "FCT_REVIEWS"."pk_review_sid"
+
+Ref: "DIM_ORDERS"."fk_customer_sid" > "DIM_CUSTOMERS"."pk_customer_sid"
+
+Ref: "DIM_DATE"."pk_date_sid" < "DIM_ORDERS"."fk_order_approved_at_date_sid"
+
+Ref: "DIM_DATE"."pk_date_sid" < "DIM_ORDERS"."fk_order_delivered_carrier_date_sid"
+
+Ref: "DIM_DATE"."pk_date_sid" < "DIM_ORDERS"."fk_order_delivered_customer_date_sid"
+
+Ref: "DIM_DATE"."pk_date_sid" < "DIM_ORDERS"."fk_order_estimated_delivery_date_sid"
+
+Ref: "DIM_DATE"."pk_date_sid" < "DIM_ORDERS"."fk_order_purchased_date_sid"
+
+Ref: "LKP_STATUS_DESC"."order_status" < "DIM_ORDERS"."order_status"
+
+Ref: "LKP_STATUS_DESC"."payment_status" < "DIM_ORDERS"."payment_status"
