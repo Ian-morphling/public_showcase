@@ -1,0 +1,32 @@
+version: 1
+default_environment: dev
+project_id: xxx
+environments:
+- name: dev
+- name: staging
+- name: prod
+plugins:
+  extractors:
+  - name: tap-postgres
+    variant: meltanolabs
+    pip_url: meltanolabs-tap-postgres
+    config:
+      host: aws-0-ap-southeast-1.pooler.supabase.com
+      port: 5432
+      database: postgres
+      user: xxx
+      filter_schemas:
+      - public
+  loaders:
+  - name: target-bigquery
+    variant: z3z1ma
+    pip_url: git+https://github.com/z3z1ma/target-bigquery.git
+    config:
+      project: projectm2-aiess
+      dataset: olist_brazilian_ecommerce
+      credentials_path: /home/eve/Module-2-Project/meltano-projectm2/xxx.json
+      method: batch_job
+      denormalized: true
+      batch_size: 104857600
+      flattening_enabled: true
+      flattening_max_depth: 1
