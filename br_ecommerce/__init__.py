@@ -19,7 +19,7 @@ defs = Definitions(
     ],
     resources={
         "meltano": meltano_resource.configured({
-            "project_dir": "/home/chuhao/dsai_sctp/br_e_commerce/meltano_br"
+            "project_dir": ""
         })
     }
 )
