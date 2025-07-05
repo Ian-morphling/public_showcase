@@ -1,0 +1,11 @@
+version: 2
+
+seeds:
+  - name: lkp_status_desc
+    config:
+      column_types:
+        order_status: string
+        payment_status: string
+        record_count: string
+        profit_lost: string
+        status_description: string
