@@ -1,0 +1,363 @@
+(dwh) swlai@orca:~/NTU_DSAI/olist_brazillian_ecommerce$ dbt debug
+dbt clean
+dbt deps
+dbt seed
+dbt run
+dbt test
+dbt docs generate
+dbt docs serve
+08:13:49  Running with dbt=1.9.2
+08:13:49  dbt version: 1.9.2
+08:13:49  python version: 3.10.17
+08:13:49  python path: /home/swlai/miniconda3/envs/dwh/bin/python3.10
+08:13:49  os info: Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39
+08:13:51  Using profiles dir at /home/swlai/.dbt
+08:13:51  Using profiles.yml file at /home/swlai/.dbt/profiles.yml
+08:13:51  Using dbt_project.yml file at /home/swlai/NTU_DSAI/olist_brazillian_ecommerce/dbt_project.yml
+08:13:51  adapter type: bigquery
+08:13:51  adapter version: 1.9.1
+08:13:51  Configuration:
+08:13:51    profiles.yml file [OK found and valid]
+08:13:51    dbt_project.yml file [OK found and valid]
+08:13:51  Required dependencies:
+08:13:51   - git [OK found]
+
+08:13:51  Connection:
+08:13:51    method: oauth
+08:13:51    database: projectm2-aiess
+08:13:51    execution_project: projectm2-aiess
+08:13:51    schema: olist_brazilian_ecommerce_target
+08:13:51    location: US
+08:13:51    priority: interactive
+08:13:51    maximum_bytes_billed: None
+08:13:51    impersonate_service_account: None
+08:13:51    job_retry_deadline_seconds: None
+08:13:51    job_retries: 1
+08:13:51    job_creation_timeout_seconds: None
+08:13:51    job_execution_timeout_seconds: 300
+08:13:51    timeout_seconds: 300
+08:13:51    client_id: None
+08:13:51    token_uri: None
+08:13:51    dataproc_region: None
+08:13:51    dataproc_cluster_name: None
+08:13:51    gcs_bucket: None
+08:13:51    dataproc_batch: None
+08:13:51  Registered adapter: bigquery=1.9.1
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:13:55    Connection test: [OK connection ok]
+
+08:13:55  All checks passed!
+08:13:58  Running with dbt=1.9.2
+08:13:58  Checking /home/swlai/NTU_DSAI/olist_brazillian_ecommerce/target/*
+08:13:58  Cleaned /home/swlai/NTU_DSAI/olist_brazillian_ecommerce/target/*
+08:13:58  Checking /home/swlai/NTU_DSAI/olist_brazillian_ecommerce/dbt_packages/*
+08:13:58  Cleaned /home/swlai/NTU_DSAI/olist_brazillian_ecommerce/dbt_packages/*
+08:13:58  Finished cleaning all paths.
+08:14:01  Running with dbt=1.9.2
+08:14:01  Installing dbt-labs/dbt_utils
+08:14:01  Installed from version 1.3.0
+08:14:01  Up to date!
+08:14:01  Installing metaplane/dbt_expectations
+08:14:03  Installed from version 0.10.8
+08:14:03  Up to date!
+08:14:03  Installing godatadriven/dbt_date
+08:14:04  Installed from version 0.14.1
+08:14:04  Up to date!
+08:14:06  Running with dbt=1.9.2
+08:14:05  Registered adapter: bigquery=1.9.1
+08:14:05  Unable to do partial parsing because saved manifest not found. Starting full parse.
+08:14:07  [WARNING]: Did not find matching node for patch with name 'lkp_status_desc' in the 'seeds' section of file 'seeds/properties.yml'
+08:14:07  [WARNING]: Test 'test.olist_brazilian_ecommerce.relationships_DIM_ORDERS_fk_customer_sid__customer_sid__ref_dim_customers_.2c7039b233' (models/schema.yml) depends on a node named 'dim_customers' in package '' which was not found
+08:14:07  [WARNING]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.olist_brazilian_ecommerce.example
+08:14:07  Found 7 models, 1 seed, 13 data tests, 9 sources, 883 macros
+08:14:07
+08:14:07  Concurrency: 1 threads (target='dev')
+08:14:07
+08:14:09  1 of 1 START seed file olist_brazilian_ecommerce_target.LKP_STATUS_DESC ........ [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:14:15  1 of 1 OK loaded seed file olist_brazilian_ecommerce_target.LKP_STATUS_DESC .... [INSERT 20 in 5.84s]
+08:14:15
+08:14:15  Finished running 1 seed in 0 hours 0 minutes and 7.69 seconds (7.69s).
+08:14:15
+08:14:15  Completed successfully
+08:14:15
+08:14:15  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+08:14:19  Running with dbt=1.9.2
+08:14:20  Registered adapter: bigquery=1.9.1
+08:14:20  [WARNING]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.olist_brazilian_ecommerce.example
+08:14:20  Found 7 models, 1 seed, 13 data tests, 9 sources, 883 macros
+08:14:20
+08:14:20  Concurrency: 1 threads (target='dev')
+08:14:20
+08:14:22  1 of 7 START sql table model olist_brazilian_ecommerce_target.DIM_CUSTOMERS .... [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:14:27  1 of 7 OK created sql table model olist_brazilian_ecommerce_target.DIM_CUSTOMERS  [CREATE TABLE (99.4k rows, 8.8 MiB processed) in 4.49s]
+08:14:27  2 of 7 START sql table model olist_brazilian_ecommerce_target.DIM_DATE ......... [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:14:30  2 of 7 OK created sql table model olist_brazilian_ecommerce_target.DIM_DATE .... [CREATE TABLE (13.2k rows, 0 processed) in 3.35s]
+08:14:30  3 of 7 START sql table model olist_brazilian_ecommerce_target.DIM_GEOLOCATION .. [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:14:36  3 of 7 OK created sql table model olist_brazilian_ecommerce_target.DIM_GEOLOCATION  [CREATE TABLE (738.3k rows, 38.7 MiB processed) in 6.16s]
+08:14:36  4 of 7 START sql table model olist_brazilian_ecommerce_target.DIM_ORDERS ....... [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:14:42  4 of 7 OK created sql table model olist_brazilian_ecommerce_target.DIM_ORDERS .. [CREATE TABLE (99.4k rows, 24.4 MiB processed) in 6.16s]
+08:14:42  5 of 7 START sql table model olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS .. [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:14:47  5 of 7 OK created sql table model olist_brazilian_ecommerce_target.FCT_ORDER_ITEMS  [CREATE TABLE (112.7k rows, 17.9 MiB processed) in 4.66s]
+08:14:47  6 of 7 START sql table model olist_brazilian_ecommerce_target.FCT_PAYMENTS ..... [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:14:51  6 of 7 OK created sql table model olist_brazilian_ecommerce_target.FCT_PAYMENTS  [CREATE TABLE (103.9k rows, 6.9 MiB processed) in 3.79s]
+08:14:51  7 of 7 START sql table model olist_brazilian_ecommerce_target.FCT_REVIEWS ...... [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:14:55  7 of 7 OK created sql table model olist_brazilian_ecommerce_target.FCT_REVIEWS . [CREATE TABLE (99.2k rows, 12.0 MiB processed) in 4.23s]
+08:14:55
+08:14:55  Finished running 7 table models in 0 hours 0 minutes and 35.05 seconds (35.05s).
+08:14:55
+08:14:55  Completed successfully
+08:14:55
+08:14:55  Done. PASS=7 WARN=0 ERROR=0 SKIP=0 TOTAL=7
+08:14:58  Running with dbt=1.9.2
+08:14:59  Registered adapter: bigquery=1.9.1
+08:14:59  [WARNING]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.olist_brazilian_ecommerce.example
+08:14:59  Found 7 models, 1 seed, 13 data tests, 9 sources, 883 macros
+08:14:59
+08:14:59  Concurrency: 1 threads (target='dev')
+08:14:59
+08:15:01  1 of 13 START test dbt_expectations_expect_compound_columns_to_be_unique_FCT_ORDER_ITEMS_pk_order_id__pk_order_item_id  [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:15:03  1 of 13 PASS dbt_expectations_expect_compound_columns_to_be_unique_FCT_ORDER_ITEMS_pk_order_id__pk_order_item_id  [PASS in 2.12s]
+08:15:03  2 of 13 START test dbt_expectations_expect_compound_columns_to_be_unique_FCT_PAYMENTS_pk_order_id__pk_payment_sequential  [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:15:05  2 of 13 PASS dbt_expectations_expect_compound_columns_to_be_unique_FCT_PAYMENTS_pk_order_id__pk_payment_sequential  [PASS in 2.40s]
+08:15:05  3 of 13 START test dbt_expectations_expect_compound_columns_to_be_unique_FCT_REVIEWS_pk_order_id__pk_review_id  [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:15:05  3 of 13 PASS dbt_expectations_expect_compound_columns_to_be_unique_FCT_REVIEWS_pk_order_id__pk_review_id  [PASS in 0.20s]
+08:15:05  4 of 13 START test not_null_DIM_CUSTOMERS_pk_customer_sid ...................... [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:15:08  4 of 13 PASS not_null_DIM_CUSTOMERS_pk_customer_sid ............................ [PASS in 2.15s]
+08:15:08  5 of 13 START test not_null_DIM_ORDERS_pk_order_sid ............................ [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:15:10  5 of 13 PASS not_null_DIM_ORDERS_pk_order_sid .................................. [PASS in 2.14s]
+08:15:10  6 of 13 START test not_null_FCT_ORDER_ITEMS_pk_order_id ........................ [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:15:12  6 of 13 PASS not_null_FCT_ORDER_ITEMS_pk_order_id .............................. [PASS in 1.97s]
+08:15:12  7 of 13 START test not_null_FCT_ORDER_ITEMS_pk_order_item_id ................... [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:15:14  7 of 13 PASS not_null_FCT_ORDER_ITEMS_pk_order_item_id ......................... [PASS in 1.98s]
+08:15:14  8 of 13 START test not_null_FCT_PAYMENTS_pk_order_id ........................... [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:15:16  8 of 13 PASS not_null_FCT_PAYMENTS_pk_order_id ................................. [PASS in 2.03s]
+08:15:16  9 of 13 START test not_null_FCT_PAYMENTS_pk_payment_sequential ................. [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:15:18  9 of 13 PASS not_null_FCT_PAYMENTS_pk_payment_sequential ....................... [PASS in 1.98s]
+08:15:18  10 of 13 START test not_null_FCT_REVIEWS_pk_order_id ........................... [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:15:20  10 of 13 PASS not_null_FCT_REVIEWS_pk_order_id ................................. [PASS in 2.10s]
+08:15:20  11 of 13 START test not_null_FCT_REVIEWS_pk_review_id .......................... [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:15:22  11 of 13 PASS not_null_FCT_REVIEWS_pk_review_id ................................ [PASS in 1.97s]
+08:15:22  12 of 13 START test unique_DIM_CUSTOMERS_pk_customer_sid ....................... [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:15:24  12 of 13 PASS unique_DIM_CUSTOMERS_pk_customer_sid ............................. [PASS in 2.21s]
+08:15:24  13 of 13 START test unique_DIM_ORDERS_pk_order_sid ............................. [RUN]
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+08:15:26  13 of 13 PASS unique_DIM_ORDERS_pk_order_sid ................................... [PASS in 2.41s]
+08:15:26
+08:15:26  Finished running 13 data tests in 0 hours 0 minutes and 26.96 seconds (26.96s).
+08:15:26
+08:15:26  Completed successfully
+08:15:26
+08:15:26  Done. PASS=13 WARN=0 ERROR=0 SKIP=0 TOTAL=13
+08:15:29  Running with dbt=1.9.2
+08:15:30  Registered adapter: bigquery=1.9.1
+08:15:30  [WARNING]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.olist_brazilian_ecommerce.example
+08:15:30  Found 7 models, 1 seed, 13 data tests, 9 sources, 883 macros
+08:15:30
+08:15:30  Concurrency: 1 threads (target='dev')
+08:15:30
+08:15:32  Building catalog
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/agate/type_tester.py:92: RuntimeWarning: "table_owner" does not match the name of any column in this table.
+  warnings.warn('"%s" does not match the name of any column in this table.' % name, RuntimeWarning)
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/dbt/adapters/bigquery/connections.py:570: FutureWarning: job_retry must be explicitly set to None if job_id is set.
+BigQuery cannot retry a failed job by using the exact
+same ID. Setting job_id without explicitly disabling
+job_retry will raise an error in the future. To avoid this
+warning, either use job_id_prefix instead (preferred) or
+set job_retry=None.
+  query_job = client.query(
+/home/swlai/miniconda3/envs/dwh/lib/python3.10/site-packages/agate/type_tester.py:92: RuntimeWarning: "table_owner" does not match the name of any column in this table.
+  warnings.warn('"%s" does not match the name of any column in this table.' % name, RuntimeWarning)
+08:15:36  Catalog written to /home/swlai/NTU_DSAI/olist_brazillian_ecommerce/target/catalog.json
+08:15:39  Running with dbt=1.9.2
+Serving docs at 8080
+To access from your browser, navigate to: http://localhost:8080
+
+
+
+Press Ctrl+C to exit.
+/usr/bin/xdg-open: 882: x-www-browser: not found
+/usr/bin/xdg-open: 882: firefox: not found
+/usr/bin/xdg-open: 882: iceweasel: not found
+/usr/bin/xdg-open: 882: seamonkey: not found
+/usr/bin/xdg-open: 882: mozilla: not found
+/usr/bin/xdg-open: 882: epiphany: not found
+/usr/bin/xdg-open: 882: konqueror: not found
+/usr/bin/xdg-open: 882: chromium: not found
+/usr/bin/xdg-open: 882: chromium-browser: not found
+/usr/bin/xdg-open: 882: google-chrome: not found
+/usr/bin/xdg-open: 882: www-browser: not found
+/usr/bin/xdg-open: 882: links2: not found
+/usr/bin/xdg-open: 882: elinks: not found
+/usr/bin/xdg-open: 882: links: not found
+/usr/bin/xdg-open: 882: lynx: not found
+/usr/bin/xdg-open: 882: w3m: not found
+xdg-open: no method available for opening 'http://localhost:8080'
+127.0.0.1 - - [17/Jun/2025 16:15:56] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [17/Jun/2025 16:15:56] "GET /manifest.json?cb=1750148156158 HTTP/1.1" 200 -
+127.0.0.1 - - [17/Jun/2025 16:15:56] "GET /catalog.json?cb=1750148156158 HTTP/1.1" 200 -
+127.0.0.1 - - [17/Jun/2025 16:15:56] code 404, message File not found
+127.0.0.1 - - [17/Jun/2025 16:15:56] "GET /$%7Brequire('./assets/favicons/favicon.ico')%7D HTTP/1.1" 404 -
+127.0.0.1 - - [17/Jun/2025 16:15:56] code 404, message File not found
+127.0.0.1 - - [17/Jun/2025 16:15:56] "GET /%7B%7B%20getIcon(item.type,%20'on')%20%7D%7D HTTP/1.1" 404 -
+127.0.0.1 - - [17/Jun/2025 16:15:56] code 404, message File not found
+127.0.0.1 - - [17/Jun/2025 16:15:56] "GET /%7B%7B%20getIcon(item.type,%20'off')%20%7D%7D HTTP/1.1" 404 -
