@@ -1,0 +1,21 @@
+order_status,payment_status,record_count,profit_lost,status_description
+Invoiced,Completed,273,Profit,"Invoice processed, payment received."
+Processing,Completed,269,Profit,Order finalized with successful payment.
+Unavailable,Completed,6,Profit,Payment received despite item unavailability.
+Canceled,Completed,411,Profit,Payment was completed despite order cancellation.
+Shipped,Completed,1004,Profit,Shipment delivered with payment finalized.
+Delivered,Completed,86973,Profit,Successfully fulfilled with payment received.
+Approved,Completed,1,Profit,Successfully processed and finalized.
+Processing,In Progress,32,In Progress,Awaiting completion of payment processing.
+Approved,In Progress,1,In Progress,Awaiting payment completion.
+Shipped,In Progress,102,In Progress,"Goods dispatched, awaiting payment."
+Canceled,In Progress,50,In Progress,Payment processing despite order cancellation.
+Delivered,In Progress,9504,In Progress,Payment processing post-delivery.
+Invoiced,In Progress,39,In Progress,Payment still being finalized.
+Invoiced,Order Items Not Found,2,Unknown,Invoiced but items missing from order.
+Canceled,Order Items Not Found,161,Unknown,"Items missing, causing uncertainty in status."
+Unavailable,Order Items Not Found,603,Unknown,Missing items prevent proper status evaluation.
+Created,Order Items Not Found,5,Unknown,Newly created order but items not located.
+Shipped,Order Items Not Found,1,Unknown,Shipped but item data missing.
+Delivered,Payments Not Found,1,Lost,Payment missing despite delivery completion.
+Canceled,Canceled,3,Lost,Transaction voided; no revenue gained.
