@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.env
+*.pkl
+*.log
+m5.ipynb
+data/*.csv
+data/*.zip
+*.ipynb_checkpoints
+prophet_results/
