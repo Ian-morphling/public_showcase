@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales Demand Forecast Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f5f7fa;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 40px;
+            color: #333;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        a.button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: #007bff;
+            border-radius: 6px;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        a.button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 6px 12px rgba(0, 86, 179, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <h1>Walmart Sales Forecast Dashboard</h1>
+    <div class="button-container">
+        <a href="/forecast" class="button">Forecast Plot</a>
+        <a href="/holiday-by-date" class="button">Holiday Effects by Date</a>
+        <a href="/holiday-by-name" class="button">Holiday Effects by Holiday</a>
+    </div>
+</body>
+</html>
