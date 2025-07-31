@@ -10,12 +10,12 @@ Each folder in this repository contains a self-contained project.
 
 ###  [Credit Card Fraud Detection](./Credit_fraud)
 - **Objective: Detect fraudulent transactions in a highly imbalanced dataset.
-- **Highlights: Achieved **F1 score of 0.86** using Random Forest with PCA, threshold tuning, and extensive model evaluation.
+- **Highlights: Achieved F1 score of 0.86 using Random Forest with PCA, threshold tuning, and extensive model evaluation.
 
 
 ###  [M5 Forecasting – Retail Demand](./walmart)
 - **Objective: Forecast daily Walmart sales using time series models.
-- **Highlights: Built Prophet-based models with performance metrics R²: 0.85, MAPE: 4%**.
+- **Highlights: Built Prophet-based models with performance metrics R²: 0.85, MAPE: 4%.
 - **Dashboard: Interactive Flask app visualizing:
   - Forecast vs actuals
   - Holiday impact by date
