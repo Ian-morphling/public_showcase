@@ -25,9 +25,9 @@ Each folder in this repository contains a self-contained project.
 ###  [Geospatial Data Pipeline – Brazil E-Commerce](./br_ecommerce)
 - **Objective:** Build an end-to-end data pipeline to uncover trends.
 - **Highlights:** Developed an automated **ELT pipeline** using **Dagster**. Transformed and visualized data into **geospatial heatmaps** 
-- **Tech Stack:** Dagster, GeoPandas, pandas.
+- **Tech Stack:** SQL, python, Dagster, GeoPandas, pandas.
 
 ###  [EDA & Visualization – Mexico COVID-19](./mexico-covid)
 - **Objective:** Perform exploratory analysis on COVID-19 cases and resource usage in Mexico.
 - **Highlights:** Created insightful queries using visualizations to reveal patterns
-- **Tech Stack:** SQL, Python, seaborn, matplotlib.
+- **Tech Stack:** Python, seaborn, matplotlib.
