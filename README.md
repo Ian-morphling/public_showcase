@@ -16,7 +16,7 @@ Each folder in this repository contains a self-contained project.
 ###  [M5 Forecasting – Retail Demand](./walmart)
 - **Objective:** Forecast daily Walmart sales using time series models.
 - **Highlights:** Built Prophet-based models with performance metrics **R²: 0.85**, **MAPE: 4%**.
-- **Dashboard:** Deployed interactive Flask dashboard on [Render.com] to visualize:
+- **Dashboard:** Deployed interactive Flask dashboard on [[Render.com](https://public-showcase.onrender.com)] to visualize:
   - Forecast vs actuals
   - Holiday impact by date
   - Holiday impact by event type
