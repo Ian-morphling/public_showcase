@@ -31,3 +31,9 @@ Each folder in this repository contains a self-contained project.
 - **Objective:** Perform exploratory analysis on COVID-19 cases and resource usage in Mexico.
 - **Highlights:** Created insightful queries using visualizations to reveal patterns
 - **Tech Stack:** Python, seaborn, matplotlib.
+
+### [LLM-powered Multi-Agent Recommender](./ecommerce_llm_recommender) (Ongoing)
+- **Objective:** Develop an explainable recommender system tailored for e-commerce, leveraging large language models, FAISS vector search, and multi-agent orchestration to provide personalized and transparent product suggestions.
+
+    Status: Early development stage 
+    
