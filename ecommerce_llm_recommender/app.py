@@ -1,21 +1,55 @@
+import os
+import requests
 import streamlit as st
 from agents.retriever_agent import RetrieverAgent
 from agents.explainer_agent import ExplainerAgent
-from dotenv import load_dotenv
-import os
 
-# Load environment variables
-load_dotenv()
+# Try to load .env locally, but ignore errors if not present
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
-# Initialize agents once and cache them to avoid reload on every interaction
+CACHE_DIR = "cache"
+os.makedirs(CACHE_DIR, exist_ok=True)
+
+def get_secret(key, default=None):
+    """
+    Return secret/config value from Streamlit secrets or environment variables.
+    Priority: Streamlit secrets > os.environ > default
+    """
+    if key in st.secrets:
+        return st.secrets[key]
+    return os.getenv(key, default)
+
+def download_if_not_exists(url: str, local_path: str):
+    if not os.path.exists(local_path):
+        st.info(f"Downloading {os.path.basename(local_path)}...")
+        r = requests.get(url, stream=True)
+        r.raise_for_status()
+        with open(local_path, "wb") as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                f.write(chunk)
+
 @st.cache_resource(show_spinner=False)
 def init_agents():
-    INDEX_PATH = os.getenv("INDEX_PATH", "index/product.index")
-    MAPPING_PATH = os.getenv("MAPPING_PATH", "index/id_to_filename.pkl")
-    DOCS_DIR = os.getenv("DOCS_DIR", "outputs")
-    GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+    INDEX_URL = get_secret("INDEX_URL")
+    MAPPING_URL = get_secret("MAPPING_URL")
+    GROQ_API_KEY = get_secret("GROQ_API_KEY")
+    DOCS_DIR = get_secret("DOCS_DIR", "outputs")
 
-    retriever = RetrieverAgent(INDEX_PATH, MAPPING_PATH, DOCS_DIR)
+    if not INDEX_URL or not MAPPING_URL or not GROQ_API_KEY:
+        st.error("Missing essential configuration! Please check your environment variables or Streamlit secrets.")
+        st.stop()
+
+    local_index_path = os.path.join(CACHE_DIR, "product.index")
+    local_mapping_path = os.path.join(CACHE_DIR, "id_to_filename.pkl")
+
+    download_if_not_exists(INDEX_URL, local_index_path)
+    download_if_not_exists(MAPPING_URL, local_mapping_path)
+
+    retriever = RetrieverAgent(local_index_path, local_mapping_path, DOCS_DIR)
     retriever.initialize()
 
     explainer = ExplainerAgent(GROQ_API_KEY)
@@ -27,7 +61,7 @@ st.title("E-Commerce Multi-Agent Recommender")
 
 query = st.text_input("Enter your product question or query:", "")
 
-top_k = st.slider("Number of reviews to retrieve:", min_value=1, max_value=10, value=5)
+top_k = st.slider("Number of reviews to retrieve:", 1, 10, 5)
 
 if st.button("Get Recommendations") and query:
     with st.spinner("Retrieving reviews..."):
