@@ -34,6 +34,7 @@ Each folder in this repository contains a self-contained project.
 
 ### [LLM-powered Multi-Agent Recommender](./ecommerce_llm_recommender) (Ongoing)
 - **Objective:** Develop an explainable recommender system tailored for e-commerce, leveraging large language models, FAISS vector search, and multi-agent orchestration to provide personalized and transparent product suggestions.
-
+- **Objective:** Built scalable embedding + FAISS index pipeline, Developed modular agents with explainable RAG prompt engineering,  CLI script to demonstrate end-to-end retrieval
+- **Tech STack:** Python, FAISS, Sentence-Transformers (MiniLM), Pandas / PyArrow, LangChain / LangGraph (planned), Requests, Streamlit (planned), Groq LLM API, Parquet 
     Status: Early development stage 
     
