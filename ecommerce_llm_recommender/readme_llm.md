@@ -1,7 +1,7 @@
-#Multi-Agent LLM Recommender with RAG & Explainability for E-Commerce
 
-A showcase project demonstrating a Retrieval-Augmented Generation (RAG) pipeline combined with multi-agent orchestration for personalized, explainable product recommendations based on Amazon Electronics 5-core reviews. 
+Multi-Agent LLM Recommender with RAG & Explainability for E-Commerce
 
+A showcase project demonstrating a Retrieval-Augmented Generation (RAG) pipeline combined with multi-agent orchestration for personalized, explainable product recommendations based on Amazon Electronics 5-core reviews.
 Project Overview
 
 This project builds an end-to-end recommender system using:
@@ -14,10 +14,12 @@ This project builds an end-to-end recommender system using:
 
     Explainable recommendations leveraging review metadata like verified purchase status, helpful votes, and sentiment
 
-    Streamlit UI (planned) for interactive demo, currently available for in person demnstration
+    Streamlit UI (planned, currently available for in-person demonstrations)
 
-The core idea is to use a user query + profile to retrieve relevant reviews, then generate concise, contextual answers with explicit rationale referencing trustworthy reviews.
+The core idea:
+Use a user query + profile to retrieve relevant reviews, then generate concise, contextual answers with explicit rationale referencing trustworthy reviews.
 
+###Code Modules
 Data & Embedding Pipeline
 
     build_index.py
@@ -27,7 +29,7 @@ Data & Embedding Pipeline
     Generates normalized embeddings from cleaned review text in parquet files, chunked for scalability.
 
     recommender/data/loader.py
-    Loads raw Amazon Electronics JSON reviews, validates and writes cleaned batches to parquet files.
+    Loads raw Amazon Electronics JSON reviews, validates, and writes cleaned batches to parquet files.
 
     recommender/data/preprocess.py
     Enriches cleaned reviews with metadata, vote bins, sentiment; creates user profile JSON for personalization.
@@ -54,7 +56,7 @@ LLM Integration & Agents
     agents/retriever_agent.py
     Loads FAISS index & metadata, embeds queries, executes similarity search, and returns detailed enriched review results.
 
-Orchestration & Running
+Orchestration
 
     scripts/run_rag.py
-    Command line interface to run the full retrieval + explanation pipeline end-to-end, displaying retrieved reviews and LLM-generated answers.
+    run the full retrieval + explanation pipeline end-to-end, displaying retrieved reviews and LLM-generated answers.
