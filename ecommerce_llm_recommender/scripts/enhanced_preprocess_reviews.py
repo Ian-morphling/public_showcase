@@ -50,7 +50,6 @@ for part_file in cleaned_parts:
             votes = None
             has_votes = False
 
-        # Optional vote binning (only if vote exists and is valid)
         if votes is not None:
             if votes >= 20:
                 vote_bin = "high"
