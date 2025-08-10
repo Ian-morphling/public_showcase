@@ -13,8 +13,9 @@ load_dotenv()
 # Determine if running in Streamlit Cloud environment
 IS_STREAMLIT_CLOUD = os.getenv("IS_STREAMLIT_CLOUD", "false").lower() == "true"
 
-# Use environment variables from secrets or .env accordingly
+# Set paths depending on environment
 if not IS_STREAMLIT_CLOUD:
+    # Local (full) index and mapping paths
     INDEX_PATH = os.getenv(
         "INDEX_URL_LOCAL",
         "/home/ianli/homl-self/public_showcase/ecommerce_llm_recommender/index/product.index",
@@ -24,15 +25,24 @@ if not IS_STREAMLIT_CLOUD:
         "/home/ianli/homl-self/public_showcase/ecommerce_llm_recommender/index/id_to_filename.pkl",
     )
 else:
-    INDEX_PATH = os.getenv("INDEX_URL")
-    MAPPING_PATH = os.getenv("MAPPING_URL")
+    # Streamlit Cloud (small) index and UPDATED mapping paths
+    INDEX_PATH = os.getenv("INDEX_URL")  # small index URL or path
+    # IMPORTANT: Use updated mapping for parquet chunks on cloud
+    MAPPING_PATH = os.getenv(
+        "MAPPING_URL",
+        "https://your-cdn-or-hosting/id_to_filename_small_updated.pkl"  # fallback URL for updated mapping
+    )
 
-DOCS_DIR = os.getenv("DOCS_DIR", "outputs")  # Make sure this points to your small parquet folder in cloud
+# DOCS_DIR: point to small parquet chunk folder on cloud, or local full parquet folder
+DOCS_DIR = os.getenv("DOCS_DIR", "outputs")  
+
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 st.title("🛒 E-Commerce Multi-Agent Recommender")
 
+# Debug info for environment config
 st.text("Config Debug Info:")
+st.text(f"Running on Streamlit Cloud: {IS_STREAMLIT_CLOUD}")
 st.text(f"INDEX_URL source: {'streamlit secrets' if IS_STREAMLIT_CLOUD else '.env / OS env'}")
 st.text(f"INDEX_URL: {INDEX_PATH}")
 st.text(f"MAPPING_URL: {MAPPING_PATH}")
