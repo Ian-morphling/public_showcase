@@ -12,7 +12,7 @@ This project builds an end-to-end recommender system using:
 - MiniLM embeddings stored in a FAISS IVF index for efficient similarity search
 - Multi-agent architecture (**RetrieverAgent**, **ExplainerAgent**, **UserProfilerAgent**, **RecommenderAgent**) orchestrated via LangChain/LangGraph (planned)
 - Explainable recommendations leveraging review metadata like verified purchase status, helpful votes, and sentiment
-- Streamlit UI (planned, currently available for in-person demonstrations)
+- Streamlit UI available for local and in-person demonstrations; public deployment planned.
 
 The core idea:  
 Use a user query + profile to retrieve relevant reviews, then generate concise, contextual answers with explicit rationale referencing trustworthy reviews.
