@@ -4,6 +4,8 @@ from agents.explainer_agent import ExplainerAgent
 from dotenv import load_dotenv
 import os
 import pickle
+import tempfile
+import requests
 
 # Load local .env variables
 load_dotenv()
@@ -13,11 +15,9 @@ IS_STREAMLIT_CLOUD = os.getenv("IS_STREAMLIT_CLOUD", "false").lower() == "true"
 
 # If local, override URLs with local filesystem paths
 if not IS_STREAMLIT_CLOUD:
-    # Override to local paths explicitly (hardcoded or from .env)
     INDEX_PATH = os.getenv("INDEX_URL_LOCAL", "/home/ianli/homl-self/public_showcase/ecommerce_llm_recommender/index/product.index")
     MAPPING_PATH = os.getenv("MAPPING_URL_LOCAL", "/home/ianli/homl-self/public_showcase/ecommerce_llm_recommender/index/id_to_filename.pkl")
 else:
-    # On cloud, use secrets/environment URLs
     INDEX_PATH = os.getenv("INDEX_URL")
     MAPPING_PATH = os.getenv("MAPPING_URL")
 
@@ -26,7 +26,6 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 st.title("🛒 E-Commerce Multi-Agent Recommender")
 
-# Debug info (no API key)
 st.text("Config Debug Info:")
 st.text(f"INDEX_URL source: {'streamlit secrets' if IS_STREAMLIT_CLOUD else '.env / OS env'}")
 st.text(f"INDEX_URL: {INDEX_PATH}")
@@ -34,11 +33,29 @@ st.text(f"MAPPING_URL: {MAPPING_PATH}")
 st.text(f"DOCS_DIR: {DOCS_DIR}")
 st.text(f"GROQ_API_KEY set? {'Yes' if GROQ_API_KEY else 'No'}")
 
-# Verify all parquet files referenced by mapping exist in DOCS_DIR
+def download_file(url, local_path):
+    if not os.path.exists(local_path):
+        resp = requests.get(url)
+        resp.raise_for_status()
+        with open(local_path, "wb") as f:
+            f.write(resp.content)
+
+def prepare_local_file(path_or_url, filename_hint):
+    if path_or_url.startswith("http"):
+        temp_path = os.path.join(tempfile.gettempdir(), filename_hint)
+        download_file(path_or_url, temp_path)
+        return temp_path
+    else:
+        return path_or_url
+
+# Prepare local index and mapping paths (download if needed)
+local_index_path = prepare_local_file(INDEX_PATH, "product.index")
+local_mapping_path = prepare_local_file(MAPPING_PATH, "id_to_filename.pkl")
+
 def check_parquet_files_exist(mapping_path, docs_dir):
     missing_files = []
     try:
-        if MAPPING_PATH.startswith("http"):
+        if mapping_path.startswith("http"):
             import requests
             from io import BytesIO
             r = requests.get(mapping_path)
@@ -58,7 +75,7 @@ def check_parquet_files_exist(mapping_path, docs_dir):
 
     return mapping, missing_files
 
-mapping, missing_files = check_parquet_files_exist(MAPPING_PATH, DOCS_DIR)
+mapping, missing_files = check_parquet_files_exist(local_mapping_path, DOCS_DIR)
 if mapping is None:
     st.stop()
 
@@ -72,7 +89,7 @@ else:
 
 @st.cache_resource(show_spinner=False)
 def init_agents():
-    retriever = RetrieverAgent(INDEX_PATH, MAPPING_PATH, DOCS_DIR)
+    retriever = RetrieverAgent(local_index_path, local_mapping_path, DOCS_DIR)
     retriever.initialize()
 
     explainer = ExplainerAgent(GROQ_API_KEY)
