@@ -4,6 +4,7 @@ import streamlit as st
 from agents.retriever_agent import RetrieverAgent
 from agents.explainer_agent import ExplainerAgent
 
+# Try loading local .env for local development
 try:
     from dotenv import load_dotenv
     load_dotenv()
@@ -13,69 +14,59 @@ except ImportError:
 CACHE_DIR = "cache"
 os.makedirs(CACHE_DIR, exist_ok=True)
 
-# Detect if running on Streamlit Cloud from env var (set in Streamlit secrets or env)
-IS_STREAMLIT_CLOUD = os.getenv("IS_STREAMLIT_CLOUD", "false").lower() == "true"
-
-def is_remote_url(path_or_url: str) -> bool:
-    return str(path_or_url).startswith("http://") or str(path_or_url).startswith("https://")
-
 def get_secret(key, default=None):
-    """Priority: Streamlit secrets > os.environ > default"""
+    """Return config from Streamlit secrets, env variables, or default."""
     if key in st.secrets:
         return st.secrets[key]
     return os.getenv(key, default)
 
 def download_if_not_exists(url: str, local_path: str):
-    """Download file from remote URL if not exists locally."""
-    if is_remote_url(url):
-        if not os.path.exists(local_path):
-            try:
-                st.info(f"Downloading {os.path.basename(local_path)} from {url}...")
-                r = requests.get(url, stream=True)
-                r.raise_for_status()
-                with open(local_path, "wb") as f:
-                    for chunk in r.iter_content(chunk_size=8192):
-                        f.write(chunk)
-                st.success(f"Downloaded and cached: {local_path}")
-            except Exception as e:
-                st.error(f"Failed to download {url}: {e}")
-                st.stop()
-    else:
-        # Local file path assumed to exist
-        if not os.path.exists(url):
-            st.error(f"Local file not found: {url}")
+    """Download file from URL if not already present."""
+    if not os.path.exists(local_path):
+        try:
+            st.info(f"Downloading {os.path.basename(local_path)} from {url}...")
+            r = requests.get(url, stream=True)
+            r.raise_for_status()
+            with open(local_path, "wb") as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            st.success(f"Downloaded and cached: {local_path}")
+        except Exception as e:
+            st.error(f"Failed to download {url}: {e}")
             st.stop()
 
 @st.cache_resource(show_spinner=False)
 def init_agents():
-    if IS_STREAMLIT_CLOUD:
-        INDEX_URL = get_secret("INDEX_SMALL_URL")
-        MAPPING_URL = get_secret("MAPPING_SMALL_URL")
-        DOCS_DIR = get_secret("DOCS_DIR", "outputs")
-    else:
-        INDEX_URL = get_secret("INDEX_URL")
-        MAPPING_URL = get_secret("MAPPING_URL")
-        DOCS_DIR = get_secret("DOCS_DIR", "outputs")
-
+    INDEX_URL = get_secret("INDEX_URL")
+    MAPPING_URL = get_secret("MAPPING_URL")
     GROQ_API_KEY = get_secret("GROQ_API_KEY")
+    DOCS_DIR = get_secret("DOCS_DIR", "outputs")
 
-    # Debug info
+    # Debug info for troubleshooting
     st.write("### Config Debug Info:")
-    st.write(f"- Running on Streamlit Cloud? {'Yes' if IS_STREAMLIT_CLOUD else 'No'}")
-    st.write(f"- INDEX_URL set? {'Yes' if INDEX_URL else 'No'}")
-    st.write(f"- MAPPING_URL set? {'Yes' if MAPPING_URL else 'No'}")
-    st.write(f"- GROQ_API_KEY set? {'Yes' if GROQ_API_KEY else 'No'}")
-    st.write(f"- DOCS_DIR: {DOCS_DIR}")
+    st.write(f"INDEX_URL: {INDEX_URL}")
+    st.write(f"MAPPING_URL: {MAPPING_URL}")
+    st.write(f"GROQ_API_KEY set? {'Yes' if GROQ_API_KEY else 'No'}")
+    st.write(f"DOCS_DIR: {DOCS_DIR}")
 
     if not INDEX_URL or not MAPPING_URL or not GROQ_API_KEY:
-        st.error("Missing essential configuration! Please set secrets or environment variables.")
+        st.error("Missing essential configuration! Please set INDEX_URL, MAPPING_URL, and GROQ_API_KEY.")
         st.stop()
 
     local_index_path = os.path.join(CACHE_DIR, os.path.basename(INDEX_URL))
     local_mapping_path = os.path.join(CACHE_DIR, os.path.basename(MAPPING_URL))
 
-    download_if_not_exists(INDEX_URL, local_index_path)
-    download_if_not_exists(MAPPING_URL, local_mapping_path)
+    # Only download if INDEX_URL / MAPPING_URL is a remote URL (starts with http)
+    if INDEX_URL.startswith("http"):
+        download_if_not_exists(INDEX_URL, local_index_path)
+    else:
+        # Assume local path, just use as is
+        local_index_path = INDEX_URL
+
+    if MAPPING_URL.startswith("http"):
+        download_if_not_exists(MAPPING_URL, local_mapping_path)
+    else:
+        local_mapping_path = MAPPING_URL
 
     try:
         retriever = RetrieverAgent(local_index_path, local_mapping_path, DOCS_DIR)
@@ -92,8 +83,10 @@ def init_agents():
 
     return retriever, explainer
 
+# Initialize agents
 retriever, explainer = init_agents()
 
+# UI
 st.title("🛒 E-Commerce Multi-Agent Recommender")
 
 query = st.text_input("Enter your product question or query:")
@@ -117,7 +110,7 @@ if st.button("Get Recommendations") and query:
         )
         st.markdown(f"Date: {r.get('date', 'N/A')} | Reviewer: {r.get('reviewer', 'N/A')}")
         text_preview = r.get("text", "")
-        st.write(text_preview[:500] + ("---" if len(text_preview) > 500 else ""))
+        st.write(text_preview[:500] + ("..." if len(text_preview) > 500 else ""))
         st.markdown("---")
 
     with st.spinner("Generating explanation and answer..."):
