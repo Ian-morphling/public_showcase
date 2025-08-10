@@ -1,73 +1,113 @@
-import streamlit as st
 import os
 import requests
-from dotenv import load_dotenv
+import streamlit as st
 from agents.retriever_agent import RetrieverAgent
 from agents.explainer_agent import ExplainerAgent
 
-# Load .env variables
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
-# Local cache directory
 CACHE_DIR = "cache"
 os.makedirs(CACHE_DIR, exist_ok=True)
 
+# Detect if running on Streamlit Cloud from env var (set in Streamlit secrets or env)
+IS_STREAMLIT_CLOUD = os.getenv("IS_STREAMLIT_CLOUD", "false").lower() == "true"
 
-def download_file(url: str, local_path: str):
-    """Download a file from a URL to local_path if not already cached."""
-    if not os.path.exists(local_path):
-        st.info(f"Downloading {os.path.basename(local_path)} from Hugging Face... This may take a minute.")
-        with requests.get(url, stream=True, timeout=60) as r:
-            r.raise_for_status()
-            with open(local_path, "wb") as f:
-                for chunk in r.iter_content(chunk_size=8192):
-                    f.write(chunk)
-        st.success(f"Downloaded and cached: {local_path}")
+def is_remote_url(path_or_url: str) -> bool:
+    return str(path_or_url).startswith("http://") or str(path_or_url).startswith("https://")
+
+def get_secret(key, default=None):
+    """Priority: Streamlit secrets > os.environ > default"""
+    if key in st.secrets:
+        return st.secrets[key]
+    return os.getenv(key, default)
+
+def download_if_not_exists(url: str, local_path: str):
+    """Download file from remote URL if not exists locally."""
+    if is_remote_url(url):
+        if not os.path.exists(local_path):
+            try:
+                st.info(f"Downloading {os.path.basename(local_path)} from {url}...")
+                r = requests.get(url, stream=True)
+                r.raise_for_status()
+                with open(local_path, "wb") as f:
+                    for chunk in r.iter_content(chunk_size=8192):
+                        f.write(chunk)
+                st.success(f"Downloaded and cached: {local_path}")
+            except Exception as e:
+                st.error(f"Failed to download {url}: {e}")
+                st.stop()
     else:
-        # Debug message only in local run
-        if os.getenv("STREAMLIT_SERVER_RUNNING") != "true":
-            print(f"Using cached file: {local_path}")
+        # Local file path assumed to exist
+        if not os.path.exists(url):
+            st.error(f"Local file not found: {url}")
+            st.stop()
 
-
-@st.cache_resource(show_spinner=True)
+@st.cache_resource(show_spinner=False)
 def init_agents():
-    # Hugging Face direct download URLs (must be set in .env)
-    INDEX_URL = os.getenv("INDEX_URL")
-    MAPPING_URL = os.getenv("MAPPING_URL")
-    DOCS_DIR = os.getenv("DOCS_DIR", "outputs")
-    GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+    if IS_STREAMLIT_CLOUD:
+        INDEX_URL = get_secret("INDEX_SMALL_URL")
+        MAPPING_URL = get_secret("MAPPING_SMALL_URL")
+        DOCS_DIR = get_secret("DOCS_DIR", "outputs")
+    else:
+        INDEX_URL = get_secret("INDEX_URL")
+        MAPPING_URL = get_secret("MAPPING_URL")
+        DOCS_DIR = get_secret("DOCS_DIR", "outputs")
 
-    if not INDEX_URL or not MAPPING_URL:
-        raise ValueError("INDEX_URL and MAPPING_URL must be set in your .env file")
+    GROQ_API_KEY = get_secret("GROQ_API_KEY")
 
-    index_path = os.path.join(CACHE_DIR, "product.index")
-    mapping_path = os.path.join(CACHE_DIR, "id_to_filename.pkl")
+    # Debug info
+    st.write("### Config Debug Info:")
+    st.write(f"- Running on Streamlit Cloud? {'Yes' if IS_STREAMLIT_CLOUD else 'No'}")
+    st.write(f"- INDEX_URL set? {'Yes' if INDEX_URL else 'No'}")
+    st.write(f"- MAPPING_URL set? {'Yes' if MAPPING_URL else 'No'}")
+    st.write(f"- GROQ_API_KEY set? {'Yes' if GROQ_API_KEY else 'No'}")
+    st.write(f"- DOCS_DIR: {DOCS_DIR}")
 
-    # Download from Hugging Face if not cached
-    download_file(INDEX_URL, index_path)
-    download_file(MAPPING_URL, mapping_path)
+    if not INDEX_URL or not MAPPING_URL or not GROQ_API_KEY:
+        st.error("Missing essential configuration! Please set secrets or environment variables.")
+        st.stop()
 
-    retriever = RetrieverAgent(index_path, mapping_path, DOCS_DIR)
-    retriever.initialize()
+    local_index_path = os.path.join(CACHE_DIR, os.path.basename(INDEX_URL))
+    local_mapping_path = os.path.join(CACHE_DIR, os.path.basename(MAPPING_URL))
 
-    explainer = ExplainerAgent(GROQ_API_KEY)
+    download_if_not_exists(INDEX_URL, local_index_path)
+    download_if_not_exists(MAPPING_URL, local_mapping_path)
+
+    try:
+        retriever = RetrieverAgent(local_index_path, local_mapping_path, DOCS_DIR)
+        retriever.initialize()
+    except Exception as e:
+        st.error(f"Failed to initialize RetrieverAgent: {e}")
+        st.stop()
+
+    try:
+        explainer = ExplainerAgent(GROQ_API_KEY)
+    except Exception as e:
+        st.error(f"Failed to initialize ExplainerAgent: {e}")
+        st.stop()
+
     return retriever, explainer
 
-
-# Initialize agents once
 retriever, explainer = init_agents()
 
-# ---- UI ----
-st.title("E-Commerce Multi-Agent Recommender")
+st.title("🛒 E-Commerce Multi-Agent Recommender")
 
-query = st.text_input("Enter your product question or query:", "")
-top_k = st.slider("Number of reviews to retrieve:", min_value=1, max_value=10, value=5)
+query = st.text_input("Enter your product question or query:")
+top_k = st.slider("Number of reviews to retrieve:", 1, 10, 5)
 
 if st.button("Get Recommendations") and query:
     with st.spinner("Retrieving reviews..."):
-        retrieved = retriever.query(query, top_k=top_k)
+        try:
+            retrieved = retriever.query(query, top_k=top_k)
+        except Exception as e:
+            st.error(f"Retrieval failed: {e}")
+            st.stop()
 
-    st.write(f"Retrieved top {len(retrieved)} reviews:")
+    st.success(f"Retrieved top {len(retrieved)} reviews:")
     for i, r in enumerate(retrieved):
         st.markdown(f"**Review {i+1} (Similarity: {r.get('similarity', 0):.4f})**")
         if r.get("summary"):
@@ -76,12 +116,14 @@ if st.button("Get Recommendations") and query:
             f"Rating: {r.get('rating', 'N/A')} | Verified: {r.get('verified', 'N/A')} | Helpful Votes: {r.get('votes', 'N/A')}"
         )
         st.markdown(f"Date: {r.get('date', 'N/A')} | Reviewer: {r.get('reviewer', 'N/A')}")
-        st.write(r.get("text", "")[:500] + ("---" if len(r.get("text", "")) > 500 else ""))
+        text_preview = r.get("text", "")
+        st.write(text_preview[:500] + ("---" if len(text_preview) > 500 else ""))
         st.markdown("---")
 
     with st.spinner("Generating explanation and answer..."):
-        answer = explainer.generate_answer(query, retrieved)
-
-    st.subheader("AI Explanation & Answer")
-    st.write(answer)
-
+        try:
+            answer = explainer.generate_answer(query, retrieved)
+            st.subheader("AI Explanation & Answer")
+            st.write(answer)
+        except Exception as e:
+            st.error(f"Failed to generate answer: {e}")
