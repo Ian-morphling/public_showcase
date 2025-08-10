@@ -23,17 +23,17 @@ Use a user query + profile to retrieve relevant reviews, then generate concise, 
 
 ### Data & Embedding Pipeline
 
-- **build_index.py**  
-  Builds and saves the FAISS IVF index from chunked `.npy` embedding files and maps vector IDs to parquet chunk files.
-
-- **recommender/data/embeddings.py**  
-  Generates normalized embeddings from cleaned review text in parquet files, chunked for scalability.
-
 - **recommender/data/loader.py**  
   Loads raw Amazon Electronics JSON reviews, validates, and writes cleaned batches to parquet files.
 
 - **recommender/data/preprocess.py**  
   Enriches cleaned reviews with metadata, vote bins, sentiment; creates user profile JSON for personalization.
+  
+- **recommender/data/embeddings.py**  
+  Generates normalized embeddings from cleaned review text in parquet files, chunked for scalability.
+
+- **build_index.py**  
+  Builds and saves the FAISS IVF index from chunked `.npy` embedding files and maps vector IDs to parquet chunk files.
 
 ### Retrieval & Querying
 
