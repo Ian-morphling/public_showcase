@@ -10,18 +10,24 @@ import requests
 # Load local .env variables
 load_dotenv()
 
-# Determine environment
+# Determine if running in Streamlit Cloud environment
 IS_STREAMLIT_CLOUD = os.getenv("IS_STREAMLIT_CLOUD", "false").lower() == "true"
 
-# If local, override URLs with local filesystem paths
+# Use environment variables from secrets or .env accordingly
 if not IS_STREAMLIT_CLOUD:
-    INDEX_PATH = os.getenv("INDEX_URL_LOCAL", "/home/ianli/homl-self/public_showcase/ecommerce_llm_recommender/index/product.index")
-    MAPPING_PATH = os.getenv("MAPPING_URL_LOCAL", "/home/ianli/homl-self/public_showcase/ecommerce_llm_recommender/index/id_to_filename.pkl")
+    INDEX_PATH = os.getenv(
+        "INDEX_URL_LOCAL",
+        "/home/ianli/homl-self/public_showcase/ecommerce_llm_recommender/index/product.index",
+    )
+    MAPPING_PATH = os.getenv(
+        "MAPPING_URL_LOCAL",
+        "/home/ianli/homl-self/public_showcase/ecommerce_llm_recommender/index/id_to_filename.pkl",
+    )
 else:
     INDEX_PATH = os.getenv("INDEX_URL")
     MAPPING_PATH = os.getenv("MAPPING_URL")
 
-DOCS_DIR = os.getenv("DOCS_DIR", "outputs")
+DOCS_DIR = os.getenv("DOCS_DIR", "outputs")  # Make sure this points to your small parquet folder in cloud
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 st.title("🛒 E-Commerce Multi-Agent Recommender")
@@ -39,6 +45,9 @@ def download_file(url, local_path):
         resp.raise_for_status()
         with open(local_path, "wb") as f:
             f.write(resp.content)
+        st.text(f"Downloaded {url} to {local_path} ({os.path.getsize(local_path)} bytes)")
+    else:
+        st.text(f"File {local_path} already exists.")
 
 def prepare_local_file(path_or_url, filename_hint):
     if path_or_url.startswith("http"):
@@ -48,9 +57,12 @@ def prepare_local_file(path_or_url, filename_hint):
     else:
         return path_or_url
 
-# Prepare local index and mapping paths (download if needed)
+# Download index and mapping locally if needed
 local_index_path = prepare_local_file(INDEX_PATH, "product.index")
 local_mapping_path = prepare_local_file(MAPPING_PATH, "id_to_filename.pkl")
+
+st.text(f"Local index path exists? {os.path.exists(local_index_path)}")
+st.text(f"Local mapping path exists? {os.path.exists(local_mapping_path)}")
 
 def check_parquet_files_exist(mapping_path, docs_dir):
     missing_files = []
@@ -106,7 +118,7 @@ query = st.text_input("Enter your product question or query:", "")
 top_k = st.slider("Number of reviews to retrieve:", min_value=1, max_value=10, value=5)
 
 if st.button("Get Recommendations") and query.strip():
-    with st.spinner("Retrieving reviews..."):
+    with st.spinner("Retrieving reviews"):
         try:
             retrieved = retriever.query(query, top_k=top_k)
         except Exception as e:
@@ -126,10 +138,10 @@ if st.button("Get Recommendations") and query.strip():
                 f"Rating: {r.get('rating', 'N/A')} | Verified: {r.get('verified', 'N/A')} | Helpful Votes: {r.get('votes', 'N/A')}"
             )
             st.markdown(f"Date: {r.get('date', 'N/A')} | Reviewer: {r.get('reviewer', 'N/A')}")
-            st.write(r.get("text", "")[:500] + ("..." if len(r.get("text", "")) > 500 else ""))
+            st.write(r.get("text", "")[:500] + ("---" if len(r.get("text", "")) > 500 else ""))
             st.markdown("---")
 
-        with st.spinner("Generating explanation and answer..."):
+        with st.spinner("Generating explanation and answer"):
             try:
                 answer = explainer.generate_answer(query, retrieved)
                 st.subheader("AI Explanation & Answer")
