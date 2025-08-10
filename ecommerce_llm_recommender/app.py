@@ -1,20 +1,35 @@
-
+import os
 import streamlit as st
+from dotenv import load_dotenv
 from agents.retriever_agent import RetrieverAgent
 from agents.explainer_agent import ExplainerAgent
-from dotenv import load_dotenv
-import os
 
-# Load environment variables
-load_dotenv()
+load_dotenv()  # loads .env from current working directory
 
-# Initialize agents once and cache them to avoid reload on every interaction
+def get_env_var(key: str, default=None):
+    is_cloud = os.getenv("IS_STREAMLIT_CLOUD", "false").lower() == "true"
+    if is_cloud:
+        # For cloud, use secrets or environment (URLs)
+        return st.secrets.get(key, os.getenv(key, default))
+    else:
+        # Locally, prefer *_PATH over *_URL for files
+        if key == "INDEX_URL":
+            return os.getenv("INDEX_PATH", default)
+        if key == "MAPPING_URL":
+            return os.getenv("MAPPING_PATH", default)
+        return os.getenv(key, default)
+
 @st.cache_resource(show_spinner=False)
 def init_agents():
-    INDEX_PATH = os.getenv("INDEX_PATH", "index/product.index")
-    MAPPING_PATH = os.getenv("MAPPING_PATH", "index/id_to_filename.pkl")
-    DOCS_DIR = os.getenv("DOCS_DIR", "outputs")
-    GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+    INDEX_PATH = get_env_var("INDEX_URL")
+    MAPPING_PATH = get_env_var("MAPPING_URL")
+    DOCS_DIR = get_env_var("DOCS_DIR", "outputs")
+    GROQ_API_KEY = get_env_var("GROQ_API_KEY")
+
+    st.write(f"Using INDEX_PATH: {INDEX_PATH}")
+    st.write(f"Using MAPPING_PATH: {MAPPING_PATH}")
+    st.write(f"Using DOCS_DIR: {DOCS_DIR}")
+    st.write(f"GROQ_API_KEY set? {'Yes' if GROQ_API_KEY else 'No'}")
 
     retriever = RetrieverAgent(INDEX_PATH, MAPPING_PATH, DOCS_DIR)
     retriever.initialize()
