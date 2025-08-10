@@ -32,7 +32,7 @@ Use a user query + profile to retrieve relevant reviews, then generate concise, 
 - **recommender/data/embeddings.py**  
   Generates normalized embeddings from cleaned review text in parquet files, chunked for scalability.
 
-- **build_index.py**  
+- **scripts/build_index.py**  
   Builds and saves the FAISS IVF index from chunked `.npy` embedding files and maps vector IDs to parquet chunk files.
 
 ### Retrieval & Querying
