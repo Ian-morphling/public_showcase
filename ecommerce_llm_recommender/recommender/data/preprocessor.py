@@ -102,16 +102,27 @@ def main():
             # Write batch to file
             if len(doc_batch) >= BATCH_SIZE:
                 df_docs = pd.DataFrame(doc_batch)
-                df_docs.to_parquet(OUTPUT_DIR / f"documents_part_{doc_part:04d}.parquet", index=False)
-                print(f"Wrote documents_part_{doc_part:04d}.parquet with {len(doc_batch)} records")
+                df_docs.to_parquet(
+                    OUTPUT_DIR / f"documents_part_{doc_part:04d}.parquet",
+                    index=False,
+                    compression="snappy",
+                    engine="pyarrow"
+                )
+                print(f"Wrote documents_part_{doc_part:04d}.parquet with {len(doc_batch)} records (Snappy compressed)")
                 doc_batch.clear()
                 doc_part += 1
 
     # Final flush
     if doc_batch:
         df_docs = pd.DataFrame(doc_batch)
-        df_docs.to_parquet(OUTPUT_DIR / f"documents_part_{doc_part:04d}.parquet", index=False)
-        print(f"Wrote documents_part_{doc_part:04d}.parquet with {len(doc_batch)} records")
+        df_docs.to_parquet(
+            OUTPUT_DIR / f"documents_part_{doc_part:04d}.parquet",
+            index=False,
+            compression="snappy",
+            engine="pyarrow"
+        )
+        print(f"Wrote documents_part_{doc_part:04d}.parquet with {len(doc_batch)} records (Snappy compressed)")
+
 
     # Save user profiles JSON
     with open(OUTPUT_DIR / "user_profiles.json", "w") as f:

@@ -5,10 +5,8 @@ from tqdm import tqdm
 from sentence_transformers import SentenceTransformer
 from pathlib import Path
 import glob
-from tqdm import tqdm
 
-# Config
-DATA_DIR = "outputs/clean_reviews"   
+DATA_DIR = "outputs"  
 EMBEDDINGS_DIR = "data/embeddings"
 CHUNK_SIZE = 100_000
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
@@ -21,25 +19,34 @@ model = SentenceTransformer(MODEL_NAME)
 def embed_and_save(texts, chunk_id):
     print(f"Embedding chunk {chunk_id} with {len(texts)} texts...")
     embeddings = model.encode(
-        texts, batch_size=128, show_progress_bar=True, normalize_embeddings=True
+        texts,
+        batch_size=128,
+        show_progress_bar=True,
+        normalize_embeddings=True
     )
-    out_path = os.path.join(EMBEDDINGS_DIR, f"product_embeddings_minilm_chunk_{chunk_id:03d}.npy")
+    out_path = os.path.join(
+        EMBEDDINGS_DIR,
+        f"product_embeddings_minilm_chunk_{chunk_id:03d}.npy"
+    )
     np.save(out_path, embeddings)
     print(f"Saved {out_path}")
 
 def main():
-    # Track embedding chunk index
     chunk_id = 0
     buffer_texts = []
 
-    # Load all .parquet files
-    parquet_files = sorted(glob.glob(os.path.join(DATA_DIR, "*.parquet")))
-    print(f"Found {len(parquet_files)} cleaned .parquet files.")
+    # Only pick up the preprocessed "documents_part" parquet files
+    parquet_files = sorted(
+        glob.glob(os.path.join(DATA_DIR, "documents_part_*.parquet"))
+    )
+    print(f"Found {len(parquet_files)} preprocessed .parquet files.")
 
-    for file_path in tqdm(parquet_files, desc="Processing parquet files"):
+    for file_path in tqdm(parquet_files, desc="Processing documents"):
         try:
-            df = pd.read_parquet(file_path)
-            texts = df["reviewText"].dropna().astype(str).tolist()
+            # Read with pyarrow backend 
+            df = pd.read_parquet(file_path, engine="pyarrow")
+            # Use the combined review + summary text from preprocessor.py
+            texts = df["text"].dropna().astype(str).tolist()
 
             for text in texts:
                 buffer_texts.append(text)
@@ -50,7 +57,6 @@ def main():
         except Exception as e:
             print(f"Error processing {file_path}: {e}")
 
-    # Save final chunk
     if buffer_texts:
         embed_and_save(buffer_texts, chunk_id)
         print(f"Finished final chunk {chunk_id}.")
