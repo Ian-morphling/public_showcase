@@ -106,12 +106,12 @@ class RetrieverAgent:
 
             metadata = row.get("metadata", {}) if "metadata" in row else {}
 
-            # Convert distance to similarity (example, adjust based on your metric)
+            # For normalized vectors with METRIC_INNER_PRODUCT, 'dist' is cosine similarity
             similarity_score = dist
 
             results.append(
                 {
-                    "similarity": similarity_score,  # rename here
+                    "similarity": similarity_score, 
                     "summary": summary,
                     "rating": metadata.get("overall", "N/A"),
                     "votes": metadata.get("votes", "N/A"),
