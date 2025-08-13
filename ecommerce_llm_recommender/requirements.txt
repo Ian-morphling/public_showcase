@@ -10,14 +10,10 @@ sentence-transformers>=2.2.2
 faiss-cpu>=1.7.4.post2  # CPU version for Streamlit Cloud; use faiss-gpu locally if desired
 numpy>=1.26
 
-# Optional for memory monitoring
+# Utility
 psutil>=5.9
-
-# HTTP requests (if ExplainerAgent uses it)
 requests>=2.31
+typing-extensions>=4.7
 
 # Groq API client
 groq>=0.1.0
-
-# For typing hints and optional niceties
-typing-extensions>=4.7
