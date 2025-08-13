@@ -1,59 +1,196 @@
 import os
+from pathlib import Path
+import json
 import requests
-from typing import List, Dict
-
+from typing import List, Dict, Optional
 
 class ExplainerAgent:
-    def __init__(self, groq_api_key: str):
-        if not groq_api_key:
-            raise ValueError("GROQ_API_KEY must be provided")
+    def __init__(self, groq_api_key: str = None):
         self.api_key = groq_api_key
-        self.endpoint = "https://api.groq.com/openai/v1/chat/completions"
+        self.base_url = "https://api.groq.com/openai/v1/chat/completions"
+        
+        if not self.api_key:
+            print("Warning: No GROQ API key provided. Using fallback responses.")
 
-    def build_rag_prompt(self, query: str, retrieved_docs: List[Dict]) -> str:
-        context = ""
+    def build_rag_prompt(self, query: str, retrieved_docs: List[Dict], user_profile: Dict = None) -> str:
+        """Construct a RAG-style prompt with retrieved reviews and user profile"""
+        
+        # Build context from retrieved documents
+        context_parts = []
         for i, doc in enumerate(retrieved_docs):
-            context += f"Review {i+1} (Similarity: {doc['similarity']:.4f}):\n"
-            if "summary" in doc:
-                context += f"Summary: {doc['summary']}\n"
-            context += f"Rating: {doc.get('rating', 'N/A')} | Verified: {doc.get('verified', 'N/A')}\n"
-            context += f"Helpful Votes: {doc.get('votes', 'N/A')}\n"
-            context += f"Date: {doc.get('date', 'N/A')} | Reviewer: {doc.get('reviewer', 'N/A')}\n"
-            context += f"Text: {doc.get('text', '')}\n\n"
+            distance = doc.get("faiss_distance", None)
+            distance_str = f"{distance:.4f}" if distance is not None else "N/A"
+            
+            # Extract metadata for context
+            metadata = doc.get("metadata", {})
+            rating = metadata.get("overall", "N/A")
+            verified = metadata.get("verified", "N/A")
+            
+            context_parts.append(
+                f"Review {i+1} (Similarity Score: {distance_str}):\n"
+                f"Rating: {rating}/5 | Verified Purchase: {verified}\n"
+                f"Content: {doc.get('text', '')}\n"
+            )
+        
+        context = "\n".join(context_parts)
+        
+        # Add user profile if available
+        user_context = ""
+        if user_profile:
+            if isinstance(user_profile, list) and len(user_profile) > 0:
+                # Calculate user stats
+                ratings = [r.get('rating', 0) for r in user_profile]
+                avg_rating = sum(ratings) / len(ratings) if ratings else 0
+                total_reviews = len(user_profile)
+                
+                user_context = f"""
+User Profile Context:
+- Total Reviews: {total_reviews}
+- Average Rating Given: {avg_rating:.1f}/5
+- Recent Review Pattern: {ratings[-5:] if len(ratings) >= 5 else ratings}
+"""
+            elif isinstance(user_profile, dict):
+                user_context = f"\nUser Profile: {json.dumps(user_profile, indent=2)}"
+        
+        # Construct the full prompt
+        prompt = f"""You are an expert e-commerce assistant helping users make informed purchasing decisions.
 
-        prompt = f"""You are a helpful e-commerce assistant. Use the following product reviews to answer the user's question.
-The reviews are ranked by similarity to the query.
+Based on the following product reviews and user context, provide a helpful, balanced, and detailed response to the user's question.
 
---- START OF REVIEWS ---
-{context.strip()}
---- END OF REVIEWS ---
+=== RETRIEVED REVIEWS ===
+{context}
 
-User question:
+{user_context}
+
+=== USER QUESTION ===
 {query}
 
-Answer concisely, referencing the relevant reviews if needed. If unclear, say so honestly."""
+=== INSTRUCTIONS ===
+- Analyze the reviews to extract key insights about the product
+- Consider both positive and negative feedback
+- If user profile is available, tailor recommendations to their preferences
+- Provide specific examples from the reviews
+- Be honest about potential drawbacks
+- Give actionable advice for the purchase decision
+- Keep response concise but informative (300-500 words)
+
+Your response:"""
+        
         return prompt
 
-    def call_groq_llm(
-        self, prompt: str, model: str = "llama3-70b-8192", temperature: float = 0.7, max_tokens: int = 512
-    ) -> str:
-        headers = {
-            "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json",
-        }
-        payload = {
-            "model": model,
-            "messages": [
-                {"role": "system", "content": "You are a helpful e-commerce assistant."},
-                {"role": "user", "content": prompt},
-            ],
-            "temperature": temperature,
-            "max_tokens": max_tokens,
-        }
-        response = requests.post(self.endpoint, headers=headers, json=payload, timeout=30)
-        response.raise_for_status()
-        return response.json()["choices"][0]["message"]["content"]
+    def generate_answer(self, query: str, retrieved_docs: List[Dict], user_profile: Dict = None) -> str:
+        """Generate answer using Groq API or fallback"""
+        
+        if not retrieved_docs:
+            return "No relevant reviews found for your query. Please try a different search term."
+        
+        prompt = self.build_rag_prompt(query, retrieved_docs, user_profile)
+        
+        # Fallback if no API key
+        if not self.api_key:
+            return self._generate_fallback_response(query, retrieved_docs, user_profile)
+        
+        # Call Groq API
+        try:
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json"
+            }
+            
+            payload = {
+                "model": "llama3-8b-8192",  # or "mixtral-8x7b-32768"
+                "messages": [
+                    {
+                        "role": "system", 
+                        "content": "You are a helpful e-commerce assistant that analyzes product reviews to help users make informed decisions."
+                    },
+                    {
+                        "role": "user", 
+                        "content": prompt
+                    }
+                ],
+                "max_tokens": 1024,
+                "temperature": 0.7,
+                "top_p": 1,
+                "stream": False
+            }
+            
+            response = requests.post(
+                self.base_url,
+                headers=headers,
+                json=payload,
+                timeout=30
+            )
+            
+            response.raise_for_status()
+            data = response.json()
+            
+            if "choices" in data and len(data["choices"]) > 0:
+                return data["choices"][0]["message"]["content"].strip()
+            else:
+                return "No response from LLM. Please try again."
+                
+        except requests.exceptions.RequestException as e:
+            return f"API request failed: {str(e)}. Using fallback analysis..."
+        except Exception as e:
+            return f"Error calling LLM: {str(e)}. Using fallback analysis..."
 
-    def generate_answer(self, query: str, retrieved_docs: List[Dict]) -> str:
-        prompt = self.build_rag_prompt(query, retrieved_docs)
-        return self.call_groq_llm(prompt)
+    def _generate_fallback_response(self, query: str, retrieved_docs: List[Dict], user_profile: Dict = None) -> str:
+        """Generate a basic analysis when LLM API is not available"""
+        
+        if not retrieved_docs:
+            return "No reviews found."
+        
+        # Extract basic stats
+        ratings = []
+        verified_count = 0
+        total_docs = len(retrieved_docs)
+        
+        review_snippets = []
+        
+        for doc in retrieved_docs:
+            metadata = doc.get("metadata", {})
+            rating = metadata.get("overall")
+            if rating:
+                ratings.append(rating)
+            
+            if metadata.get("verified"):
+                verified_count += 1
+            
+            # Get review snippet
+            text = doc.get("text", "")
+            if len(text) > 200:
+                text = text[:200] + "..."
+            review_snippets.append(f"• Rating {rating}/5: {text}")
+        
+        avg_rating = sum(ratings) / len(ratings) if ratings else 0
+        
+        # Build fallback response
+        response = f"""**Analysis Summary for: "{query}"**
+
+**Review Overview:**
+- Found {total_docs} relevant reviews
+- Average rating: {avg_rating:.1f}/5 stars
+- Verified purchases: {verified_count}/{total_docs}
+
+**Key Reviews:**
+{chr(10).join(review_snippets[:3])}
+
+**Quick Insights:**
+"""
+        
+        if avg_rating >= 4:
+            response += "- Generally positive feedback from users\n"
+        elif avg_rating >= 3:
+            response += "- Mixed reviews - consider pros and cons carefully\n"
+        else:
+            response += "- Several concerns raised in reviews\n"
+        
+        response += f"- {verified_count}/{total_docs} reviews from verified purchasers\n"
+        
+        if user_profile:
+            response += f"\n**Personalized Note:** Based on your review history, this analysis considers your preferences."
+        
+        response += "\n\n*Note: LLM analysis unavailable - showing basic review summary*"
+        
+        return response
