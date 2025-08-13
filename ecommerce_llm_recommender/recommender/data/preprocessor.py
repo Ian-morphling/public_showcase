@@ -1,11 +1,13 @@
 import pandas as pd
-import json
 from pathlib import Path
 import glob
 from collections import defaultdict
 import numpy as np
+import math
 
-BATCH_SIZE = 100_000
+# --- Config ---
+DOWNSAMPLE_FRAC = 0.1            # 10% of data
+MAX_ROWS_PER_FILE = 50_000       
 OUTPUT_DIR = Path("outputs")
 CLEAN_REVIEWS_DIR = OUTPUT_DIR / "clean_reviews"
 
@@ -13,19 +15,25 @@ def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     cleaned_parts = sorted(glob.glob(str(CLEAN_REVIEWS_DIR / "part_*.parquet")))
 
-    user_profiles = defaultdict(list)       # dictionary of reviewerID to list of reviews.
-    doc_part = 0
+    user_profiles = defaultdict(list)
     doc_batch = []
+    profile_batch = []
+    doc_part = 0
+    profile_part = 0
+
+    print(f"Processing {len(cleaned_parts)} cleaned parquet parts...")
 
     for part_file in cleaned_parts:
         df = pd.read_parquet(part_file)
 
+        # --- Downsample 10% ---
+        df = df.sample(frac=DOWNSAMPLE_FRAC, random_state=42)
+
         for _, row in df.iterrows():
             review_text = row['reviewText'].strip()
             summary_text = row['summary'].strip()
-            full_text = review_text + "\n\nSummary: " + summary_text
+            full_text = f"{review_text}\n\nSummary: {summary_text}"
 
-            # --------- Basic Metadata ---------
             rating = row['overall']
             review_length = len(review_text.split())
             verified = row.get('verified', False)
@@ -34,7 +42,7 @@ def main():
             review_time = row.get('reviewTime')
             asin = row['asin']
 
-            # --------- Rating Label (for personalization/recommendation) ---------
+            # --- Rating label ---
             if rating >= 4:
                 rating_label = "positive"
             elif rating == 3:
@@ -42,7 +50,7 @@ def main():
             else:
                 rating_label = "negative"
 
-            # --------- Helpful Votes Handling ---------
+            # --- Helpful votes ---
             vote_raw = row.get("vote", None)
             has_votes = vote_raw is not None
             try:
@@ -63,8 +71,10 @@ def main():
             else:
                 vote_bin = "missing"
 
-            # --------- Metadata Package ---------
-            metadata = {
+            # --- Flattened document row ---
+            doc_row = {
+                "id": f"{asin}_{reviewer_id}",
+                "text": full_text,
                 "asin": asin,
                 "overall": rating,
                 "rating_label": rating_label,
@@ -77,17 +87,11 @@ def main():
                 "votes": votes,
                 "vote_bin": vote_bin
             }
+            doc_batch.append(doc_row)
 
-            # --------- Document for RAG ---------
-            doc = {
-                "id": f"{asin}_{reviewer_id}",
-                "text": full_text,
-                "metadata": metadata
-            }
-            doc_batch.append(doc)
-
-            # --------- User profile storage ---------
-            user_profiles[reviewer_id].append({
+            # --- Flattened user profile row ---
+            profile_row = {
+                "reviewerID": reviewer_id,
                 "asin": asin,
                 "rating": rating,
                 "rating_label": rating_label,
@@ -97,10 +101,11 @@ def main():
                 "has_votes": has_votes,
                 "votes": votes,
                 "vote_bin": vote_bin
-            })
+            }
+            profile_batch.append(profile_row)
 
-            # Write batch to file
-            if len(doc_batch) >= BATCH_SIZE:
+            # --- Write batch if max rows reached ---
+            if len(doc_batch) >= MAX_ROWS_PER_FILE:
                 df_docs = pd.DataFrame(doc_batch)
                 df_docs.to_parquet(
                     OUTPUT_DIR / f"documents_part_{doc_part:04d}.parquet",
@@ -108,11 +113,23 @@ def main():
                     compression="snappy",
                     engine="pyarrow"
                 )
-                print(f"Wrote documents_part_{doc_part:04d}.parquet with {len(doc_batch)} records (Snappy compressed)")
+                print(f"Wrote documents_part_{doc_part:04d}.parquet with {len(doc_batch)} rows")
                 doc_batch.clear()
                 doc_part += 1
 
-    # Final flush
+            if len(profile_batch) >= MAX_ROWS_PER_FILE:
+                df_profiles = pd.DataFrame(profile_batch)
+                df_profiles.to_parquet(
+                    OUTPUT_DIR / f"user_profiles_part_{profile_part:04d}.parquet",
+                    index=False,
+                    compression="snappy",
+                    engine="pyarrow"
+                )
+                print(f"Wrote user_profiles_part_{profile_part:04d}.parquet with {len(profile_batch)} rows")
+                profile_batch.clear()
+                profile_part += 1
+
+    # --- Flush remaining docs ---
     if doc_batch:
         df_docs = pd.DataFrame(doc_batch)
         df_docs.to_parquet(
@@ -121,14 +138,19 @@ def main():
             compression="snappy",
             engine="pyarrow"
         )
-        print(f"Wrote documents_part_{doc_part:04d}.parquet with {len(doc_batch)} records (Snappy compressed)")
+        print(f"Wrote documents_part_{doc_part:04d}.parquet with {len(doc_batch)} rows")
 
+    if profile_batch:
+        df_profiles = pd.DataFrame(profile_batch)
+        df_profiles.to_parquet(
+            OUTPUT_DIR / f"user_profiles_part_{profile_part:04d}.parquet",
+            index=False,
+            compression="snappy",
+            engine="pyarrow"
+        )
+        print(f"Wrote user_profiles_part_{profile_part:04d}.parquet with {len(profile_batch)} rows")
 
-    # Save user profiles JSON
-    with open(OUTPUT_DIR / "user_profiles.json", "w") as f:
-        json.dump(user_profiles, f, indent=2)
-    print("Saved user profiles to outputs/user_profiles.json")
-
+    print("Finished processing documents and user profiles.")
 
 if __name__ == "__main__":
     main()
