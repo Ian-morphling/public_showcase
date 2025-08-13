@@ -1,20 +1,16 @@
 # Core app
-streamlit==1.36.0         # stable & supports Python 3.9–3.11
-faiss-cpu==1.8.0.post1    # FAISS retrieval
-sentence-transformers==2.6.1
-transformers==4.43.3
-torch==2.3.1
+streamlit==1.36.0
+faiss-cpu==1.8.0.post1
+sentence-transformers==2.2.2
+torch==2.8.0          # compatible with Python 3.10/3.11
+transformers==4.34.0  # stable with torch 2.8
 numpy==1.26.4
 pandas==2.2.2
+pyarrow==16.1.0
 
 # Utilities
 tqdm==4.66.5
 scikit-learn==1.5.2
 requests==2.32.3
 joblib==1.4.2
-
-# If you’re reading parquet/csv in multiple formats
-pyarrow==16.1.0
-
-# Fix for importlib-metadata issues in Streamlit deps
 importlib-metadata<7,>=6.0
