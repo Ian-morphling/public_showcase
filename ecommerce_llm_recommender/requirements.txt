@@ -1,9 +1,11 @@
+# Web app
 streamlit==1.38.0
 
-# Core numerical / data packages (wheels exist for Python 3.10)
+# Core numerical / data packages (prebuilt wheels exist for Python 3.10)
 numpy==1.26.4
 pandas==2.2.2
 scikit-learn==1.5.1
+pyarrow==14.0.2
 
 # NLP + embeddings
 sentence-transformers==2.2.2
