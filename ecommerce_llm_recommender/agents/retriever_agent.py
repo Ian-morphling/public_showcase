@@ -95,9 +95,9 @@ class RetrieverAgent:
             return []
 
         results = []
-        for doc_id, dist in zip(I, D):
+        for doc_id, sim in zip(I, D):
             doc = self._load_doc(int(doc_id))
-            doc["faiss_distance"] = float(dist)
+            doc["similarity"] = float(sim)  # renamed for clarity
             results.append(doc)
 
         return results
