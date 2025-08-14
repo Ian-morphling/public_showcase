@@ -40,4 +40,5 @@ Modular multi-agent architecture (Retriever, UserProfiler, Explainer)
 Explainable recommendations via RAG prompt engineering
 Interactive Streamlit UI: [Try it here](https://ecomm-recommender.streamlit.app/)
 - **Tech Stack:** Python, FAISS, Sentence-Transformers (MiniLM), Pandas / PyArrow, LangGraph / LangChain (planned), Streamlit, Groq LLM API, Parquet
-          Status: Early development stage
+
+  Status: Early development stage
