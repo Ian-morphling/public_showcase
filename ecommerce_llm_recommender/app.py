@@ -3,17 +3,43 @@ import os
 import gc
 import psutil
 from pathlib import Path
+import requests
 
 from agents.retriever_agent import RetrieverAgent
 from agents.userprofile_agent import UserProfileAgent  
 from agents.explainer_agent import ExplainerAgent      
 
-# === Config ===
+
+
+def download_file(url, target_path):
+    target_path = Path(target_path)
+    target_path.parent.mkdir(parents=True, exist_ok=True)
+    if not target_path.exists():
+        r = requests.get(url, stream=True)
+        r.raise_for_status()
+        with open(target_path, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                f.write(chunk)
+        st.info(f"Downloaded {target_path.name}")
+    else:
+        st.info(f"{target_path.name} already exists")
+    return target_path
+
 INDEX_PATH = "index/product.index"
 MAPPING_PATH = "index/id_to_filename.pkl"
-CHUNKS_DIR = "outputs"
-USER_PROFILES_DIR = "outputs" 
+CHUNKS_DIR = Path(os.getenv("DOCS_DIR", "outputs"))
+USER_PROFILES_DIR = CHUNKS_DIR
+
+INDEX_URL = os.getenv("INDEX_URL")
+MAPPING_URL = os.getenv("MAPPING_URL")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+
+
+if INDEX_URL and not Path(INDEX_PATH).exists():
+    download_file(INDEX_URL, INDEX_PATH)
+
+if MAPPING_URL and not Path(MAPPING_PATH).exists():
+    download_file(MAPPING_URL, MAPPING_PATH)
 
 # === Page Config ===
 st.set_page_config(
