@@ -60,7 +60,6 @@ Use a user query + profile to retrieve relevant reviews, then generate concise, 
 
 - **agents/userprofile_agent.py**
 Manages user-specific data for personalized recommendations, Provides summary statistics: total reviews, average rating, verified purchase count, rating distribution
-
 Enables the recommender to tailor retrieved reviews and AI-generated explanations based on a reviewer’s historical preferences
 
 
