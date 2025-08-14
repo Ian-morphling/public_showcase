@@ -5,6 +5,7 @@ from typing import List, Dict
 import pandas as pd
 import numpy as np
 import faiss
+import torch
 from sentence_transformers import SentenceTransformer
 
 class RetrieverAgent:
@@ -13,16 +14,22 @@ class RetrieverAgent:
         index_path: str,
         mapping_path: str,
         docs_dir: str,
-        model_name: str = "sentence-transformers/all-MiniLM-L6-v2",
-        device: str = "cuda"
+        model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
     ):
         self.index_path = Path(index_path)
         self.mapping_path = Path(mapping_path)
         self.docs_dir = Path(docs_dir)
-        self.device = device
         self.model_name = model_name
 
-        # validate files
+        # Automatically select device
+        if torch.cuda.is_available():
+            self.device = "cuda"
+            print(f"GPU detected. Using device: {self.device}")
+        else:
+            self.device = "cpu"
+            print(f"No GPU detected. Using device: {self.device}")
+
+        # Validate files
         if not self.index_path.exists():
             raise FileNotFoundError(f"FAISS index not found: {index_path}")
         if not self.mapping_path.exists():
@@ -38,7 +45,13 @@ class RetrieverAgent:
             self.id_to_file = pickle.load(f)
 
         print(f"Loading embedding model on device: {self.device}")
-        self.model = SentenceTransformer(self.model_name, device=self.device)
+        try:
+            self.model = SentenceTransformer(self.model_name, device=self.device)
+        except Exception as e:
+            print(f"Failed to load model on {self.device}: {e}")
+            print("Falling back to CPU")
+            self.device = "cpu"
+            self.model = SentenceTransformer(self.model_name, device=self.device)
 
     def _load_doc(self, doc_id: int) -> Dict:
         """Load the document safely from chunked parquet file."""
