@@ -12,7 +12,7 @@ This project builds an end-to-end recommender system using:
 - MiniLM embeddings stored in a FAISS IVF index for efficient similarity search
 - Multi-agent architecture (**RetrieverAgent**, **ExplainerAgent**, **UserProfilerAgent**, **RecommenderAgent**) orchestrated via LangChain/LangGraph (planned)
 - Explainable recommendations leveraging review metadata like verified purchase status, helpful votes, and sentiment
-- Streamlit UI available for local and in-person demonstrations; public deployment planned.
+- [Streamlit UI available](https://ecomm-recommender.streamlit.app/)
 
 The core idea:  
 Use a user query + profile to retrieve relevant reviews, then generate concise, contextual answers with explicit rationale referencing trustworthy reviews.
@@ -56,6 +56,14 @@ Use a user query + profile to retrieve relevant reviews, then generate concise, 
 
 - **agents/retriever_agent.py**  
   Loads FAISS index & metadata, embeds queries, executes similarity search, and returns detailed enriched review results.
+
+
+- **agents/userprofile_agent.py**
+Manages user-specific data for personalized recommendations, Provides summary statistics: total reviews, average rating, verified purchase count, rating distribution
+
+Enables the recommender to tailor retrieved reviews and AI-generated explanations based on a reviewer’s historical preferences
+
+
 
 ### Orchestration
 
