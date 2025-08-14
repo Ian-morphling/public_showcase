@@ -1,21 +1,20 @@
 # Web app
-streamlit==1.38.0
+streamlit>=1.38,<1.39
 
-# Core numerical / data packages (prebuilt wheels exist for Python 3.10)
-numpy==1.26.4
-pandas==2.2.2
-scikit-learn==1.5.1
-pyarrow==14.0.2
+# Core numerical / data packages (fast wheels available for Python 3.10)
+numpy>=1.26,<1.27
+pandas>=2.2,<2.3
+scikit-learn>=1.5,<1.6
+pyarrow>=14.0,<15.0
 
 # NLP + embeddings
-sentence-transformers==2.2.2
-transformers==4.43.4
-torch==2.3.1+cpu
---find-links https://download.pytorch.org/whl/torch_stable.html
+sentence-transformers>=2.2,<2.3
+transformers>=4.43,<4.44
+torch>=2.3,<2.4
 
-# FAISS with prebuilt wheels
-faiss-cpu==1.8.0.post1
+# FAISS (prebuilt wheels for CPU)
+faiss-cpu>=1.8.0.post1,<1.9
 
 # Utilities
-tqdm==4.66.5
-requests==2.32.3
+tqdm>=4.66,<4.67
+requests>=2.32,<2.33
