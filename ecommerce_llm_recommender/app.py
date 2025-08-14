@@ -9,8 +9,6 @@ from agents.retriever_agent import RetrieverAgent
 from agents.userprofile_agent import UserProfileAgent  
 from agents.explainer_agent import ExplainerAgent      
 
-
-
 def download_file(url, target_path):
     target_path = Path(target_path)
     target_path.parent.mkdir(parents=True, exist_ok=True)
@@ -34,7 +32,6 @@ INDEX_URL = os.getenv("INDEX_URL")
 MAPPING_URL = os.getenv("MAPPING_URL")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-
 if INDEX_URL and not Path(INDEX_PATH).exists():
     download_file(INDEX_URL, INDEX_PATH)
 
@@ -52,19 +49,16 @@ st.set_page_config(
 # === Helper Functions ===
 @st.cache_data
 def get_memory_usage():
-    """Get current memory usage"""
     process = psutil.Process(os.getpid())
     return process.memory_info().rss / 1024 / 1024  # MB
 
 def validate_files():
-    """Validate all required files exist"""
     required_files = {
         "FAISS Index": INDEX_PATH,
         "ID Mapping": MAPPING_PATH,
         "Documents Directory": CHUNKS_DIR,
         "User Profiles Dir": USER_PROFILES_DIR
     }
-    
     missing_files = []
     for name, path in required_files.items():
         p = Path(path)
@@ -75,13 +69,11 @@ def validate_files():
         else:
             if not p.exists():
                 missing_files.append(f"{name}: {path}")
-    
     return missing_files
 
 # === Sidebar Info ===
 with st.sidebar:
     st.header("🔧 System Status")
-    
     memory_mb = get_memory_usage()
     st.metric("Memory Usage", f"{memory_mb:.1f} MB")
     
@@ -113,7 +105,6 @@ with st.sidebar:
 st.title("🛒 E-Commerce Multi-Agent Recommender")
 st.markdown("*Advanced RAG-based product recommendation system with personalization*")
 
-# Early exit if missing critical files
 missing_files = validate_files()
 if missing_files:
     st.error("Cannot start application - missing required files. See sidebar for details.")
@@ -142,7 +133,7 @@ def load_explainer():
         return ExplainerAgent(GROQ_API_KEY)
     except Exception as e:
         st.warning(f"LLM agent initialized with warnings: {e}")
-        return ExplainerAgent(GROQ_API_KEY)  # fallback
+        return ExplainerAgent(GROQ_API_KEY)
 
 retriever = load_retriever()
 userprofile_agent = load_userprofile_agent()
@@ -244,10 +235,10 @@ if st.button(" Get Recommendations", type="primary", use_container_width=True):
                     with c2:
                         rating = doc.get('overall', 'N/A')
                         verified = doc.get('verified', 'N/A')
-                        distance = doc.get('faiss_distance', 0)
+                        similarity = doc.get('similarity', 0)
                         
                         st.metric(f"Review {i+1}", f"{rating}")
-                        st.caption(f"Similarity: {1-distance:.3f}")
+                        st.caption(f"Similarity: {similarity:.3f}")
                         st.caption(f"Verified: {'✅' if verified else '❌'}")
                     
                     with c1:
