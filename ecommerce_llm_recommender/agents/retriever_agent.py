@@ -52,30 +52,32 @@ class RetrieverAgent:
             print("Falling back to CPU")
             self.device = "cpu"
             self.model = SentenceTransformer(self.model_name, device=self.device)
-
+        
     def _load_doc(self, doc_id: int) -> Dict:
-        """Load the document safely from chunked parquet file."""
+        """Load a single document from its parquet file, with correct overall and verified."""
         if doc_id not in self.id_to_file:
-            return {"text": "", "metadata": {}, "overall": None, "verified": None}
+            return {"text": None, "summary": None, "overall": None, "verified": None}
 
         file_name = self.id_to_file[doc_id]
         file_path = self.docs_dir / file_name
         if not file_path.exists():
-            return {"text": "", "metadata": {}, "overall": None, "verified": None}
+            return {"text": None, "summary": None, "overall": None, "verified": None}
 
         try:
             df = pd.read_parquet(file_path, engine="pyarrow")
             row_idx = doc_id % len(df) if len(df) > 0 else 0
             row = df.iloc[row_idx]
+
             return {
-                "text": row.get("text",""),
-                "metadata": row.get("metadata", {}),
-                "overall": row.get("metadata", {}).get("overall", None),
-                "verified": row.get("metadata", {}).get("verified", None)
+                "summary": row.get("summary", None),
+                "text": row.get("text", None),
+                "overall": row.get("overall", None),
+                "verified": row.get("verified", None),
             }
         except Exception as e:
             print(f"Warning loading doc {doc_id}: {e}")
-            return {"text": "", "metadata": {}, "overall": None, "verified": None}
+            return {"summary": None, "text": None, "overall": None, "verified": None}
+    
 
     def retrieve(self, query: str, top_k: int = 5) -> List[Dict]:
         """Return top_k FAISS results, safe against failures."""
