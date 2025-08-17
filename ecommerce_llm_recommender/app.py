@@ -167,6 +167,9 @@ if st.button(" Get Recommendations", type="primary", use_container_width=True):
 
     # --- Display user profile summary if available ---
     if user_profile_summary:
+        st.success(
+            f"✅ Personalized recommendations generated using reviewer ID **{reviewer_id}**"
+        )
         st.subheader(" Reviewer Stats")
         c1, c2, c3, c4 = st.columns(4)
         c1.metric("Total Reviews", user_profile_summary['total_reviews'])
