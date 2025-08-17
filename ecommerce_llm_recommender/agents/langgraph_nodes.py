@@ -1,39 +1,78 @@
-from typing import Optional, List, Dict
+from typing import TypedDict, List, Dict, Optional
+from langgraph.graph import StateGraph, END
+
 from .retriever_agent import RetrieverAgent
 from .userprofile_agent import UserProfileAgent
 from .explainer_agent import ExplainerAgent
 
 
-class RetrieverNode:
-    """Wrapper around RetrieverAgent for LangGraph-style node."""
-    def __init__(self, index_path: str, mapping_path: str, docs_dir: str):
-        self.agent = RetrieverAgent(index_path=index_path, mapping_path=mapping_path, docs_dir=docs_dir)
+class GraphState(TypedDict, total=False):
+    query: str
+    top_k: int
+    reviewer_id: Optional[str]
 
-    def run(self, query: str, top_k: int = 5) -> List[Dict]:
-        """Retrieve top_k relevant reviews for the query."""
-        return self.agent.retrieve(query, top_k=top_k)
+    retrieved_docs: List[Dict]
+    user_profile: Optional[List[Dict]]
+    user_profile_summary: Optional[Dict]
 
-
-class UserProfileNode:
-    """Wrapper around UserProfileAgent for LangGraph-style node."""
-    def __init__(self, user_profiles_dir: str):
-        self.agent = UserProfileAgent(user_profiles_dir=user_profiles_dir)
-
-    def run(self, reviewer_id: str) -> Optional[List[Dict]]:
-        """Return user profile stats if reviewer exists."""
-        if self.agent.has_user(reviewer_id):
-            return self.agent.get_user_stats(reviewer_id)
-        return None
-
-    def has_user(self, reviewer_id: str) -> bool:
-        return self.agent.has_user(reviewer_id)
+    answer: str
 
 
-class ExplainerNode:
-    """Wrapper around ExplainerAgent for LangGraph-style node."""
-    def __init__(self, groq_api_key: Optional[str] = None):
-        self.agent = ExplainerAgent(groq_api_key)
+def build_graph(
+    index_path: str,
+    mapping_path: str,
+    docs_dir: str,
+    user_profiles_dir: str,
+    groq_api_key: Optional[str] = None,
+):
+    retriever = RetrieverAgent(index_path=index_path, mapping_path=mapping_path, docs_dir=docs_dir)
+    userprof = UserProfileAgent(user_profiles_dir=user_profiles_dir)
+    explainer = ExplainerAgent(groq_api_key)
 
-    def run(self, query: str, retrieved_docs: List[Dict], user_profile: Optional[List[Dict]] = None) -> str:
-        """Generate AI explanation / recommendation based on query, docs, and optional user profile."""
-        return self.agent.generate_answer(query, retrieved_docs, user_profile=user_profile)
+    graph = StateGraph(GraphState)
+
+    # --- Nodes ---
+    def node_retrieve(state: GraphState) -> GraphState:
+        query = state["query"]
+        top_k = int(state.get("top_k", 5))
+        docs = retriever.retrieve(query, top_k=top_k)
+        return {"retrieved_docs": docs}
+
+    def node_user_profile(state: GraphState) -> GraphState:
+        reviewer_id = (state.get("reviewer_id") or "").strip()
+        if reviewer_id and userprof.has_user(reviewer_id):
+            profile = userprof.get_user_stats(reviewer_id)
+            summary = userprof.get_user_summary(reviewer_id)
+        else:
+            profile = None
+            summary = None
+        return {"user_profile": profile, "user_profile_summary": summary}
+
+    def node_explain(state: GraphState) -> GraphState:
+        query = state["query"]
+        docs = state.get("retrieved_docs", [])
+        profile = state.get("user_profile", None)
+        answer = explainer.generate_answer(query, docs, user_profile=profile)
+        return {"answer": answer}
+
+    graph.add_node("retrieve", node_retrieve)
+    graph.add_node("user_profile", node_user_profile)
+    graph.add_node("explain", node_explain)
+
+    # --- Routing ---
+    def router_after_retrieve(state: GraphState) -> str:
+        reviewer_id = (state.get("reviewer_id") or "").strip()
+        if reviewer_id and userprof.has_user(reviewer_id):
+            return "user_profile"
+        return "explain"
+
+    graph.set_entry_point("retrieve")
+    graph.add_conditional_edges(
+        "retrieve",
+        router_after_retrieve,
+        {"user_profile": "user_profile", "explain": "explain"},
+    )
+    graph.add_edge("user_profile", "explain")
+    graph.add_edge("explain", END)
+
+    return graph.compile()
