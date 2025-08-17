@@ -74,7 +74,8 @@ Enables the recommender to tailor retrieved reviews and AI-generated explanation
 Defines LangGraph-compatible nodes for each agent (UserProfileNode, RetrieverNode, RecommenderNode, ExplainerNode) and build_graph() to chain them together.
 Enables flexible, multi-step orchestration where each agent’s output feeds into the next node.
 
-###Workflows
+
+### Workflows
 
 Workflow A: Direct RAG Pipeline
 
@@ -83,6 +84,7 @@ Runs retrieval + explanation sequentially via scripts/run_rag.py.
 Suitable for debugging or lightweight mode
 
 Flow: RetrieverAgent -> ExplainerAgent
+
 
 Workflow B: LangGraph Orchestration
 
@@ -96,7 +98,7 @@ Invoked via app.py (Streamlit demo)
 
 
 
-###Orchestration
+### Orchestration
 
 - **scripts/run_rag.py**  
   Runs the full retrieval + explanation pipeline end-to-end, displaying retrieved reviews and LLM-generated answers.
@@ -104,7 +106,8 @@ Invoked via app.py (Streamlit demo)
 - **app.py**
 Streamlit front-end that lets users run queries with or without reviewerid
 
-Quick Start Guide
+## Quick Start Guide
+
 ### Workflow A: Direct RAG pipeline
 python scripts/run_rag.py --query "Best headphones under $100"
 
@@ -112,7 +115,7 @@ python scripts/run_rag.py --query "Best headphones under $100"
 streamlit run app.py
 
 
-###LangGraph Orchestration
+### LangGraph Orchestration
 
 With today’s improvements, the recommender supports two alternative workflows via agents/langgraph_nodes.py:
 
