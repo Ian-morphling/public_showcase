@@ -33,15 +33,14 @@ Each folder in this repository contains a self-contained project.
 - **Tech Stack:** Python, seaborn, matplotlib.
 
 ### [LLM-powered Multi-Agent Recommender](./ecommerce_llm_recommender) (Ongoing)
-- **Objective:**  Build an explainable and personalized product recommendation system using RAG, FAISS, LLM and multi-agent orchestration
+- **Objective:** Build an explainable and personalized product recommendation system using **RAG**, FAISS, LLMs, and multi-agent orchestration.
 - **Highlights:**
-Scalable embedding + FAISS vector search pipeline for fast semantic retrieval
-Modular multi-agent architecture (Retriever, UserProfiler, Explainer)
-Two operational workflows:
-Direct RAG pipeline (Retriever -> Explainer) for quick query-answering
-LangGraph orchestration, conditional on reviewer ID for personalized recommendations
-Explainable recommendations with review metadata (verified purchases, helpful votes, ratings)
-Interactive Streamlit UI: [Try it here](https://ecomm-recommender.streamlit.app/)
-- **Tech Stack:** Python, FAISS, Sentence-Transformers (MiniLM), Pandas / PyArrow, LangGraph / LangChain , Streamlit, Groq LLM API, Parquet
-
-  Status: Early development stage
+  - Scalable embedding + **FAISS vector search** pipeline for fast semantic retrieval
+  - **Modular multi-agent architecture**: RetrieverAgent, UserProfilerAgent, ExplainerAgent
+  - **Two operational workflows**:
+    1. **Direct RAG pipeline** (Retriever -> Explainer) for quick query-answering
+    2. **LangGraph orchestration**, conditional on reviewer ID, for personalized recommendations
+  - Explainable recommendations leveraging review metadata (verified purchases, helpful votes, ratings)
+  - Interactive **Streamlit UI**: [Try it here](https://ecomm-recommender.streamlit.app/)
+- **Tech Stack:** Python, FAISS, Sentence-Transformers (MiniLM), Pandas / PyArrow, LangGraph / LangChain, Streamlit, Groq LLM API, Parquet
+- **Status:** Early development
