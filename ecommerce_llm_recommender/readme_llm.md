@@ -106,6 +106,19 @@ Invoked via app.py (Streamlit demo)
 - **app.py**
 Streamlit front-end that lets users run queries with or without reviewerid
 
+### LangGraph Orchestration
+
+the recommender supports two alternative workflows via agents/langgraph_nodes.py:
+
+1. Retrieval -> Explanation (Q&A mode)
+
+User asks a question -> System retrieves relevant reviews -> LLM explains answer.
+
+2. Profile -> Retrieval -> Recommendation + Explanation (Personalized mode)
+
+User profile guides retrieval -> Reviews retrieved -> Personalized explanation generated.
+
+
 ## Quick Start Guide
 
 ### Workflow A: Direct RAG pipeline
@@ -115,14 +128,3 @@ python scripts/run_rag.py --query "Best headphones under $100"
 streamlit run app.py
 
 
-### LangGraph Orchestration
-
-With today’s improvements, the recommender supports two alternative workflows via agents/langgraph_nodes.py:
-
-1. Retrieval -> Explanation (Q&A mode)
-
-User asks a question -> System retrieves relevant reviews -> LLM explains answer.
-
-2. Profile -> Retrieval -> Recommendation + Explanation (Personalized mode)
-
-User profile guides retrieval -> Reviews retrieved -> Personalized explanation generated.
