@@ -5,10 +5,9 @@ import psutil
 from pathlib import Path
 import requests
 
-from agents.retriever_agent import RetrieverAgent
-from agents.userprofile_agent import UserProfileAgent  
-from agents.explainer_agent import ExplainerAgent      
+from agents.langgraph_nodes import RetrieverNode, UserProfileNode, ExplainerNode
 
+# --- Helper: File Download ---
 def download_file(url, target_path):
     target_path = Path(target_path)
     target_path.parent.mkdir(parents=True, exist_ok=True)
@@ -23,6 +22,7 @@ def download_file(url, target_path):
         st.info(f"{target_path.name} already exists")
     return target_path
 
+# --- Paths & URLs ---
 INDEX_PATH = "index/product.index"
 MAPPING_PATH = "index/id_to_filename.pkl"
 CHUNKS_DIR = Path(os.getenv("DOCS_DIR", "outputs"))
@@ -38,7 +38,7 @@ if INDEX_URL and not Path(INDEX_PATH).exists():
 if MAPPING_URL and not Path(MAPPING_PATH).exists():
     download_file(MAPPING_URL, MAPPING_PATH)
 
-# === Page Config ===
+# --- Page Config ---
 st.set_page_config(
     page_title="🛒 E-Commerce Multi-Agent Recommender",
     page_icon="🛒",
@@ -46,7 +46,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# === Helper Functions ===
+# --- System Status Sidebar ---
 @st.cache_data
 def get_memory_usage():
     process = psutil.Process(os.getpid())
@@ -71,12 +71,11 @@ def validate_files():
                 missing_files.append(f"{name}: {path}")
     return missing_files
 
-# === Sidebar Info ===
 with st.sidebar:
     st.header("🔧 System Status")
     memory_mb = get_memory_usage()
     st.metric("Memory Usage", f"{memory_mb:.1f} MB")
-    
+
     missing_files = validate_files()
     if missing_files:
         st.error(" Missing Files:")
@@ -84,66 +83,49 @@ with st.sidebar:
             st.text(f"• {file}")
     else:
         st.success(" All files found")
-    
+
     if GROQ_API_KEY:
         st.success(" Groq API Key loaded")
     else:
         st.warning(" No Groq API Key (fallback mode)")
-    
+
     st.header(" System Controls")
     if st.button(" Clear Cache & Free Memory"):
         st.cache_data.clear()
         st.cache_resource.clear()
-        for key in ['retriever', 'userprofile_agent', 'explainer']:
+        for key in ['retriever_node', 'user_node', 'explainer_node']:
             if key in st.session_state:
                 del st.session_state[key]
         gc.collect()
         st.success("Cache cleared!")
         st.rerun()
 
-# === Main App ===
+# --- Main App ---
 st.title("🛒 E-Commerce Multi-Agent Recommender")
 st.markdown("*Advanced RAG-based product recommendation system with personalization*")
 
-missing_files = validate_files()
 if missing_files:
     st.error("Cannot start application - missing required files. See sidebar for details.")
     st.stop()
 
-# === Lazy Agent Loading ===
+# --- LangGraph Nodes: Lazy Loading ---
 @st.cache_resource
-def load_retriever():
-    try:
-        return RetrieverAgent(INDEX_PATH, MAPPING_PATH, CHUNKS_DIR)
-    except Exception as e:
-        st.error(f"Failed to load retriever: {e}")
-        return None
-
-@st.cache_resource  
-def load_userprofile_agent():
-    try:
-        return UserProfileAgent(USER_PROFILES_DIR)
-    except Exception as e:
-        st.error(f"Failed to load user profiles: {e}")
-        return None
+def load_retriever_node():
+    return RetrieverNode(INDEX_PATH, MAPPING_PATH, CHUNKS_DIR)
 
 @st.cache_resource
-def load_explainer():
-    try:
-        return ExplainerAgent(GROQ_API_KEY)
-    except Exception as e:
-        st.warning(f"LLM agent initialized with warnings: {e}")
-        return ExplainerAgent(GROQ_API_KEY)
+def load_user_node():
+    return UserProfileNode(USER_PROFILES_DIR)
 
-retriever = load_retriever()
-userprofile_agent = load_userprofile_agent()
-explainer = load_explainer()
+@st.cache_resource
+def load_explainer_node():
+    return ExplainerNode(GROQ_API_KEY)
 
-if not retriever:
-    st.error("Cannot proceed without retriever agent.")
-    st.stop()
+retriever_node = load_retriever_node()
+user_node = load_user_node()
+explainer_node = load_explainer_node()
 
-# === User Interface ===
+# --- UI ---
 col1, col2 = st.columns([2, 1])
 
 with col1:
@@ -169,107 +151,70 @@ reviewer_id = st.text_input(
     help="If provided, recommendations will be tailored based on your review history"
 )
 
-if reviewer_id.strip() and userprofile_agent:
-    with st.spinner("Checking user profile..."):
-        if userprofile_agent.has_user(reviewer_id):
-            summary = userprofile_agent.get_user_summary(reviewer_id)
-            if summary:
-                c1, c2, c3, c4 = st.columns(4)
-                with c1:
-                    st.metric("Total Reviews", summary['total_reviews'])
-                with c2:
-                    st.metric("Avg Rating", f"{summary['avg_rating']:.1f}")
-                with c3:
-                    st.metric("Verified Purchases", summary['verified_purchases'])
-                with c4:
-                    st.metric("5-Star Reviews", summary['rating_distribution']['5_star'])
-        else:
-            st.warning(f" Reviewer ID '{reviewer_id}' not found in database")
+# --- Show User Profile if exists ---
+user_profile_data = None
+if reviewer_id.strip():
+    if user_node.has_user(reviewer_id):
+        user_profile_data = user_node.run(reviewer_id)
+        summary = user_node.agent.get_user_summary(reviewer_id)
+        if summary:
+            c1, c2, c3, c4 = st.columns(4)
+            c1.metric("Total Reviews", summary['total_reviews'])
+            c2.metric("Avg Rating", f"{summary['avg_rating']:.1f}")
+            c3.metric("Verified Purchases", summary['verified_purchases'])
+            c4.metric("5-Star Reviews", summary['rating_distribution']['5_star'])
+    else:
+        st.warning(f" Reviewer ID '{reviewer_id}' not found in database")
 
-# === Main Query Processing ===
+# --- Query Processing ---
 if st.button(" Get Recommendations", type="primary", use_container_width=True):
     if not query.strip():
         st.error("Please enter a search query!")
         st.stop()
-    
-    retrieved_docs = []
-    user_profile_data = None
-    
-    # Phase 1: Retrieve reviews
+
+    # Phase 1: Retrieve reviews via LangGraph
     with st.spinner(" Searching relevant reviews..."):
-        try:
-            retrieved_docs = retriever.retrieve(query, top_k=top_k)
-            st.success(f" Retrieved {len(retrieved_docs)} relevant reviews")
-        except Exception as e:
-            st.error(f" Retrieval failed: {e}")
-            st.stop()
-    
-    # Phase 2: Load user profile
-    if reviewer_id.strip() and userprofile_agent:
-        with st.spinner("👤 Loading user profile..."):
-            try:
-                if userprofile_agent.has_user(reviewer_id):
-                    user_profile_data = userprofile_agent.get_user_stats(reviewer_id)
-                    if user_profile_data:
-                        st.success(f" Loaded profile with {len(user_profile_data)} reviews")
-                    else:
-                        st.warning(" User profile exists but no data loaded")
-                else:
-                    st.warning(f" Reviewer ID '{reviewer_id}' not found")
-            except Exception as e:
-                st.error(f" User profile loading failed: {e}")
-    
-    # Phase 3: Display retrieved reviews
+        retrieved_docs = retriever_node.run(query, top_k=top_k)
+        st.success(f" Retrieved {len(retrieved_docs)} relevant reviews")
+
+    # Phase 2: Display retrieved reviews
     if retrieved_docs:
         st.subheader(" Retrieved Reviews")
-        ratings = [doc.get('overall') for doc in retrieved_docs if doc.get('overall')]
-        if ratings:
-            avg_rating = sum(ratings) / len(ratings)
-            st.info(f" Average rating of retrieved reviews: {avg_rating:.1f}⭐ ({len(ratings)} reviews)")
-        
         with st.expander(" View Retrieved Reviews", expanded=True):
             for i, doc in enumerate(retrieved_docs):
-                with st.container():
-                    c1, c2 = st.columns([3, 1])
-                    
-                    with c2:
-                        rating = doc.get('overall', 'N/A')
-                        verified = doc.get('verified', 'N/A')
-                        similarity = doc.get('similarity', 0)
-                        
-                        st.metric(f"Review {i+1}", f"{rating}")
-                        st.caption(f"Similarity: {similarity:.3f}")
-                        st.caption(f"Verified: {'✅' if verified else '❌'}")
-                    
-                    with c1:
-                        text = doc.get("text", "")
-                        if len(text) > 800:
-                            st.write(text[:800] + "...")
-                            with st.expander("Read full review"):
-                                st.write(text)
-                        else:
+                c1, c2 = st.columns([3, 1])
+                with c2:
+                    rating = doc.get("overall", 'N/A')
+                    verified = doc.get("verified", 'N/A')
+                    similarity = doc.get('similarity', 0)
+                    st.metric(f"Review {i+1}", f"{rating}")
+                    st.caption(f"Similarity: {similarity:.3f}")
+                    st.caption(f"Verified: {'✅' if verified else '❌'}")
+                with c1:
+                    text = doc.get("text", "")
+                    if len(text) > 800:
+                        st.write(text[:800] + "...")
+                        with st.expander("Read full review"):
                             st.write(text)
-                    
-                    st.divider()
-    
-    # Phase 4: Generate AI explanation
-    if retrieved_docs and explainer:
+                    else:
+                        st.write(text)
+                st.divider()
+
+    # Phase 3: Generate AI Explanation via LangGraph
+    if retrieved_docs:
         st.subheader(" AI Analysis & Recommendations")
         with st.spinner(" Generating intelligent analysis..."):
-            try:
-                answer = explainer.generate_answer(query, retrieved_docs, user_profile=user_profile_data)
-                st.markdown("### Recommendation Summary")
-                st.write(answer)
-                if user_profile_data:
-                    st.success(" This recommendation was personalized based on your review history!")
-            except Exception as e:
-                st.error(f" AI analysis failed: {e}")
-    
+            answer = explainer_node.run(query, retrieved_docs, user_profile_data)
+            st.markdown("### Recommendation Summary")
+            st.write(answer)
+            if user_profile_data:
+                st.success(" Personalized based on your review history!")
+
     gc.collect()
 
-# === Footer ===
+# --- Footer ---
 st.markdown("---")
 st.markdown(
     "** Multi-Agent E-Commerce Recommender** | "
-    "*Powered by FAISS, Sentence Transformers, and Groq LLM*"
+    "*Powered by LangGraph, FAISS, Sentence Transformers, and Groq LLM*"
 )
