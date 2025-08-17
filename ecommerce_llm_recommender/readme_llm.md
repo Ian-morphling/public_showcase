@@ -33,6 +33,7 @@ Use a user query + profile to retrieve relevant reviews, then generate concise, 
 
 - **recommender/data/preprocess.py**  
   Enriches cleaned reviews with metadata, vote bins, sentiment; creates user profile JSON for personalization.
+  Data is stored in multiple parquet files to enable scalable processing of large review datasets.
   
 - **recommender/data/embeddings.py**  
   Generates normalized embeddings from cleaned review text in parquet files, chunked for scalability.
