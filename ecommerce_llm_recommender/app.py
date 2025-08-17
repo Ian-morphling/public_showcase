@@ -5,7 +5,7 @@ import psutil
 from pathlib import Path
 import requests
 
-from agents.langgraph_nodes import RetrieverNode, UserProfileNode, ExplainerNode
+from agents.langgraph_nodes import build_graph
 
 # --- Helper: File Download ---
 def download_file(url, target_path):
@@ -34,7 +34,6 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 if INDEX_URL and not Path(INDEX_PATH).exists():
     download_file(INDEX_URL, INDEX_PATH)
-
 if MAPPING_URL and not Path(MAPPING_PATH).exists():
     download_file(MAPPING_URL, MAPPING_PATH)
 
@@ -46,7 +45,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- System Status Sidebar ---
+# --- System Status ---
 @st.cache_data
 def get_memory_usage():
     process = psutil.Process(os.getpid())
@@ -72,7 +71,7 @@ def validate_files():
     return missing_files
 
 with st.sidebar:
-    st.header("🔧 System Status")
+    st.header(" System Status")
     memory_mb = get_memory_usage()
     st.metric("Memory Usage", f"{memory_mb:.1f} MB")
 
@@ -93,9 +92,6 @@ with st.sidebar:
     if st.button(" Clear Cache & Free Memory"):
         st.cache_data.clear()
         st.cache_resource.clear()
-        for key in ['retriever_node', 'user_node', 'explainer_node']:
-            if key in st.session_state:
-                del st.session_state[key]
         gc.collect()
         st.success("Cache cleared!")
         st.rerun()
@@ -108,22 +104,18 @@ if missing_files:
     st.error("Cannot start application - missing required files. See sidebar for details.")
     st.stop()
 
-# --- LangGraph Nodes: Lazy Loading ---
+# --- Load LangGraph ---
 @st.cache_resource
-def load_retriever_node():
-    return RetrieverNode(INDEX_PATH, MAPPING_PATH, CHUNKS_DIR)
+def load_graph():
+    return build_graph(
+        index_path=INDEX_PATH,
+        mapping_path=MAPPING_PATH,
+        docs_dir=CHUNKS_DIR,
+        user_profiles_dir=USER_PROFILES_DIR,
+        groq_api_key=GROQ_API_KEY
+    )
 
-@st.cache_resource
-def load_user_node():
-    return UserProfileNode(USER_PROFILES_DIR)
-
-@st.cache_resource
-def load_explainer_node():
-    return ExplainerNode(GROQ_API_KEY)
-
-retriever_node = load_retriever_node()
-user_node = load_user_node()
-explainer_node = load_explainer_node()
+graph = load_graph()
 
 # --- UI ---
 col1, col2 = st.columns([2, 1])
@@ -144,27 +136,12 @@ with col2:
         help="More reviews = better context but slower processing"
     )
 
-st.subheader("👤 Personalization (Optional)")
+st.subheader(" Personalization (Optional)")
 reviewer_id = st.text_input(
     "Reviewer ID:", 
     placeholder="Enter reviewer ID for personalized recommendations",
     help="If provided, recommendations will be tailored based on your review history"
 )
-
-# --- Show User Profile if exists ---
-user_profile_data = None
-if reviewer_id.strip():
-    if user_node.has_user(reviewer_id):
-        user_profile_data = user_node.run(reviewer_id)
-        summary = user_node.agent.get_user_summary(reviewer_id)
-        if summary:
-            c1, c2, c3, c4 = st.columns(4)
-            c1.metric("Total Reviews", summary['total_reviews'])
-            c2.metric("Avg Rating", f"{summary['avg_rating']:.1f}")
-            c3.metric("Verified Purchases", summary['verified_purchases'])
-            c4.metric("5-Star Reviews", summary['rating_distribution']['5_star'])
-    else:
-        st.warning(f" Reviewer ID '{reviewer_id}' not found in database")
 
 # --- Query Processing ---
 if st.button(" Get Recommendations", type="primary", use_container_width=True):
@@ -172,12 +149,32 @@ if st.button(" Get Recommendations", type="primary", use_container_width=True):
         st.error("Please enter a search query!")
         st.stop()
 
-    # Phase 1: Retrieve reviews via LangGraph
-    with st.spinner(" Searching relevant reviews..."):
-        retrieved_docs = retriever_node.run(query, top_k=top_k)
-        st.success(f" Retrieved {len(retrieved_docs)} relevant reviews")
+    state = {
+        "query": query,
+        "top_k": top_k,
+        "reviewer_id": reviewer_id.strip() or None
+    }
 
-    # Phase 2: Display retrieved reviews
+    with st.spinner(" Generating recommendations..."):
+        try:
+            result_state = graph.invoke(state)
+            retrieved_docs = result_state.get("retrieved_docs", [])
+            answer = result_state.get("answer", None)
+            user_profile_summary = result_state.get("user_profile_summary", None)
+        except Exception as e:
+            st.error(f"Error during graph execution: {str(e)}")
+            st.stop()
+
+    # --- Display user profile summary if available ---
+    if user_profile_summary:
+        st.subheader(" Reviewer Stats")
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Total Reviews", user_profile_summary['total_reviews'])
+        c2.metric("Avg Rating", f"{user_profile_summary['avg_rating']:.1f}")
+        c3.metric("Verified Purchases", user_profile_summary['verified_purchases'])
+        c4.metric("5-Star Reviews", user_profile_summary['rating_distribution']['5_star'])
+
+    # --- Display retrieved reviews ---
     if retrieved_docs:
         st.subheader(" Retrieved Reviews")
         with st.expander(" View Retrieved Reviews", expanded=True):
@@ -200,15 +197,11 @@ if st.button(" Get Recommendations", type="primary", use_container_width=True):
                         st.write(text)
                 st.divider()
 
-    # Phase 3: Generate AI Explanation via LangGraph
-    if retrieved_docs:
+    # --- Display AI explanation ---
+    if answer:
         st.subheader(" AI Analysis & Recommendations")
-        with st.spinner(" Generating intelligent analysis..."):
-            answer = explainer_node.run(query, retrieved_docs, user_profile_data)
-            st.markdown("### Recommendation Summary")
-            st.write(answer)
-            if user_profile_data:
-                st.success(" Personalized based on your review history!")
+        st.markdown("### Recommendation Summary")
+        st.write(answer)
 
     gc.collect()
 
