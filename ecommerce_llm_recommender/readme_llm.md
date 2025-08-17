@@ -21,7 +21,7 @@ Use a user query + profile to retrieve relevant reviews, then generate concise, 
 ### Future Improvements / Experimentation
 
 - Originally explored OpenAI's E5 embedding model to support multilingual product search, relevant for e-commerce in Asia.
-- Due to GPU memory constraints on the local setup, the current demo uses `all-MiniLM-L6-v2` embeddings for stable performance.
+- Due to GPU constraints on the local setup, the current demo uses `all-MiniLM-L6-v2` embeddings for stable performance.
 - The E5 experiment demonstrates readiness to scale to state-of-the-art embeddings for richer semantic retrieval in production environments.
 
 ## Code Modules
