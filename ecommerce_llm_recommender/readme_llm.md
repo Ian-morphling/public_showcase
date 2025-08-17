@@ -50,12 +50,6 @@ Use a user query + profile to retrieve relevant reviews, then generate concise, 
 
 ### LLM Integration & Agents
 
-- **llm/groq_api.py**  
-  Simple wrapper class to call the Groq LLM API with chat completions using your prompt and model parameters.
-
-- **llm/prompt_builder.py**  
-  Builds structured RAG prompts combining retrieved reviews and user query for input to the LLM.
-
 - **agents/explainer_agent.py**  
   Builds RAG prompts and calls the Groq LLM to generate final, explainable answers referencing review metadata.
 
