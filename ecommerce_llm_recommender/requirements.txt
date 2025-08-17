@@ -14,7 +14,7 @@ torch>=2.4.0
 torchvision>=0.19.0
 torchaudio>=2.4.0
 
-# FAISS - use latest version
+# FAISS
 faiss-cpu>=1.8.0
 
 # Utilities
@@ -22,6 +22,16 @@ tqdm>=4.65.0
 requests>=2.31.0
 psutil>=5.9.0
 
+# LangGraph
+langgraph==0.6.5
+langgraph-sdk==0.2.0
+langgraph-prebuilt==0.6.4
+langgraph-checkpoint==2.1.1
+pydantic>=2.7.4
+
+# LLMs / Groq
 groq>=0.4.0
 tiktoken>=0.5.0
+
+# Compatibility
 pickle5>=1.0.11; python_version<"3.8"
