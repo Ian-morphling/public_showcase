@@ -96,7 +96,7 @@ Invoked via app.py (Streamlit demo)
 
 
 
-### Orchestration
+###Orchestration
 
 - **scripts/run_rag.py**  
   Runs the full retrieval + explanation pipeline end-to-end, displaying retrieved reviews and LLM-generated answers.
@@ -105,10 +105,10 @@ Invoked via app.py (Streamlit demo)
 Streamlit front-end that lets users run queries with or without reviewerid
 
 Quick Start Guide
-# Workflow A: Direct RAG pipeline
+### Workflow A: Direct RAG pipeline
 python scripts/run_rag.py --query "Best headphones under $100"
 
-# Workflow B: LangGraph orchestration [Streamlit UI available](https://ecomm-recommender.streamlit.app/)
+### Workflow B: LangGraph orchestration [Streamlit UI available](https://ecomm-recommender.streamlit.app/)
 streamlit run app.py
 
 
