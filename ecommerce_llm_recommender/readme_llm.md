@@ -122,7 +122,7 @@ User profile guides retrieval -> Reviews retrieved -> Personalized explanation g
 ## Quick Start Guide
 
 ### Workflow A: Direct RAG pipeline
-python scripts/run_rag.py --query "Best headphones under 200"
+python -m scripts.run_rag --query "I want a durable laptop with long battery"
 
 ### Workflow B: LangGraph orchestration [Streamlit UI available](https://ecomm-recommender.streamlit.app/)
 streamlit run app.py
