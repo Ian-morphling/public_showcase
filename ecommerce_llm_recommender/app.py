@@ -5,7 +5,7 @@ import psutil
 from pathlib import Path
 import requests
 
-from agents.langgraph_nodes import build_graph
+from langgraph_nodes import build_graph
 
 # --- Helper: File Download ---
 def download_file(url, target_path):
