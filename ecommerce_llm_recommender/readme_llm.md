@@ -70,7 +70,7 @@ The E5 experiment shows readiness to scale to richer semantic retrieval in produ
 Manages user-specific data for personalized recommendations, Provides summary statistics: total reviews, average rating, verified purchase count, rating distribution
 Enables the recommender to tailor retrieved reviews and AI-generated explanations based on a reviewer’s historical preferences
 
-- **agents/langgraph_nodes.py**
+- **langgraph_nodes.py**
 Defines LangGraph-compatible nodes for each agent (UserProfileNode, RetrieverNode, RecommenderNode, ExplainerNode) and build_graph() to chain them together.
 Enables flexible, multi-step orchestration where each agent’s output feeds into the next node.
 
