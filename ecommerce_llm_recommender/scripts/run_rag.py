@@ -50,7 +50,7 @@ def main():
     parser.add_argument("--top-k", "-k", type=int, default=5, help="Number of results to retrieve")
     args = parser.parse_args()
 
-    # Set paths and env vars here (adjust as needed)
+    # paths and env vars 
     load_dotenv()
     INDEX_PATH = os.getenv("INDEX_PATH", "index/product.index")
     MAPPING_PATH = os.getenv("MAPPING_PATH", "index/id_to_filename.pkl")
@@ -58,12 +58,11 @@ def main():
     GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
     retriever = RetrieverAgent(INDEX_PATH, MAPPING_PATH, DOCS_DIR)
-    retriever.initialize()
 
     explainer = ExplainerAgent(GROQ_API_KEY)
 
     # Retrieve
-    raw_results = retriever.query(args.query, top_k=args.top_k)
+    raw_results = retriever.retrieve(args.query, top_k=args.top_k)
 
     # Print raw retrieved reviews with similarity scores and metadata
     display_retrieval_results(raw_results)
