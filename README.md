@@ -1,6 +1,6 @@
 #  Public Project Showcase
 
-Welcome! This repository is a showcase of my data science and machine learning projects, designed to demonstrate applications of analytics, modeling, and data engineering skills across real-world datasets.
+Welcome! This repository is a showcase of my data science and machine learning projects, designed to demonstrate applications of analytics, modeling, ai engineering and data engineering skills across real-world datasets.
 
 Each folder in this repository contains a self-contained project.
 
