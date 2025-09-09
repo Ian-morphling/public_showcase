@@ -4,8 +4,10 @@ import gc
 import psutil
 from pathlib import Path
 import requests
-
+from dotenv import load_dotenv
 from langgraph_nodes import build_graph
+
+load_dotenv()
 
 # --- Helper: File Download ---
 def download_file(url, target_path):
