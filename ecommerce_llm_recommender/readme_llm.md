@@ -114,7 +114,7 @@ the recommender supports two alternative workflows via agents/langgraph_nodes.py
 
 User asks a question -> System retrieves relevant reviews -> LLM explains answer.
 
-2. Profile -> Retrieval -> Recommendation + Explanation (Personalized mode)
+2. Profile -> Retrieval -> Recommendation + Explanation (Personalized mode) (sample reviewer id: A3QVAKVRAH657N	)
 
 User profile guides retrieval -> Reviews retrieved -> Personalized explanation generated.
 
