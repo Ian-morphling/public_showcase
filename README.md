@@ -8,6 +8,16 @@ Each folder in this repository contains a self-contained project.
 
 ##  Featured Projects
 
+### [LLM-powered Multi-Agent Recommender (Ongoing)](./ecommerce_llm_recommender)
+- **Objective:** Personalized, explainable e-commerce product recommendations using RAG, FAISS, LLMs, and multi-agent orchestration.
+- **Impact / Highlights:**
+  - Scalable embedding + **FAISS vector search** for fast semantic retrieval.
+  - **Multi-agent workflows:** Direct RAG & LangGraph orchestration.
+  - Explainable recommendations using review metadata (verified, helpful votes, ratings).
+  - Interactive [Streamlit demo](https://ecomm-recommender.streamlit.app/).
+- **Tech Stack:** Python, FAISS, Sentence-Transformers (MiniLM), LangGraph, Streamlit, Groq LLM API.
+- **Status:** Early development / actively expanding.
+
 ### [Credit Card Fraud Detection](./Credit_fraud)
 - **Objective:** Detect fraudulent transactions in a highly imbalanced dataset.
 - **Highlights:** Achieved **F1 score of 0.86** using Random Forest with PCA and threshold tuning. Conducted a comparative analysis of **SMOTE vs. no-SMOTE approaches** across two notebooks to evaluate the impact on model performance.
@@ -31,16 +41,3 @@ Each folder in this repository contains a self-contained project.
 - **Objective:** Perform exploratory analysis on COVID-19 cases and resource usage in Mexico.
 - **Highlights:** Created insightful queries using visualizations to reveal patterns
 - **Tech Stack:** Python, seaborn, matplotlib.
-
-### [LLM-powered Multi-Agent Recommender](./ecommerce_llm_recommender) (Ongoing)
-- **Objective:** Build an explainable and personalized product recommendation system using **RAG**, FAISS, LLMs, and multi-agent orchestration.
-- **Highlights:**
-  - Scalable embedding + **FAISS vector search** pipeline for fast semantic retrieval
-  - **Modular multi-agent architecture**: RetrieverAgent, UserProfilerAgent, ExplainerAgent
-  - **Two operational workflows**:
-    1. **Direct RAG pipeline** (Retriever -> Explainer) for quick query-answering
-    2. **LangGraph orchestration**, conditional on reviewer ID, for personalized recommendations
-  - Explainable recommendations leveraging review metadata (verified purchases, helpful votes, ratings)
-  - Interactive **Streamlit UI**: [Try it here](https://ecomm-recommender.streamlit.app/)
-- **Tech Stack:** Python, FAISS, Sentence-Transformers (MiniLM), Pandas / PyArrow, LangGraph / LangChain, Streamlit, Groq LLM API, Parquet
-- **Status:** Early development
