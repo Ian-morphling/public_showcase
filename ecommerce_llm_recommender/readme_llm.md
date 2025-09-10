@@ -1,6 +1,8 @@
 # Multi-Agent LLM Recommender with RAG & Explainability for E-Commerce
 
-A showcase project demonstrating a **Retrieval-Augmented Generation (RAG)** pipeline combined with multi-agent orchestration for personalized, explainable product recommendations based on Amazon Electronics 5-core reviews.
+This project demonstrates a Retrieval-Augmented Generation (RAG) pipeline combined with multi-agent orchestration for personalized and explainable product recommendations based on Amazon Electronics 5-core reviews.
+
+The system is designed for technical scalability, modularity, and explainability, demonstrating LLM integration, vector search, and agentic AI workflows
 
 ---
 
@@ -14,23 +16,19 @@ This project builds an end-to-end recommender system using:
 - Explainable recommendations leveraging review metadata like verified purchase status, helpful votes, and sentiment
 - [Streamlit UI available](https://ecomm-recommender.streamlit.app/)
 
-The core idea:  
-Use a user query + profile to retrieve relevant reviews, then generate concise, contextual answers with explicit rationale referencing trustworthy reviews.
+## Key Features
 
-This project now supports two alternative workflows:
+- Two Operational Workflows:
+1. Direct RAG Pipeline: Sequential retrieval + explanation (lightweight, debugging-friendly)
+2. LangGraph Orchestration: Multi-agent graph execution with conditional personalization
 
-Direct RAG pipeline (RetrieverAgent -> ExplainerAgent -> output)
+- Explainable Recommendations: Uses review metadata (verified purchases, helpful votes, ratings, sentiment) to produce transparent reasoning
 
-LangGraph Orchestration: Multi-agent graph execution using build_graph in agents/langgraph_nodes.py
+- Scalable Design: Parquet-based storage and chunked embeddings allow processing of large number of reviews
+
+- Interactive Demo: [Streamlit UI](https://ecomm-recommender.streamlit.app/)
 
 ---
-### Future Improvements / Experimentation
-
-- Implemented LangGraph orchestration with multi-agent nodes
-
-- Originally explored OpenAI’s E5 embeddings for multilingual search (e-commerce in Asia).
-Due to GPU constraints, the current demo uses all-MiniLM-L6-v2 for stable performance.
-The E5 experiment shows readiness to scale to richer semantic retrieval in production.
 
 ## Code Modules
 
@@ -83,7 +81,7 @@ Runs retrieval + explanation sequentially via scripts/run_rag.py.
 
 Suitable for debugging or lightweight mode
 
-Flow: RetrieverAgent -> ExplainerAgent
+RetrieverAgent -> ExplainerAgent
 
 
 Workflow B: LangGraph Orchestration
@@ -92,16 +90,17 @@ Uses build_graph() from agents/langgraph_nodes.py to orchestrate multiple agents
 
 Agents act as nodes (UserProfileNode, RetrieverNode, RecommenderNode, ExplainerNode).
 
-Provides potential for future expansion in additional reasoning, or personalization nodes.
+Supports personalized mode with reviewer profile (example ID: A3QVAKVRAH657N)
 
-Invoked via app.py (Streamlit demo)
+Run via Streamlit front-end (app.py)
 
+UserProfilerNode -> RetrieverNode -> RecommenderNode -> ExplainerNode
 
 
 ### Orchestration
 
 - **scripts/run_rag.py**  
-  Runs the full retrieval + explanation pipeline end-to-end, displaying retrieved reviews and LLM-generated answers.
+  Runs retrieval + explanation pipeline end-to-end, displaying retrieved reviews and LLM-generated answers.
   
 - **app.py**
 Streamlit front-end that lets users run queries with or without reviewerid
@@ -121,10 +120,14 @@ User profile guides retrieval -> Reviews retrieved -> Personalized explanation g
 
 ## Quick Start Guide
 
+pip install -r requirements.txt
+
 ### Workflow A: Direct RAG pipeline
 python -m scripts.run_rag --query "I want a durable laptop with long battery"
 
 ### Workflow B: LangGraph orchestration [Streamlit UI available](https://ecomm-recommender.streamlit.app/)
 streamlit run app.py
+
+
 
 
