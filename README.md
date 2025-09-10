@@ -42,8 +42,8 @@ Each folder in this repository contains a self-contained project.
 - **Tech Stack:** Python, seaborn, matplotlib.
 
 ## Key Skills Demonstrated Across Projects
-- **ML & AI:** Random Forest, PCA, Prophet, RAG, LLM integration
-- **Data Engineering:** ELT pipelines, Parquet storage, Dagster, FAISS embeddings
+- **ML & AI:** Random Forest, PCA, Prophet, RAG, LLM integration, FAISS embeddings
+- **Data Engineering:** ELT pipelines, Parquet storage, Dagster
 - **Web / Visualization:** Flask, Streamlit, Plotly, interactive dashboards
 - **Tools & Libraries:** Python, scikit-learn, pandas, PyArrow, GeoPandas, Sentence-Transformers, LangGraph
 - **Deployment & Scaling:** Streamlit, FAISS vector search, multi-agent orchestration
