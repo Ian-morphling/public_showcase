@@ -13,10 +13,10 @@ Each folder in this repository contains a self-contained project.
 - **Impact / Highlights:**
   - Scalable embedding + **FAISS vector search** for fast semantic retrieval.
   - **Multi-agent workflows:** Direct RAG & LangGraph orchestration.
-  - Explainable recommendations using review metadata (verified, helpful votes, ratings).
-  - Interactive [Streamlit demo](https://ecomm-recommender.streamlit.app/).
+  - Explainable recommendations using review metadata (verified purchases, helpful votes, ratings)
+  - Interactive [Streamlit demo](https://ecomm-recommender.streamlit.app/)
 - **Tech Stack:** Python, FAISS, Sentence-Transformers (MiniLM), LangGraph, Streamlit, Groq LLM API.
-- **Status:** Early development / actively expanding.
+- **Status:** Early development
 
 ### [Credit Card Fraud Detection](./Credit_fraud)
 - **Objective:** Detect fraudulent transactions in a highly imbalanced dataset.
@@ -28,8 +28,7 @@ Each folder in this repository contains a self-contained project.
 - **Highlights:** Built Prophet-based models with performance metrics **R²: 0.85**, **MAPE: 4%**.
 - **Dashboard:** Deployed interactive Flask dashboard on [[Render.com](https://public-showcase.onrender.com)] to visualize:
   - Forecast vs actuals
-  - Holiday impact by date
-  - Holiday impact by event type
+  - Holiday impact by date & event type
 - **Tech Stack:** Prophet, pandas, Flask, matplotlib, Plotly, Render.com
 
 ###  [Geospatial Data Pipeline – Brazil E-Commerce](./br_ecommerce)
@@ -41,3 +40,10 @@ Each folder in this repository contains a self-contained project.
 - **Objective:** Perform exploratory analysis on COVID-19 cases and resource usage in Mexico.
 - **Highlights:** Created insightful queries using visualizations to reveal patterns
 - **Tech Stack:** Python, seaborn, matplotlib.
+
+## Key Skills Demonstrated Across Projects
+- **ML & AI:** Random Forest, PCA, Prophet, RAG, LLM integration
+- **Data Engineering:** ELT pipelines, Parquet storage, Dagster, FAISS embeddings
+- **Web / Visualization:** Flask, Streamlit, Plotly, interactive dashboards
+- **Tools & Libraries:** Python, scikit-learn, pandas, PyArrow, GeoPandas, Sentence-Transformers, LangGraph
+- **Deployment & Scaling:** Streamlit, FAISS vector search, multi-agent orchestration
