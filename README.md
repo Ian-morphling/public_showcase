@@ -17,6 +17,7 @@ Each folder in this repository contains a self-contained project.
   - Interactive [Streamlit demo](https://ecomm-recommender.streamlit.app/)
 - **Tech Stack:** Python, FAISS, Sentence-Transformers (MiniLM), LangGraph, Streamlit, Groq LLM API.
 - **Status:** Early development
+- [detailed readme](./ecommerce_llm_recommender/readme_llm.md)
 
 ### [Credit Card Fraud Detection](./Credit_fraud)
 - **Objective:** Detect fraudulent transactions in a highly imbalanced dataset.
