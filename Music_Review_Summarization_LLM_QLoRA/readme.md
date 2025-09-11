@@ -98,5 +98,5 @@ python scripts/generate_qlora.py --num_samples 3 --max_new_tokens 64
 python scripts/chat_qlora.py --max_new_tokens 64
 
 
-## model card
+## Model Card
 [detailed model card](./outputs/qlora_opt_1.3b/README.md)
