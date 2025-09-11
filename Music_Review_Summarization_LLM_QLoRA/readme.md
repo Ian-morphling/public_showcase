@@ -96,3 +96,7 @@ python scripts/generate_qlora.py --num_samples 3 --max_new_tokens 64
 **Run interactive chatbot:**
 
 python scripts/chat_qlora.py --max_new_tokens 64
+
+
+## model card
+[detailed model card](./Music_Review_Summarization_LLM_QLoRA/outputs/qlora_opt_1.3b/README.md)
