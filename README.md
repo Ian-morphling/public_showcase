@@ -23,9 +23,9 @@ Each folder in this repository contains a self-contained project.
 - **Objective:** Fine-tune a large language model for summarizing Amazon Digital Music reviews using QLoRA for memory-efficient instruction-following.
 - **Impact / Highlights:**
   - Demonstrates instruction-following fine-tuning on a real-world dataset.
-  - Efficient 4-bit QLoRA adapters enable fine-tuning on small GPUs (OPT-1.3B).
+  - Efficient **4-bit QLoRA adapters** enable fine-tuning on small GPUs (OPT-1.3B).
   - Terminal-based multi-turn chatbot showcases interactive LLM inference.
-  - Comparison of base model vs fine-tuned adapter outputs to highlight performance improvement.
+  - Side-by-side comparison of **base vs fine-tuned adapter outputs** highlights performance improvements.
 - **Tech Stack:** Python, Hugging Face Transformers, PEFT (QLoRA), PyTorch
 - **Status:** Demonstration / Portfolio showcase
 - [detailed readme](./Music_Review_Summarization_LLM_QLoRA/readme.md)
@@ -54,8 +54,8 @@ Each folder in this repository contains a self-contained project.
 - **Tech Stack:** Python, seaborn, matplotlib.
 
 ## Key Skills Demonstrated Across Projects
-- **ML & AI:** Random Forest, PCA, Prophet, RAG, LLM integration, FAISS embeddings
+- **ML & AI:** Random Forest, PCA, Prophet, RAG, LLM integration, LLM fine-tuning (QLoRA), FAISS embeddings
 - **Data Engineering:** ELT pipelines, Parquet storage, Dagster
 - **Web / Visualization:** Flask, Streamlit, Plotly, interactive dashboards
-- **Tools & Libraries:** Python, scikit-learn, pandas, PyArrow, GeoPandas, Sentence-Transformers, LangGraph
+- **Tools & Libraries:** Python, scikit-learn, pandas, PyArrow, GeoPandas, Sentence-Transformers, LangGraph, Hugging Face Transformers, PEFT
 - **Deployment & Scaling:** Streamlit, FAISS vector search, multi-agent orchestration
