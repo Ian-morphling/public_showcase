@@ -19,6 +19,16 @@ Each folder in this repository contains a self-contained project.
 - **Status:** Early development
 - [detailed readme](./ecommerce_llm_recommender/readme_llm.md)
 
+### [Music Review Summarization LLM (QLoRA)]
+- **Objective:** Fine-tune a large language model for summarizing Amazon Digital Music reviews using QLoRA for memory-efficient instruction-following.
+- **Impact / Highlights:**
+  - Demonstrates instruction-following fine-tuning on a real-world dataset.
+  - Efficient 4-bit QLoRA adapters enable fine-tuning on small GPUs (OPT-1.3B).
+  - Terminal-based multi-turn chatbot showcases interactive LLM inference.
+  - Comparison of base model vs fine-tuned adapter outputs to highlight performance improvement.
+- **Tech Stack:** Python, Hugging Face Transformers, PEFT (QLoRA), PyTorch
+- **Status:** Demonstration / Portfolio showcase
+
 ### [Credit Card Fraud Detection](./Credit_fraud)
 - **Objective:** Detect fraudulent transactions in a highly imbalanced dataset.
 - **Highlights:** Achieved **F1 score of 0.86** using Random Forest with PCA and threshold tuning. Conducted a comparative analysis of **SMOTE vs. no-SMOTE approaches** across two notebooks to evaluate the impact on model performance.
