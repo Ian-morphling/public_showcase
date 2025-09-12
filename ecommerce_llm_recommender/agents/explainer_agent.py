@@ -11,7 +11,6 @@ class ExplainerAgent:
         self.api_key = (
             groq_api_key
             or os.getenv("GROQ_API_KEY")
-            or self._get_streamlit_secret("GROQ_API_KEY")
         )
         if not self.api_key:
             print("Warning: No GROQ API key provided. Using fallback responses.")
