@@ -47,13 +47,6 @@ This project builds an end-to-end recommender system using:
 - **scripts/build_index.py**  
   Builds and saves the FAISS IVF index from chunked `.npy` embedding files and maps vector IDs to parquet chunk files.
 
-### Retrieval & Querying
-
-- **recommender/retrieval/faiss_index.py**  
-  Utilities to load FAISS index, map vector IDs to parquet chunks, cache loaded chunks, and handle index-to-row mapping.
-
-- **recommender/retrieval/query_engine.py**  
-  RetrieverAgent implementation: embeds queries, performs similarity search on FAISS index, returns enriched review results.
 
 ### LLM Integration & Agents
 
