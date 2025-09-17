@@ -13,10 +13,11 @@ Each folder in this repository contains a self-contained project.
 - **Impact / Highlights:**
   - Scalable embedding + **FAISS vector search** for fast semantic retrieval.
   - **Multi-agent workflows:** Direct RAG & LangGraph orchestration.
-  - Explainable recommendations using review metadata (verified purchases, helpful votes, ratings)
+  - Explainable recommendations using review metadata (verified purchases, helpful votes, ratings, review quality scoring)
+  - Optional personalized recommendations via reviewer ID
   - Interactive [Streamlit demo](https://ecomm-recommender.streamlit.app/)
 - **Tech Stack:** Python, FAISS, Sentence-Transformers (MiniLM), LangGraph, Streamlit, Groq LLM API.
-- **Status:** Early development
+- **Status:** Early development / actively improving
 - [detailed readme](./ecommerce_llm_recommender/readme_llm.md)
 
 ### [Music Review Summarization LLM QLoRA](./Music_Review_Summarization_LLM_QLoRA))
