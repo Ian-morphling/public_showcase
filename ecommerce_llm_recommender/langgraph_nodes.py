@@ -4,6 +4,7 @@ from langgraph.graph import StateGraph, END
 from agents.retriever_agent import RetrieverAgent
 from agents.userprofile_agent import UserProfileAgent
 from agents.explainer_agent import ExplainerAgent
+from agents.quality_analysis_agent import QualityAnalysisAgent  # new
 
 class GraphState(TypedDict, total=False):
     query: str
@@ -26,6 +27,7 @@ def build_graph(
     retriever = RetrieverAgent(index_path=index_path, mapping_path=mapping_path, docs_dir=docs_dir)
     userprof = UserProfileAgent(user_profiles_dir=user_profiles_dir)
     explainer = ExplainerAgent(groq_api_key)
+    qa_agent = QualityAnalysisAgent()  # new
 
     graph = StateGraph(GraphState)
 
@@ -35,6 +37,11 @@ def build_graph(
         top_k = int(state.get("top_k", 5))
         docs = retriever.retrieve(query, top_k=top_k)
         return {"retrieved_docs": docs}
+
+    def node_quality_analysis(state: GraphState) -> GraphState:
+        docs = state.get("retrieved_docs", [])
+        analyzed_docs = qa_agent.analyze_reviews(docs)
+        return {"retrieved_docs": analyzed_docs}
 
     def node_user_profile(state: GraphState) -> GraphState:
         reviewer_id = (state.get("reviewer_id") or "").strip()
@@ -55,11 +62,15 @@ def build_graph(
 
     # --- Add nodes to graph ---
     graph.add_node("retrieve", node_retrieve)
+    graph.add_node("quality_analysis", node_quality_analysis)  # new node
     graph.add_node("user_profile", node_user_profile)
     graph.add_node("explain", node_explain)
 
     # --- Routing ---
     def router_after_retrieve(state: GraphState) -> str:
+        return "quality_analysis"
+
+    def router_after_quality(state: GraphState) -> str:
         reviewer_id = (state.get("reviewer_id") or "").strip()
         if reviewer_id and userprof.has_user(reviewer_id):
             return "user_profile"
@@ -69,8 +80,14 @@ def build_graph(
     graph.add_conditional_edges(
         "retrieve",
         router_after_retrieve,
-        {"user_profile": "user_profile", "explain": "explain"},
+        {"quality_analysis": "quality_analysis"}
     )
+    graph.add_conditional_edges(
+        "quality_analysis",
+        router_after_quality,
+        {"user_profile": "user_profile", "explain": "explain"}
+    )
+
     graph.add_edge("user_profile", "explain")
     graph.add_edge("explain", END)
 

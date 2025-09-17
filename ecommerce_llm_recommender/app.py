@@ -186,12 +186,20 @@ if st.button(" Get Recommendations", type="primary", use_container_width=True):
             for i, doc in enumerate(retrieved_docs):
                 c1, c2 = st.columns([3, 1])
                 with c2:
-                    rating = doc.get("overall", 'N/A')
+                    rating = doc.get("overall", None)
+                    rating_str = f"{rating:.1f}" if isinstance(rating, (int, float)) else "N/A"
                     verified = doc.get("verified", 'N/A')
                     similarity = doc.get('similarity', 0)
-                    st.metric(f"Review {i+1}", f"{rating}")
-                    st.caption(f"Similarity: {similarity:.3f}")
-                    st.caption(f"Verified: {'✅' if verified else '❌'}")
+                    quality_label = doc.get("quality_label", "N/A")
+                    quality_score = doc.get("quality_score", 0)
+                    st.markdown(f"""
+                    **Review {i+1}**
+                    - Rating: **{rating_str}**
+                    - Quality: **{quality_label}** (score = {quality_score:.2f})
+                    - Similarity: `{similarity:.3f}`
+                    - Verified: {"✅" if verified else "❌"}
+                    """)
+
                 with c1:
                     text = doc.get("text", "")
                     if len(text) > 800:
