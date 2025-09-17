@@ -32,10 +32,11 @@ class ExplainerAgent:
             metadata = doc.get("metadata", {})
             rating = metadata.get("overall", "N/A")
             verified = metadata.get("verified", "N/A")
+            quality_label = doc.get("quality_label", "N/A")  # new
 
             context_parts.append(
                 f"Review {i+1} (Similarity Score: {distance_str}):\n"
-                f"Rating: {rating}/5 | Verified Purchase: {verified}\n"
+                f"Rating: {rating}/5 | Verified Purchase: {verified} | Quality: {quality_label}\n"
                 f"Content: {doc.get('text', '')}\n"
             )
 
