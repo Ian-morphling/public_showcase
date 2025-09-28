@@ -77,9 +77,9 @@ Evaluates AI explanations for Relevance, Groundedness, and Balance
 Defines LangGraph-compatible nodes for each agent and build_graph() to chain them together.
 Enables flexible orchestration where each agent’s output feeds into the next node and supports function calling and tool routing.
 
-### Workflows
+## Workflows
 
-## Workflow A: Direct RAG Pipeline
+### Workflow A: Direct RAG Pipeline
 
 Runs retrieval + explanation sequentially via scripts/run_rag.py.
 
@@ -91,7 +91,7 @@ Run command:
 
 python -m scripts.run_rag --query "I want a durable laptop with long battery"
 
-## Workflow B: LangGraph Orchestration [Streamlit UI](https://ecomm-recommender.streamlit.app/)
+### Workflow B: LangGraph Orchestration [Streamlit UI](https://ecomm-recommender.streamlit.app/)
 
 Uses build_graph() from agents/langgraph_nodes.py to orchestrate multiple agents in a graph execution model.
 
@@ -105,7 +105,7 @@ streamlit run app.py
 
 Run via Streamlit front-end (app.py)
 
-## Workflow C: Offline LLM Judge Evaluation (CLI)
+### Workflow C: Offline LLM Judge Evaluation (CLI)
 
 Evaluate AI explanations automatically without the Streamlit UI using JudgeAgent.
 
