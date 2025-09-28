@@ -15,6 +15,7 @@ Each folder in this repository contains a self-contained project.
   - **Multi-agent workflows:** Direct RAG & LangGraph orchestration.
   - Explainable recommendations using review metadata (verified purchases, helpful votes, ratings, review quality scoring)
   - Optional personalized recommendations via reviewer ID
+  - **Offline evaluation with LLM as a Judge**: Evaluate AI explanation quality (Relevance, Groundedness, Balance) and save results as JSON.
   - Interactive [Streamlit demo](https://ecomm-recommender.streamlit.app/)
 - **Tech Stack:** Python, FAISS, Sentence-Transformers (MiniLM), LangGraph, Streamlit, Groq LLM API.
 - **Status:** Early development / actively improving
