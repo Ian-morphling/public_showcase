@@ -2,7 +2,7 @@
 
 This project demonstrates a Retrieval-Augmented Generation (RAG) pipeline combined with multi-agent orchestration for personalized and explainable product recommendations based on Amazon Electronics 5-core reviews.
 
-The system is designed for technical scalability, modularity, and explainability, demonstrating LLM integration, vector search, and agentic AI workflows
+The system is designed for modularity, scalability, and explainability, demonstrating LLM integration, vector search, and agentic AI workflows
 
 [Streamlit UI available](https://ecomm-recommender.streamlit.app/)
 
@@ -14,7 +14,7 @@ This project builds an end-to-end recommender system using:
 
 - Cleaned and enriched Amazon Electronics 5-core review data
 - MiniLM embeddings stored in a FAISS IVF index for efficient similarity search
-- Multi-agent architecture (**RetrieverAgent**, **ExplainerAgent**, **UserProfilerAgent**, **QualityAnalysisAgent**) orchestrated via LangGraph
+- Multi-agent architecture (**RetrieverAgent**, **ExplainerAgent**, **UserProfilerAgent**, **QualityAnalysisAgent**, **JudgeAgent**) orchestrated via LangGraph
 - Explainable recommendations leveraging review metadata like verified purchase status, helpful votes, sentiment, and review quality scoring
 - Optional personalized recommendations via reviewer ID
 
@@ -24,15 +24,17 @@ This project builds an end-to-end recommender system using:
 1. Direct RAG Pipeline: Sequential retrieval + explanation (lightweight, debugging-friendly)
 2. LangGraph Orchestration: Multi-agent graph execution with conditional personalization and function/tool routing
 
+- Offline Evaluation Workflow (CLI): Evaluate AI explanations with LLM as a Judge and save JSON results (see Workflow C below)
+
 - Personalized Recommendations: Tailor results based on reviewer ID, including user stats like total reviews, average rating, verified purchases, and 5-star distribution.
 
 - Quality Scoring: Each review now includes a quality_label and quality_score to indicate reliability.
 
 - Advanced RAG Features: Supports function calling and tool routing via LangGraph agents.
 
-- Explainable Recommendations: Uses review metadata (verified purchases, helpful votes, ratings, sentiment) to produce transparent reasoning
+- Explainable Recommendations: Transparent reasoning using review metadata, highlighting pros, cons, and evidence from reviews
 
-- Scalable Design: Parquet-based storage and chunked embeddings allow processing of large number of reviews
+- Scalable Design: Parquet-based storage and chunked embeddings allow processing of large datasets
 
 ---
 
@@ -44,14 +46,13 @@ This project builds an end-to-end recommender system using:
   Loads raw Amazon Electronics JSON reviews, validates, and writes cleaned batches to parquet files.
 
 - **recommender/data/preprocess.py**  
-  Enriches cleaned reviews with metadata, vote bins, sentiment; creates user profile parquets for personalization.
-  Data is stored in multiple parquet files to enable scalable processing of large review datasets.
+  Enriches reviews with metadata, vote bins, sentiment, and user profiles
   
 - **recommender/data/embeddings.py**  
-  Generates normalized embeddings from cleaned review text in parquet files, chunked for scalability.
+  Generates normalized embeddings from review text, chunked for scalability
 
 - **scripts/build_index.py**  
-  Builds and saves the FAISS IVF index from chunked `.npy` embedding files and maps vector IDs to parquet chunk files.
+  Builds and saves the FAISS IVF index from chunked `.npy` embedding files and maps vector IDs to parquet chunks.
 
 
 ### LLM Integration & Agents
@@ -69,8 +70,11 @@ Enables the recommender to tailor retrieved reviews and AI-generated explanation
 - **agents/quality_analysis_agent.py**
 Evaluates retrieved reviews for reliability and usefulness. Produces quality_label and quality_score for each review to help the system prioritize high-quality content in explanations and recommendations.
 
+- **agents/judge_agent.py**
+Evaluates AI explanations for Relevance, Groundedness, and Balance
+
 - **langgraph_nodes.py**
-Defines LangGraph-compatible nodes for each agent (UserProfilerNode, RetrieverNode, RecommenderNode, ExplainerNode, QualityAnalysisNode) and build_graph() to chain them together.
+Defines LangGraph-compatible nodes for each agent and build_graph() to chain them together.
 Enables flexible orchestration where each agent’s output feeds into the next node and supports function calling and tool routing.
 
 ### Workflows
@@ -83,47 +87,53 @@ Suitable for debugging or lightweight mode
 
 RetrieverAgent -> ExplainerAgent
 
+Run command:
 
-Workflow B: LangGraph Orchestration
+python -m scripts.run_rag --query "I want a durable laptop with long battery"
+
+Workflow B: LangGraph Orchestration [Streamlit UI](https://ecomm-recommender.streamlit.app/)
 
 Uses build_graph() from agents/langgraph_nodes.py to orchestrate multiple agents in a graph execution model.
 
 Supports personalized mode with reviewer profile (example ID: A3QVAKVRAH657N)
 
-Run via Streamlit front-end (app.py)
-
 UserProfilerNode -> RetrieverNode -> QualityAnalysisNode -> ExplainerNode
 
-### Orchestration
+Run command:
 
-- **scripts/run_rag.py**  
-  Runs retrieval + explanation pipeline end-to-end, displaying retrieved reviews and LLM-generated answers.
-  
-- **app.py**
-Streamlit front-end that lets users run queries with or without reviewerid
+streamlit run app.py
 
-### LangGraph Orchestration
+Run via Streamlit front-end (app.py)
 
-the recommender supports two alternative workflows via agents/langgraph_nodes.py:
+Workflow C: Offline LLM Judge Evaluation (CLI)
 
-1. Retrieval -> Explanation (Q&A mode)
+Evaluate AI explanations automatically without the Streamlit UI using JudgeAgent.
 
-User asks a question -> System retrieves relevant reviews -> LLM explains answer.
+Run command:
 
-2. Profile -> Retrieval -> Recommendation + Explanation (Personalized mode) (sample reviewer id: A3QVAKVRAH657N	)
+python -m scripts.offline_judge_runner
 
-User profile guides retrieval -> Reviews retrieved -> Personalized explanation generated.
+Outputs: JSON files with judge scores are saved under judge_outputs/. Example files already included:
 
+offline_judge_1_20250929-005257.json
+
+offline_judge_2_20250929-005259.json
+
+Purpose: This workflow allows assessment of explanation quality (Relevance, Groundedness, Balance) offline.
 
 ## Quick Start Guide
 
+### 1. Install dependencies:
 pip install -r requirements.txt
 
-### Workflow A: Direct RAG pipeline
+### 2. Workflow A: Direct RAG pipeline
 python -m scripts.run_rag --query "I want a durable laptop with long battery"
 
-### Workflow B: LangGraph orchestration [Streamlit UI available](https://ecomm-recommender.streamlit.app/)
+### 3. Workflow B: LangGraph orchestration [Streamlit UI available](https://ecomm-recommender.streamlit.app/)
 streamlit run app.py
+
+### 4. Workflow C: Offline Judge (CLI)
+python -m scripts.offline_judge_runner
 
 
 
