@@ -101,7 +101,9 @@ UserProfilerNode -> RetrieverNode -> QualityAnalysisNode -> ExplainerNode
 
 Run command:
 
+```bash
 streamlit run app.py
+```
 
 Run via Streamlit front-end (app.py)
 
@@ -111,7 +113,9 @@ Evaluate AI explanations automatically without the Streamlit UI using JudgeAgent
 
 Run command:
 
+```bash
 python -m scripts.offline_judge_runner
+```
 
 Outputs: JSON files with judge scores are saved under judge_outputs/. Example files already included:
 
@@ -124,17 +128,24 @@ Purpose: This workflow allows assessment of explanation quality (Relevance, Grou
 ## Quick Start Guide
 
 ### 1. Install dependencies:
+```bash
 pip install -r requirements.txt
+```
 
 ### 2. Workflow A: Direct RAG pipeline
+```bash
 python -m scripts.run_rag --query "I want a durable laptop with long battery"
+```
 
 ### 3. Workflow B: LangGraph orchestration [Streamlit UI available](https://ecomm-recommender.streamlit.app/)
+```bash
 streamlit run app.py
+```
 
 ### 4. Workflow C: Offline Judge (CLI)
+```bash
 python -m scripts.offline_judge_runner
-
+```
 
 
 
