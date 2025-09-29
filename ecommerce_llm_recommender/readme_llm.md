@@ -119,9 +119,9 @@ python -m scripts.offline_judge_runner
 
 Outputs: JSON files with judge scores are saved under judge_outputs/. Example files already included:
 
-offline_judge_1_20250929-005257.json
+judge_run_20250929-210527.json
 
-offline_judge_2_20250929-005259.json
+judge_run_20250929-210529.json
 
 Purpose: This workflow allows assessment of explanation quality (Relevance, Groundedness, Balance) offline.
 
