@@ -80,22 +80,31 @@ Return a JSON object like:
             # parse JSON
             try:
                 parsed = json.loads(content)
+
                 # Handle nested JSON if Justification is stringified JSON
-                if isinstance(parsed.get("Justification"), str):
+                justification_field = parsed.get("Justification")
+                if isinstance(justification_field, str):
                     try:
-                        nested = json.loads(parsed["Justification"])
+                        nested = json.loads(justification_field)
+                        # Populate outer score fields if they are None
                         for key in ["Relevance", "Groundedness", "Balance"]:
-                            if key in nested:
+                            if parsed.get(key) is None and key in nested:
                                 parsed[key] = nested[key]
+
+                        # Replace Justification with nested textual justification if available
                         parsed["Justification"] = nested.get("Justification", parsed["Justification"])
+
                     except Exception:
                         # Keep original Justification string if nested parse fails
                         pass
+
                 # Ensure all keys exist
                 for key in default_output:
                     if key not in parsed:
                         parsed[key] = default_output[key]
-                return parsed
+
+                    return parsed
+
             except Exception:
                 # fallback: return raw content as Justification
                 return {**default_output, "Justification": content}
