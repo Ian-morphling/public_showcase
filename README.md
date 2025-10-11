@@ -16,8 +16,9 @@ Each folder in this repository contains a self-contained project.
   - Explainable recommendations using review metadata (verified purchases, helpful votes, ratings, review quality scoring)
   - Optional personalized recommendations via reviewer ID
   - **Offline evaluation with LLM as a Judge**: Evaluate AI explanation quality (Relevance, Groundedness, Balance) and save results as JSON.
+  - **Human feedback in the loop evaluation (Reflex UI)**: Review LLM explanations and provide structured ratings to improve scoring and model performance.
   - Interactive [Streamlit demo](https://ecomm-recommender.streamlit.app/)
-- **Tech Stack:** Python, FAISS, Sentence-Transformers (MiniLM), LangGraph, Streamlit, Groq LLM API.
+- **Tech Stack:** Python, FAISS, Sentence-Transformers (MiniLM), LangGraph, Streamlit, Groq LLM API, Reflex.
 - **Status:** Early development / actively improving
 - [detailed readme](./ecommerce_llm_recommender/readme_llm.md)
 
