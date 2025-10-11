@@ -29,6 +29,7 @@ This project builds an end-to-end recommender system using:
 - Quality Scoring: Each review now includes a quality_label and quality_score to indicate reliability.
 
 - LLM-as-a-Judge Evaluation to assess quality across relevance, groundedness, and helpfulness (see Workflow C)
+  
 - Human Feedback Loop (Reflex UI) to collect structured user feedback and ratings for continuous improvement (see Workflow D)
 
 - Advanced RAG Features: Supports function calling and tool routing via LangGraph agents.
@@ -78,16 +79,17 @@ Evaluates AI explanations for Relevance, Groundedness, and Balance
 Defines LangGraph-compatible nodes for each agent and build_graph() to chain them together.
 Enables flexible orchestration where each agent’s output feeds into the next node and supports function calling and tool routing.
 
-### human_feedback
+### Human Feedback
 
 - **human_feedback/human_feedback.py**
-Allows humans to view and reevaluate llm as a judge analysis outputs.
+Allows humans to view and reevaluate LLM-as-a-Judge analysis outputs.
 Saves human input as a JSON file under human_feedback/feedback_storage.
 
 ## Human Feedback Dashboard Features (Reflex UI)
 
-The **Human Feedback Dashboard** (Workflow D) is built using [Reflex](https://reflex.dev/).  
-It provides a visual interface for human-in-the-loop evaluation and feedback.
+This complements the Streamlit recommendation UI by providing an internal interface for evaluation and model improvement.
+
+The Human Feedback Dashboard (Workflow D) is built using [Reflex](https://reflex.dev/) and provides a visual interface for human-in-the-loop evaluation and feedback.
 
 ### Core Features
 - **Query Inspection:** Displays the user’s question and LLM-generated answer.  
@@ -153,6 +155,14 @@ judge_run_20250929-210527.json
 judge_run_20250929-210529.json
 
 Purpose: This workflow allows assessment of explanation quality (Relevance, Groundedness, Balance) offline.
+
+### Workflow D: Human-in-the-Loop Feedback Dashboard (Reflex UI)
+
+This workflow adds a Reflex-based web interface that allows human reviewers to inspect each LLM-as-Judge evaluation, view the AI explanation, and provide manual feedback to refine future scoring.
+
+```bash
+reflex run
+```
 
 ## Quick Start Guide
 
