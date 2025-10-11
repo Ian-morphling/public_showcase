@@ -2,9 +2,9 @@
 
 This project demonstrates a Retrieval-Augmented Generation (RAG) pipeline combined with multi-agent orchestration for personalized and explainable product recommendations based on Amazon Electronics 5-core reviews.
 
-The system is designed for modularity, scalability, and explainability, demonstrating LLM integration, vector search, and agentic AI workflows
+The system is designed for modularity, scalability, and explainability, showcasing LLM integration, vector search, and agentic AI workflows.
 
-[Streamlit UI available](https://ecomm-recommender.streamlit.app/)
+Explore the main Streamlit demo for personalized recommendations [here](https://ecomm-recommender.streamlit.app/)  or use the Reflex UI to inspect human feedback scoring for internal evaluation.
 
 ---
 
