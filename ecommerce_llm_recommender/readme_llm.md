@@ -24,11 +24,12 @@ This project builds an end-to-end recommender system using:
 1. Direct RAG Pipeline: Sequential retrieval + explanation (lightweight, debugging-friendly)
 2. LangGraph Orchestration: Multi-agent graph execution with conditional personalization and function/tool routing
 
-- Offline Evaluation Workflow (CLI): Evaluate AI explanations with LLM as a Judge and save JSON results (see Workflow C below)
-
 - Personalized Recommendations: Tailor results based on reviewer ID, including user stats like total reviews, average rating, verified purchases, and 5-star distribution.
 
 - Quality Scoring: Each review now includes a quality_label and quality_score to indicate reliability.
+
+- LLM-as-a-Judge Evaluation to assess quality across relevance, groundedness, and helpfulness (see Workflow C)
+- Human Feedback Loop (Reflex UI) to collect structured user feedback and ratings for continuous improvement (see Workflow D)
 
 - Advanced RAG Features: Supports function calling and tool routing via LangGraph agents.
 
@@ -76,6 +77,34 @@ Evaluates AI explanations for Relevance, Groundedness, and Balance
 - **langgraph_nodes.py**
 Defines LangGraph-compatible nodes for each agent and build_graph() to chain them together.
 Enables flexible orchestration where each agent’s output feeds into the next node and supports function calling and tool routing.
+
+### human_feedback
+
+- **human_feedback/human_feedback.py**
+Allows humans to view and reevaluate llm as a judge analysis outputs.
+Saves human input as a JSON file under human_feedback/feedback_storage.
+
+## Human Feedback Dashboard Features (Reflex UI)
+
+The **Human Feedback Dashboard** (Workflow D) is built using [Reflex](https://reflex.dev/).  
+It provides a visual interface for human-in-the-loop evaluation and feedback.
+
+### Core Features
+- **Query Inspection:** Displays the user’s question and LLM-generated answer.  
+- **Collapsible Sections:** View intermediate RAG retrieval results and final LLM explanations separately.  
+- **Judge Score Display:** Shows automated LLM-as-a-Judge scores for Relevance, Groundedness, and Balance.  
+- **Interactive Rating Form:** Allows users to rate the AI explanation quality using dropdowns and optional comments.  
+- **Persistent Feedback Storage:** Saves all human ratings in `/human_feedback/feedback_storage/` for later analysis.  
+
+### Example UI Flow:
+
+Query → View Retrieved Reviews → Expand AI Explanation → View Judge Scores → Provide Human Ratings
+
+Outputs are automatically stored as JSON files under:
+
+```bash
+human_feedback/feedback_storage/
+```
 
 ## Workflows
 
@@ -147,5 +176,13 @@ streamlit run app.py
 python -m scripts.offline_judge_runner
 ```
 
+### 5. Workflow D: Human-in-the-Loop Feedback Dashboard (Reflex UI)
 
+This workflow adds a Reflex-based web interface that allows human reviewers to inspect each LLM-as-Judge evaluation, view the retrieved documents and AI explanation, and provide manual feedback to refine future scoring.
+
+Run locally:
+
+```bash
+reflex run
+```
 
