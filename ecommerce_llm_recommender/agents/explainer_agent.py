@@ -29,10 +29,10 @@ class ExplainerAgent:
             distance = doc.get("faiss_distance", None)
             distance_str = f"{distance:.4f}" if distance is not None else "N/A"
 
-            metadata = doc.get("metadata", {})
-            rating = metadata.get("overall", "N/A")
-            verified = metadata.get("verified", "N/A")
-            quality_label = doc.get("quality_label", "N/A")  # new
+            rating = doc.get("overall") or doc.get("metadata", {}).get("overall", "N/A")
+            verified = doc.get("verified") if "verified" in doc else doc.get("metadata", {}).get("verified", "N/A")
+            distance = doc.get("similarity") or doc.get("faiss_distance")
+            quality_label = doc.get("quality_label", "N/A")
 
             context_parts.append(
                 f"Review {i+1} (Similarity Score: {distance_str}):\n"
