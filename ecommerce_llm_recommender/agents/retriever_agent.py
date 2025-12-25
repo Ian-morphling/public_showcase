@@ -147,9 +147,10 @@ class RetrieverAgent:
         results: List[Dict] = []
         for doc_id, sim in zip(I, D):
             doc = self._load_doc(int(doc_id))
-            # IP on L2-normalized vectors equals cosine similarity
+            if doc.get("text") is None:
+                continue 
             doc["score"] = float(sim)
-            doc["similarity"] = float(sim)  # alias for app UIs that expect 'similarity'
+            doc["similarity"] = float(sim)
             results.append(doc)
 
         return results
