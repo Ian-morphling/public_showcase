@@ -26,16 +26,20 @@ class ExplainerAgent:
         # Build context from retrieved documents
         context_parts = []
         for i, doc in enumerate(retrieved_docs):
-            distance = doc.get("faiss_distance", None)
-            distance_str = f"{distance:.4f}" if distance is not None else "N/A"
+            similarity = doc.get("similarity")
 
-            rating = doc.get("overall") or doc.get("metadata", {}).get("overall", "N/A")
-            verified = doc.get("verified") if "verified" in doc else doc.get("metadata", {}).get("verified", "N/A")
-            distance = doc.get("similarity") or doc.get("faiss_distance")
+            similarity_str = (
+                f"{similarity:.4f}"
+                if isinstance(similarity, (int, float))
+                else "N/A"
+            )
+
+            rating = doc.get("overall", "N/A")
+            verified = doc.get("verified", "N/A")
             quality_label = doc.get("quality_label", "N/A")
 
             context_parts.append(
-                f"Review {i+1} (Similarity Score: {distance_str}):\n"
+                f"Review {i+1} (Similarity Score: {similarity_str}):\n"
                 f"Rating: {rating}/5 | Verified Purchase: {verified} | Quality: {quality_label}\n"
                 f"Content: {doc.get('text', '')}\n"
             )
