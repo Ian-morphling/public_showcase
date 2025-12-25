@@ -140,7 +140,7 @@ with col1:
     st.subheader("Search Query")
     query = st.text_input(
         "Enter your product question:",
-        placeholder="e.g., 'usb c charger fast charging review'"
+        placeholder="e.g., 'gaming headset microphone quality'"
     )
 with col2:
     st.subheader("Settings")
