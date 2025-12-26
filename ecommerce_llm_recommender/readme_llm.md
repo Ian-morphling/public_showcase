@@ -21,10 +21,7 @@ End-to-end Streamlit interface showing query input, personalization options, and
 LLM-generated explanation grounded in retrieved reviews with metadata-driven evidence.
 
 ### Screenshot Folder
-Screenshots are stored under:
-```bash
-assets/screenshots/
-```
+Additional screenshots for offline LLM-as-a-Judge evaluation outputs are available in `assets/screenshots/`.
 
 ---
 
