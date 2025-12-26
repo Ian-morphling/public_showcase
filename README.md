@@ -19,7 +19,7 @@ Each folder in this repository contains a self-contained project.
   - **Human feedback in the loop evaluation (Reflex UI)**: Review LLM explanations and provide structured ratings to improve scoring and model performance.
   - Interactive [Streamlit demo](https://ecomm-recommender.streamlit.app/)
 - **Tech Stack:** Python, FAISS, Sentence-Transformers (MiniLM), LangGraph, Streamlit, Groq LLM API, Reflex.
-- **Status:** Early development / actively improving
+- **Status:** actively improving
 - [detailed readme](./ecommerce_llm_recommender/readme_llm.md)
 
 ### [Music Review Summarization LLM QLoRA](./Music_Review_Summarization_LLM_QLoRA))
