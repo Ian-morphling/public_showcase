@@ -8,7 +8,7 @@ Explore the main Streamlit demo for personalized recommendations [here](https://
 
 
 
-## Demo Screenshots
+## Screenshots
 
 ### Main Streamlit Application
 ![Main App](./assets/screenshots/main_app1.png)
