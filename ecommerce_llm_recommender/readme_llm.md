@@ -13,8 +13,12 @@ Explore the main Streamlit demo for personalized recommendations [here](https://
 ### Main Streamlit Application
 ![Main App](./assets/screenshots/main_app1.png)
 
+End-to-end Streamlit interface showing query input, personalization options, and retrieved reviews.
+
 ### Explainable AI Recommendation
 ![Explanation](./assets/screenshots/main_app2.png)
+
+LLM-generated explanation grounded in retrieved reviews with metadata-driven evidence.
 
 ### Screenshot Folder
 Screenshots are stored under:
