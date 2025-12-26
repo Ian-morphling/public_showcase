@@ -30,7 +30,6 @@ Each folder in this repository contains a self-contained project.
   - Terminal-based multi-turn chatbot showcases interactive LLM inference.
   - Side-by-side comparison of **base vs fine-tuned adapter outputs** highlights performance improvements.
 - **Tech Stack:** Python, Hugging Face Transformers, PEFT (QLoRA), PyTorch
-- **Status:** Demonstration / Portfolio showcase
 - [detailed readme](./Music_Review_Summarization_LLM_QLoRA/readme.md)
 
 ### [Credit Card Fraud Detection](./Credit_fraud)
