@@ -8,7 +8,7 @@ Each folder in this repository contains a self-contained project.
 
 ##  Featured Projects
 
-### [LLM-powered Multi-Agent Recommender (Ongoing)](./ecommerce_llm_recommender)
+### [LLM-powered Multi-Agent Recommender](./ecommerce_llm_recommender)
 - **Objective:** Personalized, explainable e-commerce product recommendations using RAG, FAISS, LLMs, and multi-agent orchestration.
 - **Impact / Highlights:**
   - Scalable embedding + **FAISS vector search** for fast semantic retrieval.
