@@ -17,7 +17,10 @@ Explore the main Streamlit demo for personalized recommendations [here](https://
 ![Explanation](./assets/screenshots/main_app2.png)
 
 ### Screenshot Folder
-![Folder](./assets/screenshots)
+Screenshots are stored under:
+```bash
+assets/screenshots/
+```
 
 ---
 
