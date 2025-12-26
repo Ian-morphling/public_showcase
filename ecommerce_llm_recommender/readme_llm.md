@@ -6,6 +6,8 @@ The system is designed for modularity, scalability, and explainability, showcasi
 
 Explore the main Streamlit demo for personalized recommendations [here](https://ecomm-recommender.streamlit.app/)  or use the Reflex UI to inspect human feedback scoring for internal evaluation.
 
+Explore the main Streamlit demo for personalized recommendations [here](ecommerce_llm_recommender/assets/screenshots)
+
 ---
 
 ## Project Overview
