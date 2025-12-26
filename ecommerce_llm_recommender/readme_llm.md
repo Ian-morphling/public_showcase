@@ -11,13 +11,13 @@ Explore the main Streamlit demo for personalized recommendations [here](https://
 ## Demo Screenshots
 
 ### Main Streamlit Application
-![Main App](ecommerce_llm_recommender/assets/screenshots/main_app1.png)
+![Main App](./assets/screenshots/main_app1.png)
 
 ### Explainable AI Recommendation
-![Explanation](ecommerce_llm_recommender/assets/screenshots/main_app2.png)
+![Explanation](./assets/screenshots/main_app2.png)
 
 ### Screenshot Folder
-![Folder](ecommerce_llm_recommender/assets/screenshots)
+![Folder](./assets/screenshots)
 
 ---
 
