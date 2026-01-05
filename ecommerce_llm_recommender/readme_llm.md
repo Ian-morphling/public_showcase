@@ -20,6 +20,13 @@ End-to-end Streamlit interface showing query input, personalization options, and
 
 LLM-generated explanation grounded in retrieved reviews with metadata-driven evidence.
 
+### FastAPI API Testing (Swagger UI)
+
+![FastAPI Swagger](./assets/screenshots/fastapi_swagger.png)
+
+Swagger-based interface used to test the LangGraph-powered recommendation API,
+including request validation, rate limiting, and end-to-end RAG execution.
+
 ### Screenshot Folder
 Additional screenshots for offline LLM-as-a-Judge evaluation outputs are available in `assets/screenshots/`.
 
