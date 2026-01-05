@@ -22,7 +22,7 @@ LLM-generated explanation grounded in retrieved reviews with metadata-driven evi
 
 ### FastAPI API Testing (Swagger UI)
 
-![FastAPI Swagger](./assets/screenshots/fastapi_swagger.png)
+![FastAPI Swagger](./assets/screenshots/fastapi_swagger_recommend.png)
 
 Swagger-based interface used to test the LangGraph-powered recommendation API,
 including request validation, rate limiting, and end-to-end RAG execution.
