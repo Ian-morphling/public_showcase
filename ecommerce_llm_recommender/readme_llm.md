@@ -55,6 +55,8 @@ This project builds an end-to-end recommender system using:
 
 - Scalable Design: Parquet-based storage and chunked embeddings allow processing of large datasets
 
+- API Access via FastAPI: Exposes the LangGraph-powered recommender as a REST endpoint for programmatic access, integration testing, and clean separation between frontend and backend (e.g. Streamlit).
+  
 ---
 
 ## Code Modules
@@ -125,6 +127,45 @@ Outputs are automatically stored as JSON files under:
 human_feedback/feedback_storage/
 ```
 
+## API Layer (FastAPI)
+
+In addition to the Streamlit UI, the project includes a FastAPI-based service layer that exposes the LangGraph recommender workflow via a REST API.
+
+This API is intended for:
+- Programmatic testing of the RAG + multi-agent pipeline
+- Integration with alternative frontends (e.g. Streamlit)
+- Demonstrating clean separation between UI and backend logic
+
+The API reuses the same `build_graph()` orchestration used by the Streamlit app and adds:
+- Input validation with Pydantic
+- Rate limiting
+- Retry logic for transient failures
+- Safe JSON serialization of NumPy-based outputs
+
+### Available Endpoint
+
+**POST** `/recommend`
+
+Request body:
+```json
+{
+  "query": "gaming headset microphone quality",
+  "top_k": 5,
+  "reviewer_id": "A3QVAKVRAH657N"
+}
+```
+Response includes:
+- LLM-generated answer grounded in retrieved reviews
+- Retrieved review metadata with quality scores
+- Optional user profile summary (if reviewer_id is provided)
+  
+Run API locally
+```bash
+uvicorn backend.api:app --reload
+```
+fastapi UI at:
+http://127.0.0.1:8000/docs
+
 ## Workflows
 
 ### Workflow A: Direct RAG Pipeline
@@ -179,6 +220,20 @@ This workflow adds a Reflex-based web interface that allows human reviewers to i
 
 ```bash
 reflex run
+```
+### Workflow E: API-Based RAG & Recommendation Service (FastAPI)
+
+Runs the LangGraph recommender behind a REST API for programmatic access and testing.
+
+Suitable for:
+- Backend integration testing
+- Decoupled frontend/backend architecture demos
+- Inspecting raw retrieval and explanation outputs
+
+Run command:
+
+```bash
+uvicorn backend.api:app --reload
 ```
 
 ## Quick Start Guide
