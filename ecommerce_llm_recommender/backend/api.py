@@ -12,6 +12,11 @@ from pathlib import Path
 from dotenv import load_dotenv
 import traceback
 import numpy as np
+import logging
+
+# Logging setup
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("api")
 
 # Config Paths
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -34,15 +39,12 @@ def to_native(obj):
     else:
         return obj
 
-# -------------------------
 # FastAPI + Rate Limiter
-# -------------------------
 limiter = Limiter(key_func=get_remote_address)
 app = FastAPI(title="E-Commerce Recommender API")
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# Allow CORS for local testing with Streamlit
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -59,11 +61,11 @@ class RecommendRequest(BaseModel):
 
 # Custom Exceptions
 class TransientGraphError(Exception):
-    """Retryable error (e.g., temporary network or API issues)"""
+    """Retryable error (temporary, safe to retry)"""
     pass
 
 class NonTransientGraphError(Exception):
-    """Non-retryable error (e.g., invalid input or missing data)"""
+    """Non-retryable error (client or permanent)"""
     pass
 
 # Load LangGraph once
@@ -75,7 +77,7 @@ graph = build_graph(
     groq_api_key=GROQ_API_KEY
 )
 
-# Retry Decorator for transient failures only
+# Graph Invocation with retries
 @retry(
     stop=stop_after_attempt(3),
     wait=wait_fixed(2),
@@ -83,14 +85,46 @@ graph = build_graph(
     reraise=True
 )
 def invoke_graph_with_retry(state: dict):
-    """Invoke LangGraph workflow, retrying only transient errors."""
+    """
+    Invoke LangGraph workflow.
+    Retry only on transient errors.
+    """
     try:
         result = graph.invoke(state)
+
+        # Detect empty retrievals as transient (maybe index or query issue)
+        if not result.get("retrieved_docs"):
+            logger.warning("Transient: Empty retrievals for query: %s", state["query"])
+            raise TransientGraphError("Empty retrieval results")
+
         return result
+
+    except RuntimeError as e:
+        msg = str(e)
+        # GPU out-of-memory
+        if "CUDA out of memory" in msg:
+            logger.error("Transient: GPU OOM: %s", msg)
+            raise TransientGraphError("GPU out-of-memory") from e
+        # FAISS load failures
+        elif "cannot mmap" in msg or "FAISS" in msg:
+            logger.error("Transient: FAISS index load failure: %s", msg)
+            raise TransientGraphError("FAISS index loading issue") from e
+        # Groq API temporary failures
+        elif "Groq API" in msg:
+            logger.error("Transient: Groq API failure: %s", msg)
+            raise TransientGraphError("Groq API failure") from e
+        else:
+            # Non-transient, unexpected runtime error
+            logger.error("Non-transient runtime error: %s", msg)
+            raise NonTransientGraphError(msg) from e
+
     except TransientGraphError:
+        # Re-raise for retry
         raise
+
     except Exception as e:
         # Any other error is non-transient
+        logger.error("Non-transient unknown error: %s", e)
         raise NonTransientGraphError(str(e)) from e
 
 # API Endpoint
@@ -102,6 +136,7 @@ async def recommend(req: RecommendRequest, request: Request):
         "top_k": req.top_k,
         "reviewer_id": req.reviewer_id
     }
+
     try:
         result = invoke_graph_with_retry(state)
         response = to_native({
@@ -112,15 +147,15 @@ async def recommend(req: RecommendRequest, request: Request):
         return response
 
     except NonTransientGraphError as e:
-        # Client error or permanent failure: return 400
+        # Client error / permanent failure → 400
         raise HTTPException(
             status_code=400,
             detail=f"Non-transient error: {str(e)}"
         )
 
     except Exception as e:
-        # Transient/internal error after retries: return 500
-        print("Graph execution failed:", e)
+        # Transient/internal error after retries → 500
+        logger.error("Graph execution failed after retries: %s", e)
         traceback.print_exc()
         raise HTTPException(
             status_code=500,
