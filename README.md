@@ -1,6 +1,6 @@
 #  Public Project Showcase
 
-Welcome! This repository is a showcase of my data science and machine learning projects, designed to demonstrate applications of analytics, modeling, ai engineering and data engineering skills across real-world datasets.
+Welcome! This repository is a showcase of my data science and machine learning projects, designed to demonstrate applied analytics, machine learning, AI engineering, and data engineering skills across real-world datasets and systems.
 
 Each folder in this repository contains a self-contained project.
 
@@ -9,19 +9,25 @@ Each folder in this repository contains a self-contained project.
 ##  Featured Projects
 
 ### [LLM-powered Multi-Agent Recommender](./ecommerce_llm_recommender)
-- **Objective:** Personalized, explainable e-commerce product recommendations using RAG, FAISS, LLMs, and multi-agent orchestration.
+- A production-minded, explainable recommendation system showcasing modern RAG, agent orchestration, evaluation, and API design.
+- **Objective:** Personalized, explainable e-commerce product recommendations using Retrieval-Augmented Generation (RAG), vector search, and multi-agent orchestration.
 - **Impact / Highlights:**
-  - Scalable embedding + **FAISS vector search** for fast semantic retrieval.
-  - **Multi-agent workflows:** Direct RAG & LangGraph orchestration.
+  - End-to-end RAG pipeline using FAISS vector search and MiniLM embeddings for scalable semantic retrieval.
+  - **Multi-agent architecture** (Retriever, User Profiler, Quality Analyzer, Explainer, Judge) orchestrated with LangGraph.
   - Explainable recommendations using review metadata (verified purchases, helpful votes, ratings, review quality scoring)
-  - Optional personalized recommendations via reviewer ID
-  - **Offline evaluation with LLM as a Judge**: Evaluate AI explanation quality (Relevance, Groundedness, Balance) and save results as JSON.
-  - **Human feedback in the loop evaluation (Reflex UI)**: Review LLM explanations and provide structured ratings to improve scoring and model performance.
-  - Interactive [Streamlit demo](https://ecomm-recommender.streamlit.app/)
-- **Tech Stack:** Python, FAISS, Sentence-Transformers (MiniLM), LangGraph, Streamlit, Groq LLM API, Reflex.
-- **Status:** actively iterating
+  - Optional personalized recommendations based on reviewer history and rating distributions.
+  - Evaluation workflows:
+    - **Offline LLM-as-a-Judge scoring**: Evaluate AI explanation quality (Relevance, Groundedness, Balance)
+    - **Human-in-the-loop feedback dashboard (Reflex UI)**: Review LLM explanations and provide structured ratings to improve scoring and model performance.
+  - Multiple interfaces:
+    - Interactive Streamlit UI for end-user recommendations [Streamlit demo](https://ecomm-recommender.streamlit.app/)
+    - FastAPI service layer exposing the LangGraph workflow for programmatic access and integration testing
+  - Designed with modularity, observability, and scalability in mind (chunked embeddings, Parquet storage)
+- **Tech Stack:** Python, FastAPI, FAISS, Sentence-Transformers (MiniLM), LangGraph, Streamlit, Groq LLM API, Reflex
+- **Status:** In active development
 - [detailed readme](./ecommerce_llm_recommender/readme_llm.md)
-- ## Screenshots
+  
+## Screenshots
 
 ### Main Streamlit Application
 ![Main App](./ecommerce_llm_recommender/assets/screenshots/main_app1.png)
@@ -30,7 +36,7 @@ Each folder in this repository contains a self-contained project.
 ![Explanation](./ecommerce_llm_recommender/assets/screenshots/main_app2.png)
 
 
-### [Music Review Summarization LLM QLoRA](./Music_Review_Summarization_LLM_QLoRA))
+### [Music Review Summarization LLM QLoRA](./Music_Review_Summarization_LLM_QLoRA)
 - **Objective:** Fine-tune a large language model for summarizing Amazon Digital Music reviews using QLoRA for memory-efficient instruction-following.
 - **Impact / Highlights:**
   - Demonstrates instruction-following fine-tuning on a real-world dataset.
@@ -68,4 +74,6 @@ Each folder in this repository contains a self-contained project.
 - **Data Engineering:** ELT pipelines, Parquet storage, Dagster
 - **Web / Visualization:** Flask, Streamlit, Plotly, interactive dashboards
 - **Tools & Libraries:** Python, scikit-learn, pandas, PyArrow, GeoPandas, Sentence-Transformers, LangGraph, Hugging Face Transformers, PEFT
-- **Deployment & Scaling:** Streamlit, FAISS vector search, multi-agent orchestration
+- **AI Engineering & Systems:** RAG pipelines, multi-agent orchestration (LangGraph), LLM evaluation, human-in-the-loop feedback
+- **Backend & APIs:** FastAPI, Pydantic validation, RESTful AI services
+- **Deployment & Scaling:** Streamlit, FAISS vector search, modular service-oriented design
