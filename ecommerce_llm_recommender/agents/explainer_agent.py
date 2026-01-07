@@ -128,11 +128,21 @@ Your response:"""
 
         for doc in retrieved_docs:
             metadata = doc.get("metadata", {})
-            rating = metadata.get("overall")
-            if rating:
-                ratings.append(rating)
+            rating = (
+                doc.get("overall")
+                if "overall" in doc
+                else metadata.get("overall")
+            )
 
-            if metadata.get("verified"):
+            verified = (
+                doc.get("verified")
+                if "verified" in doc
+                else metadata.get("verified")
+            )
+
+            if rating is not None:
+                ratings.append(rating)
+            if verified:
                 verified_count += 1
 
             text = doc.get("text", "")
