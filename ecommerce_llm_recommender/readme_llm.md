@@ -149,6 +149,13 @@ The API reuses the same `build_graph()` orchestration used by the Streamlit app 
 - Retry logic for transient failures
 - Safe JSON serialization of NumPy-based outputs
 
+## Internal Implementation Improvements (API)
+
+The FastAPI backend has been refactored for better readiness monitoring:
+
+- **Startup Lifecycle Refactor**: The LangGraph recommender is now initialized once at server startup, preventing double initialization and making startup failures observable.
+- **Health Endpoint**: Added `/health` endpoint for service readiness and monitoring.
+
 ### Available Endpoint
 
 **POST** `/recommend`
