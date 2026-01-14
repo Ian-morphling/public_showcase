@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 import traceback
 import numpy as np
 import logging
+from contextlib import asynccontextmanager 
 
 # Logging setup
 logging.basicConfig(level=logging.INFO)
@@ -41,7 +42,44 @@ def to_native(obj):
 
 # FastAPI + Rate Limiter
 limiter = Limiter(key_func=get_remote_address)
-app = FastAPI(title="E-Commerce Recommender API")
+
+# FastAPI Lifespan #
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    FastAPI lifespan:
+    - Initialize LangGraph + agents once at startup
+    - Fail fast if index/model loading fails
+    """
+    try:
+        logger.info("Starting up: building LangGraph recommender")
+
+        app.state.graph = build_graph(
+            index_path=INDEX_PATH,
+            mapping_path=MAPPING_PATH,
+            docs_dir=CHUNKS_DIR,
+            user_profiles_dir=USER_PROFILES_DIR,
+            groq_api_key=GROQ_API_KEY
+        )
+
+        app.state.ready = True
+        logger.info("Startup complete: LangGraph ready")
+
+        yield
+
+    except Exception as e:
+        logger.exception("Startup failed: LangGraph initialization error")
+        app.state.ready = False
+        raise e
+
+    finally:
+        logger.info("Shutting down API")
+
+# Attach lifespan to FastAPI app
+app = FastAPI(
+    title="E-Commerce Recommender API",
+    lifespan=lifespan
+)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -68,23 +106,14 @@ class NonTransientGraphError(Exception):
     """Non-retryable error (client or permanent)"""
     pass
 
-# Load LangGraph once
-graph = build_graph(
-    index_path=INDEX_PATH,
-    mapping_path=MAPPING_PATH,
-    docs_dir=CHUNKS_DIR,
-    user_profiles_dir=USER_PROFILES_DIR,
-    groq_api_key=GROQ_API_KEY
-)
-
-# Graph Invocation with retries
+# Graph Invocation with retry #
 @retry(
     stop=stop_after_attempt(3),
     wait=wait_exponential_jitter(initial=1, max=6),
     retry=retry_if_exception_type(TransientGraphError),
     reraise=True
 )
-def invoke_graph_with_retry(state: dict):
+def invoke_graph_with_retry(graph, state: dict): 
     """
     Invoke LangGraph workflow.
     Retry only on transient errors.
@@ -92,7 +121,7 @@ def invoke_graph_with_retry(state: dict):
     try:
         result = graph.invoke(state)
 
-        # Detect empty retrievals as transient (maybe index or query issue)
+        # Detect empty retrievals as transient
         if not result.get("retrieved_docs"):
             logger.warning("Transient: Empty retrievals for query: %s", state["query"])
             raise TransientGraphError("Empty retrieval results")
@@ -101,33 +130,27 @@ def invoke_graph_with_retry(state: dict):
 
     except RuntimeError as e:
         msg = str(e)
-        # GPU out-of-memory
         if "CUDA out of memory" in msg:
             logger.error("Transient: GPU OOM: %s", msg)
             raise TransientGraphError("GPU out-of-memory") from e
-        # FAISS load failures
         elif "cannot mmap" in msg or "FAISS" in msg:
             logger.error("Transient: FAISS index load failure: %s", msg)
             raise TransientGraphError("FAISS index loading issue") from e
-        # Groq API temporary failures
         elif "Groq API" in msg:
             logger.error("Transient: Groq API failure: %s", msg)
             raise TransientGraphError("Groq API failure") from e
         else:
-            # Non-transient, unexpected runtime error
             logger.error("Non-transient runtime error: %s", msg)
             raise NonTransientGraphError(msg) from e
 
     except TransientGraphError:
-        # Re-raise for retry
         raise
 
     except Exception as e:
-        # Any other error is non-transient
         logger.error("Non-transient unknown error: %s", e)
         raise NonTransientGraphError(str(e)) from e
 
-# API Endpoint
+# /recommend Endpoint #
 @app.post("/recommend")
 @limiter.limit("5/minute")
 async def recommend(req: RecommendRequest, request: Request):
@@ -138,7 +161,8 @@ async def recommend(req: RecommendRequest, request: Request):
     }
 
     try:
-        result = invoke_graph_with_retry(state)
+        graph = request.app.state.graph 
+        result = invoke_graph_with_retry(graph, state)
         response = to_native({
             "answer": result.get("answer"),
             "retrieved_docs": result.get("retrieved_docs"),
@@ -147,17 +171,33 @@ async def recommend(req: RecommendRequest, request: Request):
         return response
 
     except NonTransientGraphError as e:
-        # Client error / permanent failure → 400
         raise HTTPException(
             status_code=400,
             detail=f"Non-transient error: {str(e)}"
         )
 
     except Exception as e:
-        # Transient/internal error after retries → 500
         logger.error("Graph execution failed after retries: %s", e)
         traceback.print_exc()
         raise HTTPException(
             status_code=500,
             detail=f"Transient/internal error: {str(e)}"
         )
+
+# /health Endpoint
+@app.get("/health")
+async def health():
+    """
+    Health / readiness check.
+    Suitable for container orchestration.
+    """
+    if getattr(app.state, "ready", False) and hasattr(app.state, "graph"):
+        return {
+            "status": "healthy",
+            "service": "langgraph-recommender"
+        }
+
+    return {
+        "status": "unhealthy",
+        "service": "langgraph-recommender"
+    }
