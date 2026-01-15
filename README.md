@@ -9,23 +9,23 @@ Each folder in this repository contains a self-contained project.
 ##  Featured Projects
 
 ### [LLM-powered Multi-Agent Recommender](./ecommerce_llm_recommender)
-- A production-minded, explainable recommendation system showcasing modern RAG, agent orchestration, evaluation, and API design.
+- A production-minded, explainable recommendation system showcasing modern RAG, multi-agent orchestration, evaluation, and API design.
 - **Objective:** Personalized, explainable e-commerce product recommendations using Retrieval-Augmented Generation (RAG), vector search, and multi-agent orchestration.
 - **Impact / Highlights:**
   - End-to-end RAG pipeline using FAISS vector search and MiniLM embeddings for scalable semantic retrieval.
   - **Multi-agent architecture** (Retriever, User Profiler, Quality Analyzer, Explainer, Judge) orchestrated with LangGraph.
-  - Explainable recommendations using review metadata (verified purchases, helpful votes, ratings, review quality scoring)
+  - Explainable recommendations using review metadata (verified purchases, helpful votes, ratings, review quality scoring).
   - Optional personalized recommendations based on reviewer history and rating distributions.
   - Evaluation workflows:
-    - **Offline LLM-as-a-Judge scoring**: Evaluate AI explanation quality (Relevance, Groundedness, Balance)
-    - **Human-in-the-loop feedback dashboard (Reflex UI)**: Review LLM explanations and provide structured ratings to improve scoring and model performance.
+    - **Offline LLM-as-a-Judge scoring:** Evaluate AI explanation quality (Relevance, Groundedness, Balance)
+    - **Human-in-the-loop feedback dashboard (Reflex UI):** Review LLM explanations and provide structured ratings to improve scoring and model performance.
   - Multiple interfaces:
-    - Interactive Streamlit UI for end-user recommendations [Streamlit demo](https://ecomm-recommender.streamlit.app/)
+    - Interactive Streamlit UI for end-user recommendations: [Streamlit demo](https://ecomm-recommender.streamlit.app/)
     - FastAPI service layer exposing the LangGraph workflow for programmatic access and integration testing
+    - **Docker-ready FastAPI:** The API can be containerized using Docker for isolated execution (Dockerfile included)
   - Designed with modularity, observability, and scalability in mind (chunked embeddings, Parquet storage)
 - **Tech Stack:** Python, FastAPI, FAISS, Sentence-Transformers (MiniLM), LangGraph, Streamlit, Groq LLM API, Reflex
-- **Status:** In active development
-- [detailed readme](./ecommerce_llm_recommender/readme_llm.md)
+- [Detailed README](./ecommerce_llm_recommender/readme_llm.md)
   
 ## Screenshots
 
