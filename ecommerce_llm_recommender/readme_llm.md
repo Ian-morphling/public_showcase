@@ -180,6 +180,39 @@ uvicorn backend.api:app --reload
 fastapi UI at:
 http://127.0.0.1:8000/docs
 
+## Optional: Containerized FastAPI Service (Docker)
+
+For deployment portability and environment isolation, the FastAPI service can optionally be run inside a Docker container.
+
+This containerization is scoped **only to the FastAPI backend** and is not used by the Streamlit Cloud deployment, which runs directly from Python.
+
+The provided `Dockerfile` demonstrates:
+- Packaging the FastAPI API with its Python dependencies
+- Loading the prebuilt FAISS index and metadata at startup
+- Running the LangGraph-powered recommender via Uvicorn
+
+This setup is intended to show how the API layer can be containerized in a production-style environment, without coupling it to the Streamlit frontend.
+
+### Environment Variables
+
+The FastAPI service requires the following environment variable:
+
+- `GROQ_API_KEY` : API key for Groq LLM access
+
+These variables are **not committed** to the repository and must be provided at runtime.
+
+### Build and run (optional)
+
+```bash
+docker build -t fastapi-langgraph .
+docker run -p 8000:8000 -e GROQ_API_KEY=your_key_here fastapi-langgraph
+Alternatively, you may use a local .env file:
+docker run -p 8000:8000 --env-file .env fastapi-langgraph
+Once running, the API is available at:
+http://localhost:8000/docs
+```
+
+
 ## Workflows
 
 ### Workflow A: Direct RAG Pipeline
