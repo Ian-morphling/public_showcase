@@ -9,7 +9,7 @@ Each folder in this repository contains a self-contained project.
 ##  Featured Projects
 
 ### [LLM-powered Multi-Agent Recommender](./ecommerce_llm_recommender)
-- A production-minded, explainable recommendation system showcasing modern RAG, multi-agent orchestration, evaluation, and API design.
+- A production-minded, explainable recommendation system showcasing RAG, multi-agent orchestration, evaluation, and API design.
 - **Objective:** Personalized, explainable e-commerce product recommendations using Retrieval-Augmented Generation (RAG), vector search, and multi-agent orchestration.
 - **Impact / Highlights:**
   - End-to-end RAG pipeline using FAISS vector search and MiniLM embeddings for scalable semantic retrieval.
