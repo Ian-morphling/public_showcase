@@ -83,8 +83,8 @@ Based ONLY on the information above, has the user's question been sufficiently a
         if hop >= self.max_hops or not new_docs:
             return None, f"Stop: max hops or no new docs", new_docs
 
-        # --- Cheap similarity drop check ---
-        if self.enable_sufficiency and len(new_docs) >= top_k:
+        # --- Stop if new information relevance degrades ---
+        if self.enable_sufficiency and new_docs:
             last_docs = new_docs[-top_k:]
             avg_last_similarity = sum(doc.similarity for doc in last_docs) / len(last_docs)
             if avg_last_similarity < 0.55:
