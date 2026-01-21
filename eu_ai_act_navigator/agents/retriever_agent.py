@@ -1,4 +1,5 @@
 import os
+import asyncio
 from typing import List, Optional, Dict
 from sentence_transformers import SentenceTransformer
 from supabase import create_client, Client
@@ -33,15 +34,36 @@ class RetrieverAgent:
     ):
         self.model = SentenceTransformer(model_name)
         self.supabase: Client = create_client(
-            SUPABASE_URL, SUPABASE_KEY
+            SUPABASE_URL,
+            SUPABASE_KEY,
         )
 
-    def retrieve(
+    async def retrieve(
         self,
         query: str,
         top_k: int = 5,
         filters: Optional[Dict] = None,
     ) -> List[RetrievedDocument]:
+        """
+        Async wrapper around synchronous retrieval logic.
+        """
+        return await asyncio.to_thread(
+            self._retrieve_sync,
+            query,
+            top_k,
+            filters,
+        )
+
+    def _retrieve_sync(
+        self,
+        query: str,
+        top_k: int,
+        filters: Optional[Dict],
+    ) -> List[RetrievedDocument]:
+        """
+        Synchronous retrieval implementation.
+        Separated to allow clean async wrapping.
+        """
 
         query_embedding = self.model.encode(query).tolist()
 
@@ -51,10 +73,11 @@ class RetrieverAgent:
         }
 
         response = self.supabase.rpc(
-            "match_documents", rpc_args
+            "match_documents",
+            rpc_args,
         ).execute()
 
-        if response.data is None:
+        if not response.data:
             return []
 
         return [
