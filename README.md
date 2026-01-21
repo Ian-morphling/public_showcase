@@ -29,12 +29,20 @@ Each folder in this repository contains a self-contained project.
   
 ## Screenshots
 
-### Main Streamlit Application
+## Main Streamlit Application
 ![Main App](./ecommerce_llm_recommender/assets/screenshots/main_app1.png)
 
-### Explainable AI Recommendation
+## Explainable AI Recommendation
 ![Explanation](./ecommerce_llm_recommender/assets/screenshots/main_app2.png)
 
+
+
+### [EU AI Act Navigator](./eu_ai_act_navigator)(ongoing)
+- Agentic Retrieval-Augmented Generation (RAG) system built with LangGraph. 
+- Designed for regulatory reasoning over the EU AI Act using planner-driven multi-hop retrieval and structured search steps, with an emphasis on explainable responses.
+
+- **Tech Stack:** LangGraph, pgvector (Postgres/Supabase), Sentence-Transformers (MiniLM)
+- [Detailed README](./eu_ai_act_navigator/README.md)
 
 ### [Music Review Summarization LLM QLoRA](./Music_Review_Summarization_LLM_QLoRA)
 - **Objective:** Fine-tune a large language model for summarizing Amazon Digital Music reviews using QLoRA for memory-efficient instruction-following.
