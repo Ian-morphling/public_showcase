@@ -45,6 +45,25 @@ Each folder in this repository contains a self-contained project.
     - **Planner Agent:** decides retrieval strategy, hop counts, and query reformulation.
     - **Retriever Agent:** performs vector-based search (pgvector / Supabase) with strict grounding, no hallucination.
     - **Explainer Agent:** synthesizes answers strictly from retrieved evidence, maintaining citations (e.g., *Article 6*, *Annex III*).
+  - **Workflow Overview:**
+```text
+User Query
+|
+v
+Planner Agent
+(controls retrieval strategy)
+|
+v
+Retriever Agent
+(pgvector search, single or multi-hop)
+|
+v
+Explainer Agent
+(citation-bound synthesis)
+|
+v
+Final Answer
+```
   - Designed for **production-style AI engineering**:
     - Deterministic LangGraph execution graph for async, inspectable workflows.
     - Explicit state passing for testing, observability, and future scaling.
