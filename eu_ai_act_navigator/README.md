@@ -31,27 +31,30 @@ The result is an **agentic search system** that mirrors real-world backend and I
 User Query
    |
    v
-+-----------------+
-| Planner Agent   |
-| - Decides single/multi-hop retrieval
-| - Reformulates queries
-| - Stops when evidence sufficient
-+-----------------+
++---------------------------+
+| Planner Agent             |
+| - Decide single/multi-hop |
+| - Reformulate queries     |
+| - Stop when evidence      |
+|   is sufficient           |
++---------------------------+
    |
    v
-+-----------------+
-| Retriever Agent |
-| - Searches vector DB (pgvector)
-| - Returns structured chunks
-+-----------------+
++---------------------------+
+| Retriever Agent           |
+| - Search vector DB        |
+|   (pgvector)              |
+| - Return structured chunks|
++---------------------------+
    |
    v
-+-----------------+
-| Explainer Agent |
-| - Synthesizes answer
-| - Strictly grounded in retrieved docs
-| - Generates citations (Article/Annex)
-+-----------------+
++---------------------------+
+| Explainer Agent           |
+| - Synthesize answer       |
+| - Strictly grounded       |
+| - Generate citations      |
+|   (Article / Annex)       |
++---------------------------+
    |
    v
 Final Answer (Grounded & Explainable)
