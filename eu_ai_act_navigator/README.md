@@ -29,21 +29,32 @@ The result is an **agentic search system** that mirrors real-world backend and I
 
 ```text
 User Query
-|
-v
-Planner Agent
-(controls retrieval strategy)
-|
-v
-Retriever Agent
-(pgvector search, single or multi-hop)
-|
-v
-Explainer Agent
-(citation-bound synthesis)
-|
-v
-Final Answer
+   |
+   v
++-----------------+
+| Planner Agent   |
+| - Decides single/multi-hop retrieval
+| - Reformulates queries
+| - Stops when evidence sufficient
++-----------------+
+   |
+   v
++-----------------+
+| Retriever Agent |
+| - Searches vector DB (pgvector)
+| - Returns structured chunks
++-----------------+
+   |
+   v
++-----------------+
+| Explainer Agent |
+| - Synthesizes answer
+| - Strictly grounded in retrieved docs
+| - Generates citations (Article/Annex)
++-----------------+
+   |
+   v
+Final Answer (Grounded & Explainable)
 ```
 
 Each agent has a **strict, non-overlapping responsibility**, enabling observability, testing, and future scaling.
