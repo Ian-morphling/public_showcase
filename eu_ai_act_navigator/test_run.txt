@@ -1,0 +1,140 @@
+Enter your EU AI query: Who is responsible for compliance of high-risk AI systems
+
+===== Agentic RAG Execution Trace =====
+User query:
+Who is responsible for compliance of high-risk AI systems
+
+===== Hop 1 =====
+Query used:
+Who is responsible for compliance of high-risk AI systems
+
+New documents added (5):
+
+Result 1
+Section: Recital Recital 85
+Similarity: 0.8418
+URL: https://artificialintelligenceact.eu/recital/85/
+Preview:
+  General-purpose AI systems may be used as high-risk AI systems by themselves or be components of other high-risk AI systems. Therefore, due to their particular nature and in order to ensure a fair sharing of...
+
+Result 2
+Section: Recital Recital 26
+Similarity: 0.7824
+URL: https://artificialintelligenceact.eu/recital/26/
+Preview:
+  In order to introduce a proportionate and effective set of binding rules for AI systems, a clearly defined risk-based approach should be followed. That approach should tailor the type and content of such rules to the...
+
+Result 3
+Section: Article Article 17
+Similarity: 0.7718
+URL: https://artificialintelligenceact.eu/article/17/
+Preview:
+  1. Providers of high-risk AI systems shall put a quality management system in place that ensures compliance with this Regulation. That system shall be documented in a systematic and orderly manner in the form of...
+
+Result 4
+Section: Recital Recital 86
+Similarity: 0.7553
+URL: https://artificialintelligenceact.eu/recital/86/
+Preview:
+  Where, under the conditions laid down in this Regulation, the provider that initially placed the AI system on the market or put it into service should no longer be considered to be the provider for the purposes of...
+
+Result 5
+Section: Article Article 74
+Similarity: 0.7529
+URL: https://artificialintelligenceact.eu/article/74/
+Preview:
+  the Commission, that have the aim of promoting compliance, identifying non-compliance, raising awareness or providing guidance in relation to this Regulation with respect to specific categories of high-risk AI systems...
+
+===== Hop 2 =====
+Query used:
+Who is primarily liable for non-compliance of high-risk AI systems among multiple stakeholders.
+
+New documents added (3):
+
+Result 1
+Section: Recital Recital 51
+Similarity: 0.6879
+URL: https://artificialintelligenceact.eu/recital/51/
+Preview:
+  The classification of an AI system as high-risk pursuant to this Regulation should not necessarily mean that the product whose safety component is the AI system, or the AI system itself as a product, is considered to...
+
+Result 2
+Section: Recital Recital 87
+Similarity: 0.6773
+URL: https://artificialintelligenceact.eu/recital/87/
+Preview:
+  In addition, where a high-risk AI system that is a safety component of a product which falls within the scope of Union harmonisation legislation based on the New Legislative Framework is not placed on the market or...
+
+Result 3
+Section: Recital Recital 52
+Similarity: 0.6772
+URL: https://artificialintelligenceact.eu/recital/52/
+Preview:
+  As regards stand-alone AI systems, namely high-risk AI systems other than those that are safety components of products, or that are themselves products, it is appropriate to classify them as high-risk if, in light of...
+
+===== Hop 3 =====
+Query used:
+Who is designated to perform risk assessments for high-risk AI systems?
+
+New documents added (3):
+
+Result 1
+Section: Recital Recital 65
+Similarity: 0.7150
+URL: https://artificialintelligenceact.eu/recital/65/
+Preview:
+  The risk-management system should consist of a continuous, iterative process that is planned and run throughout the entire lifecycle of a high-risk AI system. That process should be aimed at identifying and mitigating...
+
+Result 2
+Section: Article Article 14
+Similarity: 0.7116
+URL: https://artificialintelligenceact.eu/article/14/
+Preview:
+  1. High-risk AI systems shall be designed and developed in such a way, including with appropriate human-machine interface tools, that they can be effectively overseen by natural persons during the period in which they...
+
+Result 3
+Section: Article Article 9
+Similarity: 0.7043
+URL: https://artificialintelligenceact.eu/article/9/
+Preview:
+  1. A risk management system shall be established, implemented, documented and maintained in relation to high-risk AI systems. 2. The risk management system shall be understood as a continuous iterative process planned...
+
+Stop reason: Stop: max hops or no new docs
+
+===== Final Answer (Explainable) =====
+**Summary**: The EU AI Act assigns responsibility for compliance with high-risk AI systems to various parties, including providers, product manufacturers, and deployers.
+
+**Explanation**:
+
+* Providers of high-risk AI systems are responsible for ensuring compliance with the Regulation, including putting in place a quality management system (Article 17).
+ * This quality management system must ensure compliance with the Regulation and shall be documented in a systematic and orderly manner (Article 17).
+ * Providers must closely cooperate with other high-risk AI system providers and stakeholders to enable compliance (Recital 85).
+ * For stand-alone AI systems, the provider is responsible for ensuring that the AI system is designed and developed in such a way that it can be effectively overseen by natural persons during use (Article 14).
+ * The oversight measures shall be commensurate with the risks, level of autonomy, and context of use of the high-risk AI system, and shall be ensured through measures identified and built into the high-risk AI system by the provider or implemented by the deployer (Article 14).
+ * The provider must also give consideration to whether the high-risk AI system is likely to have an adverse impact on persons under the age of 18 and, as appropriate, other vulnerable groups (Article 9).
+ * The product manufacturer of a product that includes a high-risk AI system is responsible for complying with the obligations of the provider established in the Regulation, including ensuring that the AI system embedded in the final product complies with the requirements of the Regulation (Recital 87).
+ * Deployers of high-risk AI systems must also be aware of and take into account possible risks and adverse impacts when using the system, including instructions for use provided by the provider (Article 14).
+
+===== Sources (Deduplicated) =====
+1. Recital Recital 85
+   https://artificialintelligenceact.eu/recital/85/
+2. Recital Recital 26
+   https://artificialintelligenceact.eu/recital/26/
+3. Article Article 17
+   https://artificialintelligenceact.eu/article/17/
+4. Recital Recital 86
+   https://artificialintelligenceact.eu/recital/86/
+5. Article Article 74
+   https://artificialintelligenceact.eu/article/74/
+6. Recital Recital 51
+   https://artificialintelligenceact.eu/recital/51/
+7. Recital Recital 87
+   https://artificialintelligenceact.eu/recital/87/
+8. Recital Recital 52
+   https://artificialintelligenceact.eu/recital/52/
+9. Recital Recital 65
+   https://artificialintelligenceact.eu/recital/65/
+10. Article Article 14
+   https://artificialintelligenceact.eu/article/14/
+11. Article Article 9
+   https://artificialintelligenceact.eu/article/9/
