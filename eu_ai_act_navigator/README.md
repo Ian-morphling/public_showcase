@@ -124,6 +124,12 @@ Key characteristics:
   - Retrieved documents
 - Designed to support future regression testing and retrieval evaluation
 
+### EU AI Act Navigator Example
+
+Below is a sample run of the agentic RAG workflow, showing multi-hop retrieval, explainable final answer, and deduplicated sources.
+
+File: [examples/test_run.txt](examples/test_run.txt)
+
 ---
 
 ## What This Project Demonstrates
