@@ -23,6 +23,10 @@ This project implements **planner-driven retrieval**, where an explicit planner 
 
 The result is an **agentic search system** that mirrors real-world backend and IR architectures.
 
+**Why the EU AI Act?**
+
+The EU AI Act was chosen as a domain due to its dense cross-referencing structure, where key obligations are distributed across multiple articles and annexes. Answering real compliance questions often requires reasoning across definitions, scope, and obligations, making it a natural fit for planner-driven, multi-hop retrieval.
+
 ---
 
 ## High-Level Architecture
@@ -163,11 +167,12 @@ It demonstrates:
 
 ## Tech Stack
 
-- **Language**: Python 3.11
+- **Language**: Python
 - **Agent Framework**: LangGraph
 - **Embeddings**: sentence-transformers
-- **Vector Store**: PostgreSQL + pgvector (Supabase)
+- **Vector Store**: PostgreSQL + pgvector (Supabase-hosted)
 - **Async Runtime**: asyncio
+- **Backend API**: FastAPI
 
 ---
 
