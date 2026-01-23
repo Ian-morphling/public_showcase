@@ -16,7 +16,7 @@ In real production systems (search, compliance, enterprise AI), retrieval itself
 - How do we avoid redundant searches?
 - How do we guarantee grounded, explainable outputs?
 
-This project explores **planner-driven retrieval**, where an explicit planner agent decides:
+This project implements **planner-driven retrieval**, where an explicit planner agent decides:
 - single-hop vs multi-hop retrieval
 - query reformulation across hops
 - when enough evidence has been gathered
@@ -129,6 +129,21 @@ Key characteristics:
 Below is a sample run of the agentic RAG workflow, showing multi-hop retrieval, explainable final answer, and deduplicated sources.
 
 File: [examples/test_run.txt](examples/test_run.txt)
+
+---
+
+## FastAPI Backend
+
+The project exposes a production-style FastAPI endpoint (/rag/query) that runs an agentic RAG workflow over the EU AI Act.
+
+- final mode: grounded answer + citations
+
+- full mode: multi-hop reasoning trace + answer + citations
+
+All citations are strictly derived from retrieved EU AI Act articles.
+
+[screenshot](screenshots/eu_fastapi_final.png)
+
 
 ---
 
