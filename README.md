@@ -72,7 +72,7 @@ Final Answer
     - Embedded with **Sentence-Transformers (MiniLM)** and stored in PostgreSQL + pgvector.
     - Metadata preserved for filtering, labeling, and citation.
   - Emphasis on **explainable, citation-bound outputs**, mirroring real-world enterprise or compliance AI pipelines.
-- **Tech Stack:** Python, LangGraph, pgvector (Postgres/Supabase), Sentence-Transformers (MiniLM), asyncio
+- **Tech Stack:** Python, LangGraph, pgvector (Postgres/Supabase), Sentence-Transformers (MiniLM), asyncio, FastAPI, Streamlit
 - [Detailed README](./eu_ai_act_navigator/README.md)
 
 ### [Music Review Summarization LLM QLoRA](./Music_Review_Summarization_LLM_QLoRA)
