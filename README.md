@@ -40,10 +40,10 @@ Each folder in this repository contains a self-contained project.
 ### [EU AI Act Navigator](./eu_ai_act_navigator) (ongoing)
 - **Objective:** Agentic Retrieval-Augmented Generation (RAG) system for regulatory reasoning over the EU Artificial Intelligence Act.  
 - **Highlights / Impact:**
-  - Implements **planner-driven multi-hop retrieval**, treating each retrieval step as a reasoning decision rather than a fixed pipeline.
+  - Implements **planner-driven multi-hop retrieval**, treating each retrieval step as a reasoning decision.
   - Structured agent responsibilities:
     - **Planner Agent:** decides retrieval strategy, hop counts, and query reformulation.
-    - **Retriever Agent:** performs vector-based search (pgvector / Supabase) with strict grounding, no hallucination.
+    - **Retriever Agent:** performs vector-based search (pgvector / Supabase) with strict grounding.
     - **Explainer Agent:** synthesizes answers strictly from retrieved evidence, maintaining citations (e.g., *Article 6*, *Annex III*).
   - **Workflow Overview:**
 ```text
@@ -72,7 +72,7 @@ Final Answer
     - Embedded with **Sentence-Transformers (MiniLM)** and stored in PostgreSQL + pgvector.
     - Metadata preserved for filtering, labeling, and citation.
   - Emphasis on **explainable, citation-bound outputs**, mirroring real-world enterprise or compliance AI pipelines.
-- **Tech Stack:** Python, LangGraph, pgvector (Postgres/Supabase), Sentence-Transformers (MiniLM), asyncio, FastAPI, Streamlit
+- **Tech Stack:** Python, LangGraph, asyncio, Sentence-Transformers (MiniLM), PostgreSQL + pgvector (Supabase), FastAPI, Streamlit
 - [Detailed README](./eu_ai_act_navigator/README.md)
 
 ### [Music Review Summarization LLM QLoRA](./Music_Review_Summarization_LLM_QLoRA)
