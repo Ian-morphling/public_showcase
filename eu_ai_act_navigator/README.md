@@ -146,8 +146,32 @@ The project exposes a production-style FastAPI endpoint (/rag/query) that runs a
 
 All citations are strictly derived from retrieved EU AI Act articles.
 
+The API is designed to be consumed by downstream applications (e.g. web frontends, internal tools, compliance workflows).
+
 [screenshot](screenshots/eu_fastapi_final.png)
 
+---
+
+## Demo Frontend (Streamlit)
+
+A lightweight Streamlit application is included as a **reference frontend** for interacting with the FastAPI backend.
+
+The Streamlit app:
+- Calls the FastAPI `/rag/query` endpoint
+- Allows users to select between:
+  - **Final mode**: concise answer with citations
+  - **Explainable mode**: multi-hop retrieval trace with document snippets
+- Renders answers, citations, and (optionally) retrieval hops in a readable UI
+
+The frontend is intentionally thin and stateless, serving as a demonstration of how the backend API can be consumed by downstream applications.
+
+### Streamlit Demo (Final Mode)
+
+Below is an example of the Streamlit UI using **final mode**, showing a grounded answer and citations:
+
+[screenshot](screenshots/eu_streamlit_final.png)
+
+> Multi-hop reasoning and retrieval traces are demonstrated separately via the test script output (`test_langgraph_flow.py`) and API `full` mode.
 
 ---
 
@@ -162,6 +186,7 @@ It demonstrates:
 - Clear separation of concerns
 - Grounded, explainable LLM outputs
 - Backend-first AI engineering mindset
+- Clean API contracts consumable by frontend applications
 
 ---
 
@@ -173,7 +198,7 @@ It demonstrates:
 - **Vector Store**: PostgreSQL + pgvector (Supabase-hosted)
 - **Async Runtime**: asyncio
 - **Backend API**: FastAPI
-
+- **Demo Frontend**: Streamlit
 ---
 
 ## Disclaimer
