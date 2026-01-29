@@ -1,6 +1,6 @@
 #  Public Project Showcase
 
-Welcome! This repository is a showcase of my data science and machine learning projects, designed to demonstrate applied analytics, machine learning, AI engineering, and data engineering skills across real-world datasets and systems.
+Welcome! This repository is a showcase of my data science and machine learning projects, designed to demonstrate applied analytics, machine learning, and production-oriented AI engineering across real-world datasets and systems
 
 Each folder in this repository contains a self-contained project.
 
@@ -72,7 +72,7 @@ Final Answer
     - Embedded with **Sentence-Transformers (MiniLM)** and stored in PostgreSQL + pgvector.
     - Metadata preserved for filtering, labeling, and citation.
   - Emphasis on **explainable, citation-bound outputs**, mirroring real-world enterprise or compliance AI pipelines.
-- **Tech Stack:** Python, LangGraph, asyncio, Sentence-Transformers (MiniLM), PostgreSQL + pgvector (Supabase), FastAPI, Streamlit
+- **Tech Stack:** Python, LangGraph, asyncio, Sentence-Transformers (MiniLM), PostgreSQL + pgvector (Supabase), Pytest, FastAPI, Streamlit
 - [Detailed README](./eu_ai_act_navigator/README.md)
 
 ### [Music Review Summarization LLM QLoRA](./Music_Review_Summarization_LLM_QLoRA)
