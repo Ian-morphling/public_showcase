@@ -148,6 +148,7 @@ tests/test_planner_agent.py::test_plan_next_query_stops_on_low_similarity PASSED
 Below is a sample run of the pytest script:
 
 File: [test_outputs/pytest_output_clean.txt](test_outputs/pytest_output_clean.txt)
+
 ---
 
 ## Testing & Introspection
