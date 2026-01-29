@@ -119,6 +119,36 @@ Key characteristics:
 
 ---
 
+## Testing
+
+The project includes focused tests to validate planner behavior and agent control flow.
+
+### Unit Tests (pytest)
+
+- `tests/test_planner_agent.py` validates the **PlannerAgent** in isolation
+- External LLM calls (Groq) are mocked using `pytest.monkeypatch`
+- Tests cover:
+  - LLM-based sufficiency checks
+  - Multi-hop stop conditions
+  - Document deduplication across hops
+  - Max-hop termination
+  - Similarity-based early stopping
+
+This demonstrates isolation of external LLM dependencies in agentic systems.
+
+Example (clean pytest run):
+
+```text
+tests/test_planner_agent.py::test_check_answer_sufficiency PASSED
+tests/test_planner_agent.py::test_plan_next_query_stop_on_stop PASSED
+tests/test_planner_agent.py::test_plan_next_query_filters_seen_docs PASSED
+tests/test_planner_agent.py::test_plan_next_query_stops_on_max_hops PASSED
+tests/test_planner_agent.py::test_plan_next_query_stops_on_low_similarity PASSED
+```
+Below is a sample run of the pytest script:
+File: [test_outputs/pytest_output_clen.txt](test_outputs/pytest_output_clean.txt)
+---
+
 ## Testing & Introspection
 
 - End-to-end execution tested via `test_langgraph_flow.py`
@@ -177,7 +207,7 @@ Below is an example of the Streamlit UI using **final mode**, showing a grounded
 
 ## What This Project Demonstrates
 
-This project intentionally focuses on system design.
+This project intentionally focuses on agentic system design.
 
 It demonstrates:
 - Agentic search and multi-step reasoning
@@ -197,6 +227,7 @@ It demonstrates:
 - **Embeddings**: sentence-transformers
 - **Vector Store**: PostgreSQL + pgvector (Supabase-hosted)
 - **Async Runtime**: asyncio
+- **Testing**: Pytest (unit-level, isolated agent tests)
 - **Backend API**: FastAPI
 - **Demo Frontend**: Streamlit
 ---
