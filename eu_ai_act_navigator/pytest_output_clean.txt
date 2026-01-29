@@ -1,0 +1,15 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0 -- /home/ianli/anaconda3/envs/eu_ai_env/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ianli/homl-self/public_showcase/eu_ai_act_navigator
+plugins: langsmith-0.6.4, asyncio-1.3.0, anyio-4.12.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 5 items
+
+tests/test_planner_agent.py::test_check_answer_sufficiency PASSED        [ 20%]
+tests/test_planner_agent.py::test_plan_next_query_stop_on_stop PASSED    [ 40%]
+tests/test_planner_agent.py::test_plan_next_query_filters_seen_docs PASSED [ 60%]
+tests/test_planner_agent.py::test_plan_next_query_stops_on_max_hops PASSED [ 80%]
+tests/test_planner_agent.py::test_plan_next_query_stops_on_low_similarity PASSED [100%]
+
+============================== 5 passed in 5.56s ===============================
