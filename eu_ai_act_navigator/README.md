@@ -42,8 +42,8 @@ User Query
 | - Stop when evidence      |
 |   is sufficient           |
 +---------------------------+
-   |
-   v
+   |                  ^
+   v                  |
 +---------------------------+
 | Retriever Agent           |
 | - Search vector DB        |
