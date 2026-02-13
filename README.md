@@ -52,8 +52,8 @@ User Query
 v
 Planner Agent
 (controls retrieval strategy)
-|
-v
+|            ^
+v            |
 Retriever Agent
 (pgvector search, single or multi-hop)
 |
