@@ -35,13 +35,13 @@ The EU AI Act was chosen as a domain due to its dense cross-referencing structur
 User Query
    |
    v
-+---------------------------+
-| Planner Agent             |
-| - Decide single/multi-hop |
-| - Reformulate queries     |
-| - Stop when evidence      |
-|   is sufficient           |
-+---------------------------+
++------------------------------+
+| Planner Agent                |
+| - Decide single/multi-hop    |
+| - Reformulate queries        |
+| - Decide whether evidence    |
+|   is sufficient to continue  |
++------------------------------+
    |                  ^
    v                  |
 +---------------------------+
@@ -63,6 +63,7 @@ User Query
    v
 Final Answer (Grounded & Explainable)
 ```
+The planner–retriever loop may execute multiple times until stop conditions are met (sufficiency, max hops, or relevance degradation).
 
 Each agent has a **strict, non-overlapping responsibility**, enabling observability, testing, and future scaling.
 
