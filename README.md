@@ -38,6 +38,7 @@ Each folder in this repository contains a self-contained project.
 
 
 ### [EU AI Act Navigator](./eu_ai_act_navigator) (ongoing)
+- Demonstrates production-grade agentic AI: planner-driven multi-hop retrieval, strict grounding, and scalable FastAPI deployment over complex regulatory text.
 - **Objective:** Agentic Retrieval-Augmented Generation (RAG) system for regulatory reasoning over the EU Artificial Intelligence Act.  
 - **Highlights / Impact:**
   - Implements **planner-driven multi-hop retrieval**, treating each retrieval step as a reasoning decision.
