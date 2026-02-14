@@ -173,11 +173,16 @@ File: [examples/test_run.txt](examples/test_run.txt)
 
 The project exposes a production-style FastAPI endpoint (/rag/query) that runs an agentic RAG workflow over the EU AI Act.
 
+Endpoint Modes:
 - final mode: grounded answer + citations
-
 - full mode: multi-hop reasoning trace + answer + citations
 
-All citations are strictly derived from retrieved EU AI Act articles.
+Key Backend Enhancements:
+- Rate limiting per IP: prevents abuse of the API (5 requests/minute by default)
+- Retry logic for transient failures: the backend will automatically retry graph invocations on temporary LLM or network issues, ensuring robust responses
+- Strictly grounded citations: all citations are derived from retrieved EU AI Act documents; hallucinations are prevented
+- Async execution: supports concurrent queries via asyncio, suitable for scaling in real production systems
+- Typed API contracts: all requests/responses use Pydantic models, making integration with downstream apps reliable
 
 The API is designed to be consumed by downstream applications (e.g. web frontends, internal tools, compliance workflows).
 
