@@ -45,6 +45,12 @@ Each folder in this repository contains a self-contained project.
     - **Planner Agent:** decides retrieval strategy, hop counts, and query reformulation.
     - **Retriever Agent:** performs vector-based search (pgvector / Supabase) with strict grounding.
     - **Explainer Agent:** synthesizes answers strictly from retrieved evidence, maintaining citations (e.g., *Article 6*, *Annex III*).
+  - Production-Ready Backend: FastAPI endpoint (/rag/query) with:
+    - Rate limiting per IP (5 requests/minute default)
+    - Retry logic for transient LLM or network failures
+    - Strictly grounded citations, preventing hallucinations
+    - Async execution for concurrent queries
+    - Typed API contracts using Pydantic models for reliable integration
   - **Workflow Overview:**
 ```text
 User Query
