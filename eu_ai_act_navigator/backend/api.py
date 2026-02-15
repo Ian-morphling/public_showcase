@@ -138,7 +138,7 @@ def is_transient_error(e: Exception) -> bool:
         return True
 
     # LLM / API transient messages
-    llm_keywords = ["groq", "rate limit", "timeout", "503", "502"]
+    llm_keywords = ["timeout", "503", "502"]
     if any(k in msg for k in llm_keywords):
         logger.warning("Transient: LLM/API issue: %s", msg)
         return True
