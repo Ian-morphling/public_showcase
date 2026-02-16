@@ -1,8 +1,9 @@
 # langgraph_graph.py
 """
+Multi-turn aware LangGraph for EU AI Act Navigator
 - Multi-hop retrieval driven by PlannerAgent
-- Only NEW documents are used for explanation
-- Planner internal state is reset per run
+- Deduplicates new docs per thread
+- Maintains per-thread Planner state using thread_id
 """
 
 from typing import List, Optional, TypedDict, Any, Dict
@@ -12,8 +13,10 @@ from agents.retriever_agent import RetrieverAgent, RetrievedDocument
 from agents.planner_agent import PlannerAgent
 from agents.explainer_agent import ExplainerAgent
 
-# State definition
+# --- Thread-aware Planner state store ---
+planner_thread_state: Dict[str, Dict[str, set]] = {}
 
+# State definition
 class RAGState(TypedDict, total=False):
     # user input
     user_query: str
@@ -29,29 +32,36 @@ class RAGState(TypedDict, total=False):
     retrieved_docs: List[RetrievedDocument]
     new_docs: List[RetrievedDocument]
 
-    # hop tracking (for debugging / tests)
+    # hop tracking
     hops: List[Dict[str, Any]]
 
     # final output
     answer: Optional[str]
     sources: List[Dict[str, str]]
 
-# Agent initialization
+    # multi-turn thread
+    thread_id: Optional[str]
 
+# --- Agent initialization ---
 retriever = RetrieverAgent()
 planner = PlannerAgent(max_hops=3, enable_sufficiency=True)
 explainer = ExplainerAgent()
 
-
-# LangGraph nodes
-
+# --- LangGraph nodes ---
 async def classify_intent_node(state: RAGState) -> RAGState:
     """
     Initialize state and classify intent once.
     """
-    # Reset planner internal memory per run
-    planner.seen_doc_ids.clear()
-    planner.query_hashes.clear()
+    # Multi-turn: maintain thread-specific Planner memory
+    thread_id = state.get("thread_id")
+    if thread_id and thread_id not in planner_thread_state:
+        planner_thread_state[thread_id] = {"seen_doc_ids": set()}
+
+    # Assign Planner memory for this run
+    if thread_id:
+        planner.seen_doc_ids = planner_thread_state[thread_id]["seen_doc_ids"]
+    else:
+        planner.seen_doc_ids.clear()
 
     intent = await planner.classify_intent(state["user_query"])
 
@@ -79,9 +89,7 @@ async def retrieve_node(state: RAGState) -> RAGState:
         state["current_query"],
         top_k=5,
     )
-
     state["retrieved_docs"].extend(docs)
-
     return state
 
 
@@ -117,6 +125,11 @@ async def plan_node(state: RAGState) -> RAGState:
         state["previous_queries"].append(state["current_query"])
         state["current_query"] = next_query
 
+    # Update thread-aware Planner memory
+    thread_id = state.get("thread_id")
+    if thread_id:
+        planner_thread_state[thread_id]["seen_doc_ids"] = planner.seen_doc_ids
+
     return state
 
 
@@ -133,9 +146,7 @@ async def explain_node(state: RAGState) -> RAGState:
     """
     Final explanation using ONLY deduplicated NEW documents.
     """
-    deduped_docs = list({
-        doc.id: doc for doc in state["new_docs"]
-    }.values())
+    deduped_docs = list({doc.id: doc for doc in state["new_docs"]}.values())
 
     state["answer"] = await explainer.explain(
         query=state["user_query"],
@@ -152,8 +163,8 @@ async def explain_node(state: RAGState) -> RAGState:
 
     return state
 
-# Graph builder
 
+# --- Graph builder ---
 def build_graph():
     graph = StateGraph(RAGState)
 
