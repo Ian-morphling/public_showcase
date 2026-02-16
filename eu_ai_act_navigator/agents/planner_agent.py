@@ -24,7 +24,6 @@ groq_client = Client(api_key=GROQ_API_KEY)
 class PlannerAgent:
     def __init__(self, max_hops: int = 3, enable_sufficiency: bool = True):
         self.intent: str | None = None
-        self.query_hashes: set[str] = set()
         self.seen_doc_ids: set[str] = set()
         self.max_hops = max_hops
         self.enable_sufficiency = enable_sufficiency
