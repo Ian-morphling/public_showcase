@@ -120,6 +120,32 @@ Key characteristics:
 
 ---
 
+## Conversation Context & Multi-Turn Design
+
+The system supports **optional multi-turn conversations** via an explicit conversation context layer rather than relying solely on LangGraph’s built-in memory.
+
+A dedicated `context_manager.py` module is responsible for:
+- Managing per-conversation state scoped by a `thread_id`
+- Tracking planner state (e.g. seen documents, hop count, stop conditions)
+- Preventing redundant retrieval across turns
+- Explicitly resetting or isolating context when multi-turn is disabled
+- Efficiently summarizes conversation state for long-running interactions
+
+The `thread_id` is generated at the app (Streamlit) and passed through the FastAPI boundary on each request.  
+This identifier is injected into the LangGraph state, allowing multiple concurrent conversations to be handled deterministically.
+
+---
+
+### Why Not Rely on LangGraph Memory Alone?
+
+While LangGraph provides built-in memory primitives, this project intentionally manages conversation context explicitly in order to:
+- Keep graph execution deterministic and inspectable
+- Avoid implicit state mutations hidden inside memory abstractions
+- Allow fine-grained control over what persists across turns (planner state vs retrieved evidence)
+- Support stateless API boundaries where context must be reconstructed per request
+  
+---
+
 ## Testing
 
 The project includes focused tests to validate planner behavior and agent control flow.
@@ -183,6 +209,8 @@ Key Backend Enhancements:
 - Strictly grounded citations: all citations are derived from retrieved EU AI Act documents; hallucinations are prevented
 - Async execution: supports concurrent queries via asyncio, suitable for scaling in real production systems
 - Typed API contracts: all requests/responses use Pydantic models, making integration with downstream apps reliable
+- Explicit conversation context management via `context_manager.py` using `thread_id`
+
 
 The API is designed to be consumed by downstream applications (e.g. web frontends, internal tools, compliance workflows).
 
