@@ -15,7 +15,8 @@ from pydantic import BaseModel, Field
 import asyncio
 from textwrap import shorten
 import logging
-
+from uuid import uuid4
+from backend.context_manager import ContextManager
 from langgraph_graph import build_graph
 
 # --- Retry & Rate limiting imports ---
@@ -76,12 +77,14 @@ class HopTrace(BaseModel):
 class FinalResponse(BaseModel):
     answer: str
     citations: List[Citation]
+    thread_id: str
 
 class FullResponse(FinalResponse):
     hops: List[HopTrace]
 
 # --- Graph initialization ---
 graph = build_graph()
+context_manager = ContextManager(max_turns=6, model="llama-3.1-8b-instant")
 
 # --- Helper functions ---
 def preview(text: str, max_chars: int = 220) -> str:
@@ -152,23 +155,37 @@ def is_transient_error(e: Exception) -> bool:
     retry=retry_if_exception(is_transient_error),
     reraise=True,
 )
-async def invoke_graph_with_retry(initial_state: dict) -> dict:
+async def invoke_graph_with_retry(initial_state: dict, thread_id: Optional[str] = None) -> dict:
     """
     Invoke the agentic RAG graph with retry on transient errors.
+    - Pass thread_id so LangGraph + PlannerAgent maintain multi-turn state
     """
+    # Attach thread_id to state for LangGraph / Planner to track seen docs
+    if thread_id:
+        initial_state["thread_id"] = thread_id
+
     return await graph.ainvoke(initial_state)
 
 # --- API Endpoint with Rate Limiting ---
 @app.post("/rag/query", response_model=FinalResponse | FullResponse)
 @limiter.limit("5/minute")
-async def query_rag(request: Request, body: QueryRequest):
+async def query_rag(request: Request, body: QueryRequest, thread_id: Optional[str] = None):
     if not body.query.strip():
         raise HTTPException(status_code=400, detail="Query must not be empty")
 
-    initial_state = {"user_query": body.query.strip()}
+    # Generate thread_id if missing
+    thread_id = thread_id or str(uuid4())
+
+    # Build conversation-aware query including summary of past turns
+    conversation_query = context_manager.build_query(thread_id, body.query.strip())
+
+    initial_state = {"user_query": conversation_query}
 
     try:
-        final_state = await invoke_graph_with_retry(initial_state)
+        final_state = await invoke_graph_with_retry(
+            initial_state,
+            thread_id=thread_id  # pass thread_id for LangGraph state
+        )
     except RetryError as e:
         raise HTTPException(
             status_code=500,
@@ -184,9 +201,12 @@ async def query_rag(request: Request, body: QueryRequest):
 
     citations = format_citations(sources)
 
+    # Update ContextManager with this turn
+    await context_manager.append_turn(thread_id, body.query.strip(), answer)
+
     if body.mode == "final":
-        return FinalResponse(answer=answer, citations=citations)
-    return FullResponse(answer=answer, citations=citations, hops=format_hops(hops))
+        return FinalResponse(answer=answer, citations=citations, thread_id=thread_id)
+    return FullResponse(answer=answer, citations=citations, hops=format_hops(hops), thread_id=thread_id)
 
 # --- Local dev entrypoint ---
 if __name__ == "__main__":
