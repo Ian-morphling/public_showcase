@@ -129,9 +129,9 @@ A dedicated `context_manager.py` module is responsible for:
 - Tracking planner state (e.g. seen documents, hop count, stop conditions)
 - Preventing redundant retrieval across turns
 - Explicitly resetting or isolating context when multi-turn is disabled
-- Efficiently summarizes conversation state for long-running interactions
+- Efficiently summarizes accumulated context to manage long-running interactions and prevent planner degradation.
 
-The `thread_id` is generated at the app (Streamlit) and passed through the FastAPI boundary on each request.  
+The `thread_id` is generated at the application layer and passed through the FastAPI boundary on each request.
 This identifier is injected into the LangGraph state, allowing multiple concurrent conversations to be handled deterministically.
 
 ---
@@ -142,7 +142,7 @@ While LangGraph provides built-in memory primitives, this project intentionally 
 - Keep graph execution deterministic and inspectable
 - Avoid implicit state mutations hidden inside memory abstractions
 - Allow fine-grained control over what persists across turns (planner state vs retrieved evidence)
-- Support stateless API boundaries where context must be reconstructed per request
+- State is explicitly passed into each LangGraph execution rather than stored implicitly between requests.
   
 ---
 
