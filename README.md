@@ -46,7 +46,7 @@ Each folder in this repository contains a self-contained project.
     - **Planner Agent:** decides retrieval strategy, hop counts, and query reformulation.
     - **Retriever Agent:** performs vector-based search (pgvector / Supabase) with strict grounding.
     - **Explainer Agent:** synthesizes answers strictly from retrieved evidence, maintaining citations (e.g., *Article 6*, *Annex III*).
-  - Multi-Turn / Context Management: Explicit context manager handles conversation state per thread, including planner state and summarization for long-running sessions.
+  - Multi-Turn / Context Management: Explicit context manager tracks planner state and summarizes long-running sessions for robust multi-turn interactions.
   - Production-Ready Backend: FastAPI endpoint (/rag/query) with:
     - Rate limiting per IP (5 requests/minute default)
     - Retry logic for transient LLM or network failures
