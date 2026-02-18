@@ -84,7 +84,7 @@ class FullResponse(FinalResponse):
 
 # --- Graph initialization ---
 graph = build_graph()
-context_manager = ContextManager(max_turns=6, model="llama-3.1-8b-instant")
+context_manager = ContextManager(max_turns=4, model="llama-3.1-8b-instant")
 
 # --- Helper functions ---
 def preview(text: str, max_chars: int = 220) -> str:

@@ -32,7 +32,7 @@ class Turn:
 
 
 class ContextManager:
-    def __init__(self, max_turns: int = 6, model: str = "llama-3.1-8b-instant"):
+    def __init__(self, max_turns: int = 4, model: str = "llama-3.1-8b-instant"):
         self.max_turns = max_turns
         self.model = model
         self._store: Dict[str, List[Turn]] = {}
