@@ -164,4 +164,4 @@ streamlit run scripts/app.py
 ## Related Projects
 
 - [EU AI Act Navigator](../eu_ai_act_navigator) — Agentic RAG with LangGraph and pgvector
-- [LLM Multi-Agent Recommender](../multi_agent_recommender) — Explainable recommender with FAISS and FastAPI
+- [LLM Multi-Agent Recommender](../ecommerce_llm_recommender) — Explainable recommender with FAISS and FastAPI
