@@ -37,7 +37,7 @@ Each folder in this repository contains a self-contained project.
 
 
 
-### [EU AI Act Navigator](./eu_ai_act_navigator) (ongoing)
+### [EU AI Act Navigator](./eu_ai_act_navigator)
 - Agentic RAG system for regulatory reasoning over the EU AI Act, using planner-driven multi-hop retrieval to produce strictly grounded, explainable answers.
 - **Objective:** Agentic Retrieval-Augmented Generation (RAG) system for regulatory reasoning over the EU Artificial Intelligence Act.  
 - **Highlights / Impact:**
@@ -83,7 +83,35 @@ Final Answer
 - **Tech Stack:** Python, LangGraph, asyncio, Sentence-Transformers (MiniLM), PostgreSQL + pgvector (Supabase), Pytest, FastAPI, Streamlit
 - [Detailed README](./eu_ai_act_navigator/README.md)
 
+- ### [MedQA-Distill](./Med_Distill)
+- End-to-end knowledge distillation pipeline that teaches a small 1.5B language model 
+  to answer medical questions at near 7B-model quality — running fully on a consumer GPU.
+- **Objective:** Fine-tune Qwen2.5-1.5B-Instruct on medical Q&A by distilling knowledge 
+  from DeepSeek-R1-Distill-Qwen-7B, reducing inference cost while preserving answer quality.
+- **Impact / Highlights:**
+  - **+32.3% ROUGE-2 improvement** over base model on 141 held-out test samples.
+  - Full distillation pipeline: teacher label generation → data quality filtering → 
+    QLoRA fine-tuning → ROUGE evaluation → Streamlit demo.
+  - Data quality filtering — detected and removed ~30% of teacher outputs 
+    containing unstripped reasoning traces before training.
+  - Same-family distillation (Qwen2.5 7B → 1.5B) for tokenizer compatibility and 
+    stable training signal.
+  - Completion-only label masking — model trained on answer tokens only, 
+    not questions or system prompts.
+  - Streamlit demo with live base vs fine-tuned inference, interactive loss curve, 
+    and evaluation metrics dashboard.
+- **Tech Stack:** Python, Unsloth, TRL (SFTTrainer), QLoRA, BitsAndBytes, Qwen2.5, 
+  DeepSeek-R1-Distill, HuggingFace Transformers, PEFT, Streamlit, Plotly
+- [Detailed README](./Med_Distill/README.md)
+
+## Screenshots
+
+## Training loss
+![Training_loss](./Med_Distill/outputs/training_loss.png)
+
+
 ### [Music Review Summarization LLM QLoRA](./Music_Review_Summarization_LLM_QLoRA)
+*(Superseded by MedQA-Distill — kept for reference)*
 - **Objective:** Fine-tune a large language model for summarizing Amazon Digital Music reviews using QLoRA for memory-efficient instruction-following.
 - **Impact / Highlights:**
   - Demonstrates instruction-following fine-tuning on a real-world dataset.
@@ -117,10 +145,11 @@ Final Answer
 - **Tech Stack:** Python, seaborn, matplotlib.
 
 ## Key Skills Demonstrated Across Projects
-- **ML & AI:** Random Forest, PCA, Prophet, RAG, LLM integration, LLM fine-tuning (QLoRA), FAISS embeddings
+- **ML & AI:** Random Forest, PCA, Prophet, RAG, LLM integration, FAISS embeddings, LLM knowledge distillation, QLoRA fine-tuning (Unsloth), 
+  ROUGE evaluation
 - **Data Engineering:** ELT pipelines, Parquet storage, Dagster
 - **Web / Visualization:** Flask, Streamlit, Plotly, interactive dashboards
-- **Tools & Libraries:** Python, scikit-learn, pandas, PyArrow, GeoPandas, Sentence-Transformers, LangGraph, Hugging Face Transformers, PEFT
-- **AI Engineering & Systems:** RAG pipelines, multi-agent orchestration (LangGraph), LLM evaluation, human-in-the-loop feedback
+- **Tools & Libraries:** Python, scikit-learn, pandas, PyArrow, GeoPandas, Sentence-Transformers, LangGraph, Hugging Face Transformers, PEFT, Unsloth. TRL
+- **AI Engineering & Systems:** RAG pipelines, multi-agent orchestration (LangGraph), LLM fine-tuning & distillation, LLM evaluation, human-in-the-loop feedback
 - **Backend & APIs:** FastAPI, Pydantic validation, RESTful AI services
 - **Deployment & Scaling:** Streamlit, FAISS vector search, modular service-oriented design
