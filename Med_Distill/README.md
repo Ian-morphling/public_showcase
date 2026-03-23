@@ -72,6 +72,7 @@ Evaluated on **141 held-out test samples**. Reference: teacher-generated answers
 **Q: Is Trisomy 18 inherited?**
 
 | **Base Model** | Trisomy 18 is not an inherited condition; it's a chromosomal disorder that occurs when there are three copies of chromosome 18 instead of the usual two. This extra genetic material leads to various physical and developmental problems, rather than being passed down from parents. The condition results from errors during cell division (meiosis) or during early embryonic development before conception. If you're concerned about your family history or risk factors for this type of genetic disorder, consulting with a genetic counselor can provide valuable information and guidance. |
+
 | **Fine-tuned** | Trisomy 18 is not an inherited condition. It is a chromosomal disorder that occurs when there are three copies of chromosome 18 instead of the usual two, leading to various physical and developmental issues. This condition is not passed down from parents through their genes but rather arises due to random changes during cell division or other genetic factors. Therefore, Trisomy 18 cannot be considered an inherited trait. |
 
 The fine-tuned student produces a more **concise, structured answer** without unnecessary hedging — reflecting the teacher model's patient-friendly answer style.
