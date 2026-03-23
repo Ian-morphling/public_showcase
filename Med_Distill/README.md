@@ -1,4 +1,4 @@
-# MedQA-Distill
+# Med-Distill
 
 > Fine-tuning a small language model for medical Q&A using knowledge distillation — making a 1.5B parameter model approximate the quality of a 7B model at a fraction of the inference cost.
 
