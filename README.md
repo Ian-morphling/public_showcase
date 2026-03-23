@@ -83,7 +83,7 @@ Final Answer
 - **Tech Stack:** Python, LangGraph, asyncio, Sentence-Transformers (MiniLM), PostgreSQL + pgvector (Supabase), Pytest, FastAPI, Streamlit
 - [Detailed README](./eu_ai_act_navigator/README.md)
 
-- ### [MedQA-Distill](./Med_Distill)
+### [MedQA-Distill](./Med_Distill)
 - End-to-end knowledge distillation pipeline that teaches a small 1.5B language model 
   to answer medical questions at near 7B-model quality — running fully on a consumer GPU.
 - **Objective:** Fine-tune Qwen2.5-1.5B-Instruct on medical Q&A by distilling knowledge 
