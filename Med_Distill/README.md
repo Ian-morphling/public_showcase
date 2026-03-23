@@ -79,6 +79,13 @@ The fine-tuned student produces a more **concise, structured answer** without un
 
 ---
 
+## Streamlit Demo
+
+**Evaluation Tab**
+![Evaluation Results](outputs//eval_results.png)
+
+---
+
 ## Tech Stack
 
 | Component                     | Tool                                                                  |
