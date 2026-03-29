@@ -1,20 +1,13 @@
-# Core
 fastapi==0.111.1
 uvicorn[standard]==0.23.2
-pydantic==2.7.0
 python-dotenv==1.0.0
-httpx==1.9.2
-tenacity==8.2.2
-
-# RAG / embeddings / ML
+httpx>=0.24.0,<1.0.0
+langgraph>=0.3.0
 numpy>=1.26.0
 pandas>=2.1.0
-torch>=2.1.0
 sentence-transformers>=2.2.2
-langgraph>=0.3.0
-
-# Rate limiting
-slowapi==0.2.1
-
-# Telegram bot
-python-telegram-bot[asyncio]==23.14.3
+torch>=2.1.0
+supabase>=1.2.1
+tenacity>=8.2.2
+slowapi>=0.2.2
+python-telegram-bot[all]>=20.4,<21.0
