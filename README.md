@@ -53,7 +53,8 @@ Each folder in this repository contains a self-contained project.
     - Strictly grounded citations, preventing hallucinations
     - Async execution for concurrent queries
     - Typed API contracts using Pydantic models for reliable integration
-  - **Workflow Overview:**
+  - Telegram Bot interface consuming the same FastAPI backend, with chat_id mapped to thread_id for multi-turn context management per user.
+- **Workflow Overview:**
 ```text
 User Query
 |
@@ -80,7 +81,7 @@ Final Answer
     - Embedded with **Sentence-Transformers (MiniLM)** and stored in PostgreSQL + pgvector.
     - Metadata preserved for filtering, labeling, and citation.
   - Emphasis on **explainable, citation-bound outputs**, mirroring real-world enterprise or compliance AI pipelines.
-- **Tech Stack:** Python, LangGraph, asyncio, Sentence-Transformers (MiniLM), PostgreSQL + pgvector (Supabase), Pytest, FastAPI, Streamlit
+- **Tech Stack:** Python, LangGraph, asyncio, Sentence-Transformers (MiniLM), PostgreSQL + pgvector (Supabase), Pytest, FastAPI, Streamlit, Telegram Bot API
 - [Detailed README](./eu_ai_act_navigator/README.md)
 
 ### [MedQA-Distill](./Med_Distill)
