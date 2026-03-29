@@ -269,6 +269,27 @@ It demonstrates:
 
 ---
 
+## Running the Project
+
+1. Start the FastAPI backend
+
+```bash
+uvicorn backend.api:app --reload
+```
+
+2.  Start the Telegram bot (separate terminal)
+
+```bash
+python -m telegram_bot.bot
+```
+
+3. Start the Streamlit frontend (separate terminal)
+```bash
+streamlit run streamlit_app.py
+```
+
+---
+
 ## Tech Stack
 
 - **Language**: Python
