@@ -218,6 +218,19 @@ The API is designed to be consumed by downstream applications (e.g. web frontend
 
 ---
 
+## Telegram Bot
+
+A Telegram bot is included as an alternative conversational interface to the EU AI Act Navigator, consuming the same FastAPI /rag/query endpoint as the Streamlit frontend.
+
+- Returns grounded answers with citations (final mode) — retrieval traces are accessible separately via the API's full mode or test_langgraph_flow.py
+- Supports multi-turn conversations via explicit context management — Telegram's chat_id is mapped to the backend's thread_id, scoping conversation state per user
+- Commands:
+  - /start — welcome message
+  - /help — command reference
+  - /reset — clears conversation history and starts a fresh session
+
+---
+
 ## Demo Frontend (Streamlit)
 
 A lightweight Streamlit application is included as a **reference frontend** for interacting with the FastAPI backend.
